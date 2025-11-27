@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"]
+		}
+	},
+
+	"exclude": [
+		"dist",
+		"build",
+		"**/*.min.js",
+		"node_modules",
+		"**/node_modules/*"
+	]
+}
