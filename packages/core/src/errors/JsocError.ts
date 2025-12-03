@@ -1,4 +1,4 @@
-import { joinStringArray } from "@/utils";
+import { joinStringArray } from '../utils';
 
 export class JsocError extends Error {
 	constructor(message: string) {

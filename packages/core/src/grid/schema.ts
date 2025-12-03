@@ -1,5 +1,6 @@
-import { JsocGridError } from '@/errors';
-import { isIndexWithinLength, type PlainObject } from '@/utils';
+import { JsocGridError } from '../errors';
+import { generateRows, type PrimaryColumnKey } from '../grid';
+import { isIndexWithinLength, type PlainObject } from '../utils';
 
 /**
  * Unique id build by the `buildGridId` method to uniquely identify a `GridSchema`

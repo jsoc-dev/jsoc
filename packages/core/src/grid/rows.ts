@@ -5,13 +5,13 @@ import {
 	isNumber,
 	isPlainObject,
 	isString,
-} from '@/utils';
+} from '../utils';
 import {
 	type GridData,
 	type GridPlainRows,
 	type PrimaryColumnKey,
 	FALLBACK_PRIMARY_COLUMN_KEY,
-} from '@/grid';
+} from './';
 
 /**
  * Returns an object containing:

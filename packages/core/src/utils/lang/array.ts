@@ -1,4 +1,4 @@
-import { isNumber } from "@/utils";
+import { isNumber, isPlainObject, isString, type PlainObject } from '../';
 
 export const MAX_ARRAY_LENGTH = Math.pow(2, 32) - 1;
 

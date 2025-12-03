@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "@/utils";
+import { isNullOrUndefined } from '../';
 
 export function isString(arg: unknown): arg is string {
 	return typeof arg === 'string';

@@ -7,8 +7,8 @@ import {
 	isNumber,
 	isPlainObject,
 	isString,
-} from 'utils';
-import { GridSchema, GridPlainRows } from '@/grid';
+} from '../utils';
+import { GridSchema, GridPlainRows } from './schema';
 
 /**
  * Property name of a `PlainObject` in `GridPlainRows`
