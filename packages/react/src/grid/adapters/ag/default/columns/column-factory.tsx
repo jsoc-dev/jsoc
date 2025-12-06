@@ -1,34 +1,36 @@
-import { ToggleSubGridButtonAg } from './ToggleSubGridButton';
-import { capitalizeFirst, ensureString } from '@jsoc/core';
+import {
+	ensureArray,
+	ensureString,
+	isArray,
+	isPlainObject,
+	safeStringify,
+	toReadableString,
+} from '@jsoc/core';
 import {
 	ColumnFactory,
 	type ColumnDataType,
 	type ColumnDefinitionProviderParams,
 } from '@jsoc/core/grid';
 import type { ColDef, ICellRendererParams } from 'ag-grid-community';
+import { ToggleSubGridButton } from '../../../../components';
 
 export const COLUMN_FACTORY_AG: ColumnFactory<ColDef> = {
-	arrayOfObjects: colDefProviderAg,
-	arrayOfStrings: colDefProviderAg,
-	boolean: colDefProviderAg,
-	number: colDefProviderAg,
-	object: colDefProviderAg,
-	stringDate: colDefProviderAg,
-	string: colDefProviderAg,
-	unresolved: colDefProviderAg,
+	arrayOfObjects,
+	boolean,
+	number,
+	object,
+	stringDate,
+	string,
+	unresolved,
 };
 
-export function colDefProviderAg(
-	params: ColumnDefinitionProviderParams
-): ColDef {
-	const { columnKey, columnDataType } = params;
+export function commonColDefAg(params: ColumnDefinitionProviderParams): ColDef {
+	const { columnKey } = params;
 
 	return {
 		field: columnKey,
-		headerName: capitalizeFirst(columnKey),
+		headerName: toReadableString(columnKey),
 		filter: true,
-		cellRenderer:
-			DEFAULT_CELL_RENDERER_PROVIDER_MAP_AG[columnDataType](params),
 	};
 }
 
@@ -38,74 +40,94 @@ export type DefaultCellRendererProviderMapAg = Record<
 	(params: ColumnDefinitionProviderParams) => CellRendererAg
 >;
 
-export const DEFAULT_CELL_RENDERER_PROVIDER_MAP_AG: DefaultCellRendererProviderMapAg =
-	{
-		arrayOfObjects: function (params) {
-			const { columnKey, gridId, gridIdColumnKey } = params;
+function string(params: ColumnDefinitionProviderParams): ColDef {
+	return {
+		...commonColDefAg(params),
+		cellDataType: 'text',
+	};
+}
 
-			return (params: ICellRendererParams) => {
-				const { data, value } = params;
+function boolean(params: ColumnDefinitionProviderParams): ColDef {
+	return {
+		...commonColDefAg(params),
+		cellDataType: 'boolean',
+	};
+}
 
-				if (value) {
-					return (
-						<ToggleSubGridButtonAg
-							subGridData={value}
-							parentGridId={gridId}
-							parentGridCellLocation={{
-								rowId: data[gridIdColumnKey],
-								columnKey,
-							}}
-						/>
-					);
-				}
-			};
+function number(params: ColumnDefinitionProviderParams): ColDef {
+	return {
+		...commonColDefAg(params),
+		cellDataType: 'number',
+	};
+}
+
+function stringDate(params: ColumnDefinitionProviderParams): ColDef {
+	return {
+		...commonColDefAg(params),
+		cellDataType: 'dateTimeString',
+	};
+}
+
+/**
+ * Provides column definitions for column having values as arrayOfObjects
+ */
+function arrayOfObjects(params: ColumnDefinitionProviderParams): ColDef {
+	const { columnKey, gridId, gridIdColumnKey } = params;
+
+	return {
+		...commonColDefAg(params),
+		cellDataType: 'object',
+		sortable: false,
+		filter: false,
+		valueFormatter: (params) => {
+			const { value } = params;
+
+			return safeStringify(value);
 		},
+		/**
+		 * Returns a button that allows toggling SubGrid which represents the data for this column.
+		 */
+		cellRenderer: (params: ICellRendererParams) => {
+			const { data, value } = params;
 
-		arrayOfStrings: function (params) {
-			return (params: ICellRendererParams) => {
-				// const { value } = params;
-
-				return 'Array of string column'; // TODO
-			};
-		},
-
-		boolean: function (params) {
-			return (params: ICellRendererParams) => {
-				const { value } = params;
-
-				return value;
-			};
-		},
-
-		number: function (params) {
-			return (params: ICellRendererParams) => {
-				const { value } = params;
-
-				return value;
-			};
-		},
-
-		object: function (params) {
-			return this.arrayOfObjects(params);
-		},
-
-		stringDate: function (params) {
-			return (params: ICellRendererParams) => {
-				// const { value } = params;
-
-				return 'Date Column'; // TODO
-			};
-		},
-
-		string: function (params) {
-			return (params: ICellRendererParams) => {
-				const { value } = params;
-
-				return ensureString(value);
-			};
-		},
-
-		unresolved: function (params) {
-			return this.string(params);
+			return (
+				<ToggleSubGridButton
+					subGridData={ensureArray(value)}
+					parentGridId={gridId}
+					parentGridCellLocation={{
+						rowId: data[gridIdColumnKey],
+						columnKey,
+					}}
+				/>
+			);
 		},
 	};
+}
+
+function object(params: ColumnDefinitionProviderParams): ColDef {
+	return arrayOfObjects(params);
+}
+
+function unresolved(params: ColumnDefinitionProviderParams): ColDef {
+	return {
+		...commonColDefAg(params),
+		sortable: false,
+		filter: false,
+		/**
+		 * Converting the value to a string.
+		 */
+		valueFormatter: (params) => {
+			const { value } = params;
+
+			if (isArray(value)) {
+				if (value.some((x) => isPlainObject(x) || isArray(x))) {
+					return safeStringify(value);
+				} else {
+					return value.join(', ');
+				}
+			}
+
+			return ensureString(value);
+		},
+	};
+}

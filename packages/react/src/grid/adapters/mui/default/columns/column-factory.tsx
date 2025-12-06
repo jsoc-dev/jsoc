@@ -1,113 +1,149 @@
-import { ToggleSubGridButtonMui } from './ToggleSubGridButton';
-import { ensureString, capitalizeFirst } from '@jsoc/core';
+import {
+	ensureString,
+	ensureArray,
+	isArray,
+	isPlainObject,
+	prettyStringify,
+	safeStringify,
+	toReadableString,
+} from '@jsoc/core';
 import {
 	ColumnFactory,
-	type ColumnDataType,
+	// type ColumnDataType,
 	type ColumnDefinitionProviderParams,
+	type GridData,
+	type GridDataReadonly,
+	type GridRows,
 } from '@jsoc/core/grid';
-import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import type { GridBaseColDef } from '@mui/x-data-grid/internals';
+import {
+	GridColDef,
+	GridRenderCellParams,
+	// type GridColType,
+} from '@mui/x-data-grid';
+import { ToggleSubGridButton } from '../../../../components';
+// import type { GridBaseColDef } from '@mui/x-data-grid/internals';
 
 export const COLUMN_FACTORY_MUI: ColumnFactory<GridColDef> = {
-	arrayOfObjects: colDefProviderMui,
-	arrayOfStrings: colDefProviderMui,
-	boolean: colDefProviderMui,
-	number: colDefProviderMui,
-	object: colDefProviderMui,
-	stringDate: colDefProviderMui,
-	string: colDefProviderMui,
-	unresolved: colDefProviderMui,
+	arrayOfObjects,
+	boolean,
+	number,
+	object,
+	stringDate,
+	string,
+	unresolved,
 };
 
-export function colDefProviderMui(
+export function commonColDefMui(
 	params: ColumnDefinitionProviderParams
 ): GridColDef {
-	const { columnKey, columnDataType } = params;
+	const { columnKey } = params;
 
 	return {
 		field: columnKey,
-		headerName: capitalizeFirst(columnKey),
-		// type: '', // TODO: add column type
-		renderCell:
-			DEFAULT_CELL_RENDERER_PROVIDER_MAP_MUI[columnDataType](params),
+		headerName: toReadableString(columnKey),
 	};
 }
 
-export type CellRendererMui = GridBaseColDef['renderCell'];
-export type DefaultCellRendererProviderMapMui = Record<
-	ColumnDataType,
-	(params: ColumnDefinitionProviderParams) => CellRendererMui
->;
-export const DEFAULT_CELL_RENDERER_PROVIDER_MAP_MUI: DefaultCellRendererProviderMapMui =
-	{
-		arrayOfObjects: function (params) {
-			const { columnKey, gridId, gridIdColumnKey } = params;
+function string(params: ColumnDefinitionProviderParams): GridColDef {
+	return {
+		...commonColDefMui(params),
+		type: 'string',
+	};
+}
 
-			return function (params: GridRenderCellParams) {
-				const { row, value } = params;
+function boolean(params: ColumnDefinitionProviderParams): GridColDef {
+	return {
+		...commonColDefMui(params),
+		type: 'boolean',
+	};
+}
 
-				if (value) {
-					return (
-						<ToggleSubGridButtonMui
-							subGridData={value}
-							parentGridId={gridId}
-							parentGridCellLocation={{
-								rowId: row[gridIdColumnKey],
-								columnKey,
-							}}
-						/>
-					);
-				}
-			};
+function number(params: ColumnDefinitionProviderParams): GridColDef {
+	return {
+		...commonColDefMui(params),
+		type: 'number',
+	};
+}
+
+function stringDate(params: ColumnDefinitionProviderParams): GridColDef {
+	return {
+		...commonColDefMui(params),
+		type: 'dateTime',
+		valueGetter: (value) => value && new Date(value),
+	};
+}
+
+/**
+ * Provides column definitions for column having values as arrayOfObjects
+ */
+function arrayOfObjects(params: ColumnDefinitionProviderParams): GridColDef {
+	const { columnKey, gridId, gridIdColumnKey } = params;
+
+	return {
+		...commonColDefMui(params),
+		type: 'actions',
+		sortable: false,
+		filterable: false,
+		/**
+		 * For ensuring the value to be used is array, as same column definitons will be used for `object` type columns also.
+		 */
+		valueGetter: (value: GridDataReadonly) =>
+			ensureArray(value as GridData),
+		/**
+		 * Returns value which will be used in exporting, as suggested in:
+		 * https://mui.com/x/react-data-grid/column-definition/#:~:text=When%20using%20renderCell,exporting%20the%20data.
+		 * Value returned by valueFormatter is not used for filtering/sorting as it is only for rendering purposes. In this
+		 * case, it won't be used for rendering also as renderCell is provided. So, this is solely for value to use in the
+		 * export operation.
+		 */
+		valueFormatter: (value: GridRows) => {
+			return prettyStringify(value);
 		},
+		/**
+		 * Returns a button that allows toggling SubGrid which represents the data for this column.
+		 * Uses the value from valueGetter which is ensured array of objects to represent in the SubGrid.
+		 *
+		 * CANDO: Is there any benefit if we wrap <ToggleSubGridButtonMui> inside <GridActionsCell> ?
+		 */
+		renderCell: (params: GridRenderCellParams) => {
+			const { row, value } = params;
 
-		arrayOfStrings: function (params) {
-			return (params: GridRenderCellParams) => {
-				// const { row, value } = params;
-
-				return 'Array of string column'; // TODO
-			};
-		},
-
-		boolean: function (params) {
-			return (params: GridRenderCellParams) => {
-				const { value } = params;
-
-				return value;
-			};
-		},
-
-		number: function (params) {
-			return (params: GridRenderCellParams) => {
-				const { value } = params;
-
-				return value;
-			};
-		},
-
-		object: function (params) {
-			return DEFAULT_CELL_RENDERER_PROVIDER_MAP_MUI.arrayOfObjects(
-				params
+			return (
+				<ToggleSubGridButton
+					subGridData={value}
+					parentGridId={gridId}
+					parentGridCellLocation={{
+						rowId: row[gridIdColumnKey],
+						columnKey,
+					}}
+				/>
 			);
 		},
+	};
+}
 
-		stringDate: function (params) {
-			return (params: GridRenderCellParams) => {
-				// const { row, value } = params;
+function object(params: ColumnDefinitionProviderParams): GridColDef {
+	return arrayOfObjects(params);
+}
 
-				return 'Date Column'; // TODO
-			};
-		},
+function unresolved(params: ColumnDefinitionProviderParams): GridColDef {
+	return {
+		...commonColDefMui(params),
+		sortable: false,
+		filterable: false,
+		/**
+		 * Converting the value to a string.
+		 */
+		valueGetter: (value: unknown) => {
+			if (isArray(value)) {
+				if (value.some((x) => isPlainObject(x) || isArray(x))) {
+					return safeStringify(value);
+				} else {
+					return value.join(', ');
+				}
+			}
 
-		string: function (params) {
-			return (params: GridRenderCellParams) => {
-				const { value } = params;
-
-				return ensureString(value);
-			};
-		},
-
-		unresolved: function (params) {
-			return DEFAULT_CELL_RENDERER_PROVIDER_MAP_MUI.string(params);
+			return ensureString(value);
 		},
 	};
+}

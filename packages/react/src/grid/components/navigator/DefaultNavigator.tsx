@@ -1,15 +1,11 @@
-import { useGridSchemaStore } from '../../../../hooks/useGridSchemaStore';
-import {
-	DefaultNavigatorItemMui,
-} from '../navigator/components/NavigatorItem';
-import {
-	DefaultNavigatorTitleMui,
-} from '../navigator/components/NavigatorTitle';
+import { useGridSchemaStore } from '../../hooks/useGridSchemaStore';
+import { DefaultNavigatorItemMui } from './components/NavigatorItem';
+import { DefaultNavigatorTitleMui } from './components/NavigatorTitle';
 import { Fragment } from 'react/jsx-runtime';
 import { Stack } from '@mui/material';
 import { NavigateNext } from '@mui/icons-material';
 
-export function DefaultNavigatorMui() {
+export function DefaultNavigator() {
 	const { gridSchemaStore } = useGridSchemaStore();
 
 	return (

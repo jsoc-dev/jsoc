@@ -1,5 +1,4 @@
-import { useHidePopperDom } from '../../../hooks';
-import { useGridNavigator } from '../../../../../hooks';
+import { useGridNavigator } from '../../../hooks';
 import {
 	extractGridNameFromGridId,
 	type GridSchemaStoreIndex,
@@ -18,7 +17,7 @@ export function DefaultNavigatorItemMui({ index }: NavigatorItemProps) {
 	return (
 		<>
 			<Tooltip
-				title={gridId} // TODO: use better title as gridId is not user friendly
+				title={gridId} // CANDO: use better title as gridId is not user friendly
 				slotProps={{
 					popper: { popperRef },
 				}}
@@ -40,4 +39,22 @@ export function DefaultNavigatorItemMui({ index }: NavigatorItemProps) {
 			</Tooltip>
 		</>
 	);
+}
+
+import { useRef } from 'react';
+// TODO: Remove this and use a proper solution
+export function useHidePopperDom() {
+	const popperRef = useRef(null);
+
+	function popperHide() {
+		const popperRefCurr = popperRef.current as any;
+		if (popperRefCurr?.state?.elements?.popper?.style) {
+			popperRefCurr.state.elements.popper.style.display = 'none';
+		}
+	}
+
+	return {
+		popperRef,
+		popperHide,
+	};
 }

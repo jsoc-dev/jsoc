@@ -5,7 +5,8 @@ import {
 } from './adapter-registry';
 import { PlainObject } from '@jsoc/core';
 import {
-	type GridData,
+	FALLBACK_ROOT_GRID_ID,
+	type GridDataReadonly,
 	type GridSchemaStore,
 	initGridSchemaStore,
 } from '@jsoc/core/grid';
@@ -22,14 +23,14 @@ import {
 } from 'react';
 
 export type JsocGridProps<U extends GridUiAdapterName> = {
-	data: GridData;
+	data: GridDataReadonly;
 	children?: ReactNode;
-	uiAdapterName: U;
-	uiAdapterProps: GridUiAdapterComponentProps<U>;
+	ui: U;
+	uiProps?: GridUiAdapterComponentProps<U>;
 	/**
 	 * Allows consumer to wrap or transform the UiAdapter component by providing a render function
 	 */
-	uiAdapterRenderer?: (adapter: JSX.Element) => JSX.Element;
+	uiRenderer?: (adapter: JSX.Element) => JSX.Element;
 	/**
 	 * If `true`, the default navigator won't be rendered
 	 */
@@ -50,21 +51,21 @@ export const JsocGridContext = createContext<JsocGridContextValue>({
 
 export function JsocGrid<U extends GridUiAdapterName>({
 	data,
-	uiAdapterName,
-	uiAdapterProps,
-	uiAdapterRenderer = (adapter) => adapter, // default renderer just returns the adapter as it is
+	ui,
+	uiProps,
+	uiRenderer = (adapter) => adapter, // default renderer just returns the adapter as it is
 	showDefaultNavigator = true,
 }: JsocGridProps<U>) {
-	const { gridId } = uiAdapterProps.custom;
+	const rootGridId = uiProps?.custom?.gridId || FALLBACK_ROOT_GRID_ID;
 	const [gridSchemaStore, setGridSchemaStore] = useState(
-		initGridSchemaStore(gridId, data)
+		initGridSchemaStore(rootGridId, data)
 	);
 
 	useEffect(() => {
-		setGridSchemaStore(initGridSchemaStore(gridId, data));
-	}, [gridId, data]);
+		setGridSchemaStore(initGridSchemaStore(rootGridId, data));
+	}, [rootGridId, data]);
 
-	const UiAdapter = GRID_UI_ADAPTERS[uiAdapterName] as FC<
+	const UiAdapter = GRID_UI_ADAPTERS[ui] as FC<
 		GridUiAdapterComponentProps<U> | PlainObject
 	>;
 
@@ -81,13 +82,13 @@ export function JsocGrid<U extends GridUiAdapterName>({
 					key={gridSchema.gridId}
 					mode={gridSchema.isActiveGrid ? 'visible' : 'hidden'}
 				>
-					{uiAdapterRenderer(
+					{uiRenderer(
 						<UiAdapter
-							{...uiAdapterProps}
+							{...uiProps}
 							{...{
 								custom: {
-									...uiAdapterProps.custom,
-									gridId: gridSchema.gridId,
+									...uiProps?.custom,
+									gridId: gridSchema.gridId, // need to supplied always and use the id of gridSchema, not the consumer provided which is only for root grid
 								},
 							}}
 						/>

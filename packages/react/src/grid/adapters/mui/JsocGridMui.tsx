@@ -1,6 +1,6 @@
 import { JsocGridContext } from '../../wrapper';
 import { COLUMN_FACTORY_MUI, DefaultToolbarMui } from './default';
-import { SubsetKeysOf} from '@jsoc/core';
+import { JsocGridError, SubsetKeysOf} from '@jsoc/core';
 import {
 	generateColumns,
 	CustomColumnFactory,
@@ -23,7 +23,17 @@ import { GridApiCommunity } from '@mui/x-data-grid/internals';
  * These props are not part of DataGridProps as they don't exist in MUI DataGrid
  */
 export type JsocGridMuiCustomProps = {
-	gridId: GridId;
+	/**
+	 * Name for the root grid. This is used by the default navigator to indicate whether
+	 * root grid is active or not. 
+	 * - Note: This prop is managed by `JsocGrid` and always has a value even if you don't 
+	 * 	provide any value.
+	 */
+	gridId?: GridId;
+	/**
+	 * Object containing 0 or more custom `ColumnDefinitionProvider`s to override the
+	 * corresponding default `ColumnDefinitionProvider`s for the `ColumnDataType`.
+	 */
 	columnFactory?: CustomColumnFactory<GridColDef>;
 };
 
@@ -45,15 +55,19 @@ export type JsocGridMuiInjectedProps = Pick<
  * The public adapter component props that will be supplied by the consumer.
  */
 export type JsocGridMuiProps = {
-	native: Omit<DataGridProps, JsocGridMuiInjectedPropNames>;
-	custom: JsocGridMuiCustomProps;
+	native?: Omit<DataGridProps, JsocGridMuiInjectedPropNames>;
+	custom?: JsocGridMuiCustomProps;
 };
 //#endregion
 
 /**
  * Adapter component for MUI DataGrid
  */
-export function JsocGridMui({ native = {}, custom }: JsocGridMuiProps) {
+export function JsocGridMui({ native = {}, custom = {} }: JsocGridMuiProps) {
+	if (!custom.gridId) {
+		throw new JsocGridError("An internal error occured. JsocGrid didn't provide the gridId to the adapter.")
+	}
+
 	const { gridSchemaStore, showDefaultNavigator } =
 		useContext(JsocGridContext);
 	const apiRef = useGridApiRef();
