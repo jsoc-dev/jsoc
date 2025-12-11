@@ -9,7 +9,6 @@ import { type GridUiAdapterName } from '@jsoc/react/grid';
 import { useState } from 'react';
 
 export function JsocGridDemo() {
-
 	const [gridName, setGridName] = useState('products')
 	const [gridData, setGridData] = useState<GridDataReadonly>(products);
 	const [gridDataError, setGridDataError] = useState('');

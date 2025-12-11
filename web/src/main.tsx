@@ -3,19 +3,14 @@ import './index.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { HomePage } from './pages/home/HomePage.tsx';
-import { DocsPage } from './pages/docs/DocsPage.tsx';
-import { ComponentsPage } from './pages/components/ComponentsPage.tsx';
+
+
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<App />}>
-					<Route index element={<HomePage />} />
-					<Route path='docs' element={<DocsPage />} />
-					<Route path='components' element={<ComponentsPage />} />
-				</Route>
+				<Route path='/*' element={<App />}/>
 			</Routes>
 		</BrowserRouter>
 	</StrictMode>

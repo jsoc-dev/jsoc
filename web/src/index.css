@@ -2,17 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* custom utility classes */
 
-.page-width-cap {
-	@apply w-full max-w-screen-xl
-}
-.light-bottom-border {
-	@apply border-b border-[hsl(215,15%,92%)];
-}
-
-/* base styles*/
-#root {
-	width: 100%;
-	text-align: center;
+.link-button {
+    @apply py-1 px-2 border-2 border-black rounded-lg font-semibold
 }
