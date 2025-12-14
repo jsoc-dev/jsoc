@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/home/HomePage';
 import { DocsPage } from './pages/docs/DocsPage';
-import { CompsPage } from './pages/comps/CompsPage';
 
 function App() {
 	return (
@@ -17,7 +16,6 @@ function App() {
 					<Routes>
 						<Route index element={<HomePage />} />
 						<Route path='docs/*' element={<DocsPage />} />
-						<Route path='comps/*' element={<CompsPage />} />
 					</Routes>
 				</div>
 			</main>

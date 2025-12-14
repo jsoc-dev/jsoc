@@ -29,10 +29,12 @@ export type JsocGridProps<U extends GridUiAdapterName> = {
 	uiProps?: GridUiAdapterComponentProps<U>;
 	/**
 	 * Allows consumer to wrap or transform the UiAdapter component by providing a render function
+	 * @default (adapter) => adapter
 	 */
 	uiRenderer?: (adapter: JSX.Element) => JSX.Element;
 	/**
-	 * If `true`, the default navigator won't be rendered
+	 * If `false`, the default navigator won't be rendered
+	 * @default true
 	 */
 	showDefaultNavigator?: boolean;
 };

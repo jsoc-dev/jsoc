@@ -1,65 +1,59 @@
 import githubLogo from '../assets/github.svg';
 import npmLogo from '../assets/npm.svg';
 
-type SocialLink =
+export type SocialLink =
 	| 'https://github.com/jsoc-dev/jsoc'
 	| 'https://www.npmjs.com/org/jsoc';
-
-type SocialList = {
+export type SocialList = Array<{
 	link: SocialLink;
 	text: string;
 	logo: string;
-}[];
-
+}>;
 export const SOCIAL_LIST: SocialList = [
 	{
-		text: 'Github Repository',
+		text: 'Github',
 		link: 'https://github.com/jsoc-dev/jsoc',
 		logo: githubLogo,
 	},
 	{
-		text: 'NPM Packages',
+		text: 'NPM',
 		link: 'https://www.npmjs.com/org/jsoc',
 		logo: npmLogo,
 	},
 ];
 
-type PageLink = '/docs' | '/comps';
-type PageList = {
-	link: PageLink;
-	text: string;
-}[];
+export type Page = 'docs' | 'comps';
+export type PageMap = {
+	[key in Page]: {
+		name: string;
+		path: string;
+	};
+};
+export const PAGE_MAP: PageMap = {
+	docs: {
+		name: 'Docs',
+		path: '/docs',
+	},
+	comps: {
+		name: 'Components',
+		path: '/comps',
+	},
+};
 
-export const PAGE_LIST: PageList = [
-	{
-		link: '/docs',
-		text: 'Docs',
-	},
-	{
-		link: '/comps',
-		text: 'Components',
-	},
-];
+export type Framework = 'react' | 'angular' | 'vue';
+export type Component = 'grid';
+export type ComponentMap = {
+	[key in Component]: {
+		name: string;
+		path: string;
+		frameworks: Framework[];
+	};
+};
 
-type Framework = 'React' | 'Angular' | 'Vue';
-type FrameworkList = {
-	text: Framework;
-	link: string;
-}[];
-
-const docsPageLink = PAGE_LIST.find((p) => p.text == 'Docs')?.link;
-
-export const FRAMEWORK_LIST: FrameworkList = [
-	{
-		text: 'React',
-		link: docsPageLink + '/jsoc-react',
+export const COMPONENT_MAP: ComponentMap = {
+	grid: {
+		name: 'JsocGrid',
+		path: PAGE_MAP.comps.path + '/grid',
+		frameworks: ['react'],
 	},
-	{
-		text: 'Angular',
-		link: docsPageLink + '/jsoc-angular',
-	},
-	{
-		text: 'Vue',
-		link: docsPageLink + '/jsoc-vue',
-	},
-];
+};

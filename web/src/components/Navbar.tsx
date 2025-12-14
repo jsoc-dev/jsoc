@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
-import { PAGE_LIST, SOCIAL_LIST } from '../utils/contants';
+import jsocLogo from "../assets/jsoc.svg"
+import { SOCIAL_LIST } from '../utils/contants';
 import type { Dispatch, SetStateAction } from 'react';
+import { Link } from 'react-router';
 
 export function Navbar() {
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	return (
 		<>
@@ -17,20 +16,16 @@ export function Navbar() {
 							className='text-2xl font-semibold inline-flex items-center'
 							to='/'
 						>
-							JSOC
+							<img
+								title="JSOC"
+								className='h-10 w-10 min-h-8 min-w-8'
+								src={jsocLogo}
+								alt="JSOC"
+							/>
 						</Link>
 					</div>
 					{/* Menu Items */}
 					<div className='hidden pt-[3px] md:flex md:items-center md:space-x-5'>
-						{PAGE_LIST.map(({ link, text }, index) => (
-							<Link
-								className='h-8 text-lg inline-flex items-center'
-								key={index}
-								to={link}
-							>
-								{text}
-							</Link>
-						))}
 					</div>
 				</div>
 				{/* right-items */}
@@ -46,32 +41,13 @@ export function Navbar() {
 								rel='noopener noreferrer'
 							>
 								<img
-									className='h-5 w-5'
+									className='h-5 w-5 min-h-4 min-w-4'
 									src={logo}
 									alt={text}
 								/>
 							</Link>
 						))}
 					</div>
-
-					<Hamburger state={[mobileMenuOpen, setMobileMenuOpen]} />
-
-					{/* mobile menu drawer */}
-					{mobileMenuOpen && (
-						<div className=' w-full flex flex-col items-center fixed left-0 top-14 bg-white border-b border-b-slate-200 md:hidden'>
-							{PAGE_LIST.map(({ link, text }, index) => (
-								<Link
-									onClick={() => {setMobileMenuOpen(false)}}
-									className='my-2'
-									key={index}
-									to={link}
-									title={text}
-								>
-									{text}
-								</Link>
-							))}
-						</div>
-					)}
 				</div>
 			</nav>
 		</>
