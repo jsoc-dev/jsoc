@@ -1,19 +1,21 @@
 import {
-	GRID_UI_ADAPTERS,
-	type GridUiAdapterComponentProps,
 	type GridUiAdapterName,
+	type GridUiAdapterComponent,
+	type GridUiAdapterComponentProps,
+	GRID_UI_ADAPTERS,
 } from './adapter-registry';
 import { PlainObject } from '@jsoc/core';
 import {
-	FALLBACK_ROOT_GRID_ID,
 	type GridDataReadonly,
 	type GridSchemaStore,
 	initGridSchemaStore,
+	FALLBACK_ROOT_GRID_ID,
 } from '@jsoc/core/grid';
 import {
 	type FC,
 	type JSX,
 	type ReactNode,
+	type ReactElement,
 	type Dispatch,
 	type SetStateAction,
 	useState,
@@ -21,23 +23,6 @@ import {
 	createContext,
 	Activity,
 } from 'react';
-
-export type JsocGridProps<U extends GridUiAdapterName> = {
-	data: GridDataReadonly;
-	children?: ReactNode;
-	ui: U;
-	uiProps?: GridUiAdapterComponentProps<U>;
-	/**
-	 * Allows consumer to wrap or transform the UiAdapter component by providing a render function
-	 * @default (adapter) => adapter
-	 */
-	uiRenderer?: (adapter: JSX.Element) => JSX.Element;
-	/**
-	 * If `false`, the default navigator won't be rendered
-	 * @default true
-	 */
-	showDefaultNavigator?: boolean;
-};
 
 export type JsocGridContextValue = {
 	gridSchemaStore: GridSchemaStore;
@@ -47,15 +32,33 @@ export type JsocGridContextValue = {
 
 export const JsocGridContext = createContext<JsocGridContextValue>({
 	gridSchemaStore: [],
-	setGridSchemaStore: () => {},
+	setGridSchemaStore: () => undefined,
 	showDefaultNavigator: true,
 });
+
+export type JsocGridProps<U extends GridUiAdapterName> = {
+	data: GridDataReadonly;
+	children?: ReactNode;
+	ui: U;
+	uiProps?: GridUiAdapterComponentProps<U>;
+	/**
+	 * A custom render function provided by consumer. 
+	 * Using this, consumer can wrap the UiAdapter element in any custom components if needed.
+	 * @default (uiAdapterEl) => uiAdapterEl
+	 */
+	uiRenderer?: (uiAdapterEl: ReactElement<GridUiAdapterComponent<U>>) => JSX.Element;
+	/**
+	 * If `false`, the default navigator won't be rendered
+	 * @default true
+	 */
+	showDefaultNavigator?: boolean;
+};
 
 export function JsocGrid<U extends GridUiAdapterName>({
 	data,
 	ui,
 	uiProps,
-	uiRenderer = (adapter) => adapter, // default renderer just returns the adapter as it is
+	uiRenderer = (uiAdapterEl) => uiAdapterEl, // default renderer just returns the uiAdapterEl as it is
 	showDefaultNavigator = true,
 }: JsocGridProps<U>) {
 	const rootGridId = uiProps?.custom?.gridId || FALLBACK_ROOT_GRID_ID;
