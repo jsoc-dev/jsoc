@@ -1,35 +1,61 @@
 import { CodeBlock } from './components/CodeBlock';
 import { Section } from './components/Section';
 import { ListItem, NumericList } from './components/List';
+import { CodeInline } from './components/CodeInline';
+import { JsocGridProps } from 'docs/generated';
+import { JsocGrid } from '@jsoc/react';
 
-const renderExampleCode = `
-import { JsocGrid } from '@jsoc/react/grid';
+const compName = 'JsocGrid';
+const pkgName = '@jsoc/react';
 
+const importExample = `import { ${compName} } from '${pkgName}/grid'`;
+const renderExample = `${importExample}\n
 function JsocGridDemo({data, ui}) {
 	return (
 		<div className='h-80 min-w-full m-1.5'>
-			<JsocGrid data={data} ui={ui} />
+			<${compName} data={data} ui={ui} />
 		</div>
 	)
 }
 `;
+const propsData = Object.values(JsocGridProps).map((x) => ({
+	name: x.name,
+	type: x.type.name,
+	description: x.description,
+	required: x.required,
+	defaultvalue: x.defaultValue?.value
+}));
 
 export function Grid() {
+	const compNameEl = <CodeInline>{compName}</CodeInline>;
+	const pkgNameEl = <CodeInline>{pkgName}</CodeInline>;
+
 	return (
 		<>
 			{/* heading */}
 			<Section
 				isHeading
-				title='{{JsocGrid}}'
-				subtitle='This page will guide you through how to use {{JsocGrid}} in your React app.'
+				title={compNameEl}
+				subtitle={
+					<>
+						This page will guide you through how to use {compNameEl}{' '}
+						in your React app.
+					</>
+				}
 			/>
 
 			{/* installation */}
 			<Section id='installation' title='Installation'>
 				<NumericList>
-					<ListItem title='Install the {{@jsoc/react}} package in your project.'>
+					<ListItem
+						title={
+							<>
+								Install the {pkgNameEl} package in your project.
+							</>
+						}
+					>
 						<CodeBlock lang='cmd'>
-							npm install @jsoc/react
+							{'npm install ' + pkgName}
 						</CodeBlock>
 					</ListItem>
 				</NumericList>
@@ -40,7 +66,7 @@ export function Grid() {
 				<NumericList>
 					<ListItem title='Import the component.'>
 						<CodeBlock title='JsocGridDemo' lang='tsx'>
-							{"import { JsocGrid } from '@jsoc/react/grid'"}
+							{importExample}
 						</CodeBlock>
 					</ListItem>
 
@@ -50,7 +76,7 @@ export function Grid() {
 							lang='tsx'
 							highlightLines={[6]}
 						>
-							{renderExampleCode}
+							{renderExample}
 						</CodeBlock>
 					</ListItem>
 				</NumericList>
@@ -59,6 +85,7 @@ export function Grid() {
 			{/* props */}
 			<Section id='props' title='Props'>
 				{/* to be fetched from generated docs */}
+				<JsocGrid data={propsData} ui='mui' showDefaultNavigator={false} uiProps={{native: {showToolbar: true}}}/>
 			</Section>
 
 			{/* adapters */}

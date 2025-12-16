@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { renderInlineCode } from './CodeInline';
 
 export function NumericList({ children }: { children: ReactNode }) {
 	return (
@@ -15,14 +14,14 @@ export function ListItem({
 	title,
 	children,
 }: {
-	title: string;
+	title: ReactNode;
 	children: ReactNode;
 }) {
 	return (
 		<>
 			<li>
 				{/* title */}
-				<p className='mb-4'>{renderInlineCode(title)}</p>
+				<p className='mb-4'>{title}</p>
 				{/* content */}
 				{children}
 			</li>

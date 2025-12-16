@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		// target
+
+
+		// strict checks
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"noUnusedLocals": true,
+	},
+
+	"exclude": [
+		"dist",
+		"build",
+		"**/*.min.js",
+		"node_modules",
+		"**/node_modules/*"
+	]
+}

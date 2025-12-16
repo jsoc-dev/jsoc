@@ -31,7 +31,8 @@ export function CodeBlock({
 				<div className='py-3 font-code overflow-auto'>
 					{lines.map((line, index) => (
 						<LineBox
-							index={index}
+							key={index}
+							lineNumber={index+1}
 							content={line}
 							showLineNum={showLineNum}
 							highlightLines={highlightLines}
@@ -80,17 +81,16 @@ function CopyCode({ code }: { code: string }) {
 }
 
 function LineBox({
-	index,
+	lineNumber,
 	content,
 	showLineNum,
 	highlightLines,
 }: {
-	index: number;
+	lineNumber: number;
 	content: string;
 	showLineNum: boolean;
 	highlightLines: number[];
 }) {
-	const lineNumber = index + 1;
 	const lineWrapperStyle = function (lineNum: number) {
 		if (highlightLines.includes(lineNum)) {
 			return ' border-gray-400 border-l-4 bg-gray-200';
@@ -101,7 +101,6 @@ function LineBox({
 
 	return (
 		<div
-			key={lineNumber}
 			className={
 				'pl-3 flex flex-row space-x-5' + lineWrapperStyle(lineNumber)
 			}

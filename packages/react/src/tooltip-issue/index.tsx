@@ -1,13 +1,5 @@
 import { Tooltip } from '@mui/material';
-import {
-	Activity,
-	useEffect,
-	useEffectEvent,
-	useRef,
-	useState,
-	type ActivityProps,
-} from 'react';
-import { useHidePopperDom } from '../grid/adapters/mui/hooks/useHidePopperDom';
+import { Activity, useState, type ActivityProps } from 'react';
 
 export function ToolTipIssue() {
 	const modes: ActivityProps['mode'][] = ['hidden', 'visible'];
@@ -15,23 +7,16 @@ export function ToolTipIssue() {
 	const show = () => setMode('visible');
 	const hide = () => setMode('hidden');
 
-	const [open, setOpen] = useState(false);
-	const {popperRef, popperHide} = useHidePopperDom();
-
 	return (
 		<>
-			{mode == 'hidden' && <button onClick={show}>Set mode as visible</button>}
+			{mode == 'hidden' && (
+				<button onClick={show}>Set mode as visible</button>
+			)}
 			<Activity mode={mode}>
 				<div>
-					<Tooltip
-						title='Hide'
-						slotProps={{
-							popper: { popperRef },
-						}}
-					>
+					<Tooltip title='Hide'>
 						<button
 							onClick={(e) => {
-								popperHide();
 								hide();
 							}}
 						>

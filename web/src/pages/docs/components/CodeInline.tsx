@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export function CodeInline({ children }: { children: string }) {
 	return (
 		<>
@@ -8,20 +6,4 @@ export function CodeInline({ children }: { children: string }) {
 			</code>
 		</>
 	);
-}
-
-export function renderInlineCode(
-	text: string,
-): ReactNode[] {
-	const parts = text.split(/(\{\{.*?\}\})/g);
-
-	return parts.map((part, index) => {
-		const match = part.match(/^\{\{(.*?)\}\}$/);
-
-		if (match) {
-			return <CodeInline key={index}>{match[1]}</CodeInline>;
-		}
-
-		return part;
-	});
 }

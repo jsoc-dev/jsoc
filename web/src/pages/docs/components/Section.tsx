@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { renderInlineCode } from './CodeInline';
 
 export function Section({
 	id,
@@ -9,8 +8,8 @@ export function Section({
 	isHeading = false,
 }: {
 	id?: string;
-	title: string;
-	subtitle?: string;
+	title: ReactNode;
+	subtitle?: ReactNode;
 	children?: ReactNode;
 	isHeading?: boolean;
 }) {
@@ -19,9 +18,9 @@ export function Section({
 	return (
 		<section id={id} className='mb-10'>
 			{/* title */}
-			<h2 className={titleStyles + ' font-semibold'}>{renderInlineCode(title)}</h2>
+			<h2 className={titleStyles + ' font-semibold'}>{title}</h2>
 			{/* subtitle */}
-			{subtitle && <p className='text-md mb-4'>{renderInlineCode(subtitle)}</p>}
+			{subtitle && <p className='text-md mb-4'>{subtitle}</p>}
 			{/* content */}
 			{children}
 		</section>
