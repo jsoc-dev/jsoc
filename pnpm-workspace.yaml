@@ -1,8 +1,7 @@
 packages:
   - docs
+  - docsite
   - packages/*
-  - test/*
-  - web
 
 onlyBuiltDependencies:
   - esbuild
