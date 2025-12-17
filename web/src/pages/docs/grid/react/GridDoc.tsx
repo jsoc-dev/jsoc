@@ -1,8 +1,8 @@
-import { CodeBlock } from './components/CodeBlock';
-import { Section } from './components/Section';
-import { ListItem, NumericList } from './components/List';
-import { CodeInline } from './components/CodeInline';
-import { JsocGridProps } from 'docs/generated';
+import { CodeBlock } from '../../components/CodeBlock';
+import { Section } from '../../components/Section';
+import { ListItem, NumericList } from '../../components/List';
+import { CodeInline } from '../../components/CodeInline';
+import { props } from 'docs/generated';
 import { JsocGrid } from '@jsoc/react';
 
 const compName = 'JsocGrid';
@@ -18,15 +18,15 @@ function JsocGridDemo({data, ui}) {
 	)
 }
 `;
-const propsData = Object.values(JsocGridProps).map((x) => ({
+const propsData = Object.values(props).map((x) => ({
 	name: x.name,
-	type: x.type.name,
+	type: x.type?.name,
 	description: x.description,
 	required: x.required,
 	defaultvalue: x.defaultValue?.value
 }));
 
-export function Grid() {
+export function GridDoc() {
 	const compNameEl = <CodeInline>{compName}</CodeInline>;
 	const pkgNameEl = <CodeInline>{pkgName}</CodeInline>;
 

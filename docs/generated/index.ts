@@ -1,1 +1,1 @@
-export * from './react/grid'
+export * from './grid/react'

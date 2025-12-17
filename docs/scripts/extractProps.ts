@@ -12,14 +12,15 @@ const [, , component, framework] = process.argv;
 
 assertIsValidComponent(component);
 assertIsValidFramework(framework);
+
 function assertIsValidComponent(arg: unknown): asserts arg is Component {
-	if (typeof arg != 'string' || !COMPONENTS.includes(arg as Component)) {
+	if (!COMPONENTS.includes(arg as Component)) {
 		throwError();
 	}
 }
 
 function assertIsValidFramework(arg: unknown): asserts arg is Framework {
-	if (typeof arg != 'string' || !FRAMEWORKS.includes(arg as Framework)) {
+	if (!FRAMEWORKS.includes(arg as Framework)) {
 		throwError();
 	}
 }
@@ -51,7 +52,7 @@ const DOCS_PATH_MAP: DocsPathMap = {
 	grid: {
 		react: {
 			inputPath: '../packages/react/src/grid/wrapper/JsocGrid.tsx',
-			outputPath: './generated/react/grid/JsocGridProps.json',
+			outputPath: './generated/grid/react/props.json',
 		},
 	},
 };
