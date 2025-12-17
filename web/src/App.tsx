@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/home/HomePage';
 import { DocsPage } from './pages/docs/DocsPage';
+import { DemosPage } from './pages/demos/DemosPage';
 
 function App() {
 	return (
@@ -14,7 +15,8 @@ function App() {
 			<main className='w-full flex justify-center'>
 				<div className='h-full w-full max-w-screen-xl px-6 2xl:px-0'>
 					<Routes>
-						<Route index element={<HomePage />} />
+						<Route path="/*" element={<HomePage />} />
+						<Route path='demos/*' element={<DemosPage />} />
 						<Route path='docs/*' element={<DocsPage />} />
 					</Routes>
 				</div>
