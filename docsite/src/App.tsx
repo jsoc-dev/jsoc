@@ -6,7 +6,7 @@ import { DemosPage } from './pages/demos/DemosPage';
 
 function App() {
 	return (
-		<div className='w-svw flex flex-col'>
+		<div className='flex flex-col'>
 			<header className='h-14 w-full flex justify-center border-b border-b-slate-200'>
 				<div className='h-full w-full max-w-screen-xl px-6 2xl:px-0'>
 					<Navbar />
