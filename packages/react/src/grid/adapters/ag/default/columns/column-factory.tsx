@@ -3,7 +3,7 @@ import {
 	ensureString,
 	isArray,
 	isPlainObject,
-	safeStringify,
+	encodePretty,
 	toReadableString,
 } from '@jsoc/core';
 import {
@@ -82,7 +82,7 @@ function arrayOfObjects(params: ColumnDefinitionProviderParams): ColDef {
 		valueFormatter: (params) => {
 			const { value } = params;
 
-			return safeStringify(value);
+			return encodePretty(value);
 		},
 		/**
 		 * Returns a button that allows toggling SubGrid which represents the data for this column.
@@ -121,7 +121,7 @@ function unresolved(params: ColumnDefinitionProviderParams): ColDef {
 
 			if (isArray(value)) {
 				if (value.some((x) => isPlainObject(x) || isArray(x))) {
-					return safeStringify(value);
+					return encodePretty(value);
 				} else {
 					return value.join(', ');
 				}

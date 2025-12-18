@@ -3,8 +3,7 @@ import {
 	ensureArray,
 	isArray,
 	isPlainObject,
-	prettyStringify,
-	safeStringify,
+	encodePretty,
 	toReadableString,
 } from '@jsoc/core';
 import {
@@ -97,7 +96,7 @@ function arrayOfObjects(params: ColumnDefinitionProviderParams): GridColDef {
 		 * export operation.
 		 */
 		valueFormatter: (value: GridRows) => {
-			return prettyStringify(value);
+			return encodePretty(value);
 		},
 		/**
 		 * Returns a button that allows toggling SubGrid which represents the data for this column.
@@ -137,7 +136,7 @@ function unresolved(params: ColumnDefinitionProviderParams): GridColDef {
 		valueGetter: (value: unknown) => {
 			if (isArray(value)) {
 				if (value.some((x) => isPlainObject(x) || isArray(x))) {
-					return safeStringify(value);
+					return encodePretty(value);
 				} else {
 					return value.join(', ');
 				}
