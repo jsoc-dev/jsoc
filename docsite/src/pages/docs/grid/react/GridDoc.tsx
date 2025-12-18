@@ -1,7 +1,7 @@
-import { CodeBlock } from '../../components/CodeBlock';
-import { Section } from '../../components/Section';
-import { ListItem, NumericList } from '../../components/List';
-import { CodeInline } from '../../components/CodeInline';
+import { CodeBlock } from '../../../../components/CodeBlock';
+import { Section } from '../../../../components/Section';
+import { ListItem, NumericList } from '../../../../components/List';
+import { CodeInline } from '../../../../components/CodeInline';
 import { props } from 'docs/generated';
 import { JsocGrid } from '@jsoc/react';
 
