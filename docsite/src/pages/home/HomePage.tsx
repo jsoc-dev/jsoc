@@ -47,14 +47,14 @@ export function HomePage() {
 						className='inline-flex items-center border-2 border-dashed border-black rounded-2xl px-8 py-6 max-w-3xl w-full'
 					>
 						<div className='w-[45%] text-right pr-4'>
-							<h2 className='break-words text-[clamp(1.1rem,4vw,2rem)] font-semibold'>
+							<h2 className='break-words text-[clamp(1.05rem,4vw,2rem)] font-semibold'>
 								{title}
 							</h2>
 						</div>
 
 						<span className='border-r border-gray-300 self-stretch'></span>
 
-						<p className='break-words w-[55%] pl-4 text-[clamp(0.8rem,3vw,1rem)] text-gray-700'>
+						<p className='break-words w-[55%] pl-4 text-[clamp(0.75rem,3vw,1rem)] text-gray-700'>
 							{description}
 						</p>
 					</div>

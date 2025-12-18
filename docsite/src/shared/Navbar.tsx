@@ -1,9 +1,17 @@
-import jsocLogo from "../assets/jsoc.svg"
-import { SOCIAL_LIST } from '../utils/contants';
-import type { Dispatch, SetStateAction } from 'react';
-import { Link } from 'react-router';
+import jsocLogo from '../assets/jsoc.svg';
+import { PAGE_MAP, SOCIAL_LIST } from '../utils/contants';
+import { useReducer, useEffect } from 'react';
+import { Link, useLocation } from 'react-router';
 
 export function Navbar() {
+	const [isMobileMenuOpen, dispatch] = useReducer(mobileMenuReducer, false);
+	const closeMobileMenu = () => dispatch('close');
+	const toggleMobileMenu = () => dispatch('toggle');
+	const location = useLocation();
+
+	useEffect(() => {
+		closeMobileMenu();
+	}, [location.pathname]);
 
 	return (
 		<>
@@ -17,15 +25,26 @@ export function Navbar() {
 							to='/'
 						>
 							<img
-								title="JSOC"
+								title='JSOC'
 								className='h-10 w-10 min-h-8 min-w-8'
 								src={jsocLogo}
-								alt="JSOC"
+								alt='JSOC'
 							/>
 						</Link>
 					</div>
 					{/* Menu Items */}
 					<div className='hidden pt-[3px] md:flex md:items-center md:space-x-5'>
+						{Object.entries(PAGE_MAP).map(
+							([key, { name, path }]) => (
+								<Link
+									className='h-8 text-lg inline-flex items-center'
+									key={key}
+									to={path}
+								>
+									{name}
+								</Link>
+							)
+						)}
 					</div>
 				</div>
 				{/* right-items */}
@@ -48,21 +67,55 @@ export function Navbar() {
 							</Link>
 						))}
 					</div>
+
+					<Hamburger
+						value={isMobileMenuOpen}
+						toggleValue={toggleMobileMenu}
+					/>
+
+					{/* mobile menu drawer */}
+					{isMobileMenuOpen && (
+						<div className='bg-white border-b border-b-outline-subtle w-full flex flex-col items-center fixed left-0 top-14  md:hidden'>
+							{Object.entries(PAGE_MAP).map(
+								([key, { name, path }]) => (
+									<Link
+										className='w-full text-center p-3 hover:bg-surface-code'
+										key={key}
+										to={path}
+										title={name}
+									>
+										{name}
+									</Link>
+								)
+							)}
+						</div>
+					)}
 				</div>
 			</nav>
 		</>
 	);
 }
 
-type HamburgerProps = {
-	state: [boolean, Dispatch<SetStateAction<boolean>>];
-};
-export function Hamburger({ state }: HamburgerProps) {
-	const [value, setter] = state;
+type Action = 'open' | 'close' | 'toggle';
+function mobileMenuReducer(state: boolean, action: Action) {
+	switch (action) {
+		case 'open':
+			return true;
+		case 'close':
+			return false;
+		case 'toggle':
+			return !state;
+	}
+}
 
+type HamburgerProps = {
+	value: boolean;
+	toggleValue: () => void;
+};
+export function Hamburger({ value, toggleValue }: HamburgerProps) {
 	return (
 		<button
-			onClick={() => setter(!value)}
+			onClick={() => toggleValue()}
 			className='ml-5 md:hidden rounded'
 			aria-label='Toggle menu'
 			aria-expanded={value}

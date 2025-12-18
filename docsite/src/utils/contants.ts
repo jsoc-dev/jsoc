@@ -22,7 +22,7 @@ export const SOCIAL_LIST: SocialList = [
 	},
 ];
 
-export type Page = 'docs' | 'comps';
+export type Page = 'demos' | 'docs';
 export type PageMap = {
 	[key in Page]: {
 		name: string;
@@ -30,13 +30,13 @@ export type PageMap = {
 	};
 };
 export const PAGE_MAP: PageMap = {
+	demos: {
+		name: 'Demos',
+		path: '/demos',
+	},
 	docs: {
 		name: 'Docs',
 		path: '/docs',
-	},
-	comps: {
-		name: 'Components',
-		path: '/comps',
 	},
 };
 
@@ -53,7 +53,7 @@ export type ComponentMap = {
 export const COMPONENT_MAP: ComponentMap = {
 	grid: {
 		name: 'JsocGrid',
-		path: PAGE_MAP.comps.path + '/grid',
+		path: PAGE_MAP.docs.path + '/grid',
 		frameworks: ['react'],
 	},
 };
