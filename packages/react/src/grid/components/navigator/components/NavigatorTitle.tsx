@@ -1,5 +1,5 @@
 import { useGridNavigator } from '../../../hooks/useGridNavigator';
-import { capitalizeFirst } from "@jsoc/core";
+import { capitalizeFirst } from '@jsoc/core/utils';
 import type { GridSchemaStoreIndex } from "@jsoc/core/grid";
 import { Typography } from "@mui/material";
 

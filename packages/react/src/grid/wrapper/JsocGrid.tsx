@@ -4,7 +4,7 @@ import {
 	type GridUiAdapterComponentProps,
 	GRID_UI_ADAPTERS,
 } from './adapter-registry';
-import { PlainObject } from '@jsoc/core';
+import { PlainObject } from '@jsoc/core/utils';
 import {
 	type GridDataReadonly,
 	type GridSchemaStore,

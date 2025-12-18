@@ -1,3 +1,4 @@
+import { ToggleSubGridButton } from '../../../../components';
 import {
 	ensureArray,
 	ensureString,
@@ -5,14 +6,13 @@ import {
 	isPlainObject,
 	encodePretty,
 	toReadableString,
-} from '@jsoc/core';
+} from '@jsoc/core/utils';
 import {
 	ColumnFactory,
 	type ColumnDataType,
 	type ColumnDefinitionProviderParams,
 } from '@jsoc/core/grid';
 import type { ColDef, ICellRendererParams } from 'ag-grid-community';
-import { ToggleSubGridButton } from '../../../../components';
 
 export const COLUMN_FACTORY_AG: ColumnFactory<ColDef> = {
 	arrayOfObjects,

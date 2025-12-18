@@ -3,7 +3,7 @@ import { Section } from '../../../../components/Section';
 import { ListItem, NumericList } from '../../../../components/List';
 import { CodeInline } from '../../../../components/CodeInline';
 import { props } from 'docs/generated';
-import { JsocGrid } from '@jsoc/react';
+import { JsocGrid } from '@jsoc/react/grid';
 
 const compName = 'JsocGrid';
 const pkgName = '@jsoc/react';

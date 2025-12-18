@@ -5,7 +5,7 @@ import {
 	isPlainObject,
 	encodePretty,
 	toReadableString,
-} from '@jsoc/core';
+} from '@jsoc/core/utils';
 import {
 	ColumnFactory,
 	// type ColumnDataType,

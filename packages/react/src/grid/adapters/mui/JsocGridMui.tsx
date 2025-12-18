@@ -1,6 +1,7 @@
 import { JsocGridContext } from '../../wrapper';
 import { COLUMN_FACTORY_MUI, DefaultToolbarMui } from './default';
-import { JsocGridError, SubsetKeysOf} from '@jsoc/core';
+import { JsocGridError } from '@jsoc/core/errors';
+import { SubsetKeysOf } from '@jsoc/core/utils';
 import {
 	generateColumns,
 	CustomColumnFactory,
