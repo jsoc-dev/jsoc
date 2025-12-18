@@ -1,5 +1,5 @@
 {
-	"name": "docsite",
+	"name": "@jsoc/docsite",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -11,7 +11,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"docs": "workspace:*",
+		"@jsoc/docs": "workspace:*",
 		"@jsoc/core": "workspace:*",
 		"@jsoc/react": "workspace:*",
 		"react": "^19.2.0",

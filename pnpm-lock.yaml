@@ -22,12 +22,12 @@ importers:
       '@jsoc/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@jsoc/docs':
+        specifier: workspace:*
+        version: link:../docs
       '@jsoc/react':
         specifier: workspace:*
         version: link:../packages/react
-      docs:
-        specifier: workspace:*
-        version: link:../docs
       react:
         specifier: ^19.2.0
         version: 19.2.0

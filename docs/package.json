@@ -1,5 +1,5 @@
 {
-	"name": "docs",
+	"name": "@jsoc/docs",
 	"private": true,
 	"type": "module",
 	"scripts": {

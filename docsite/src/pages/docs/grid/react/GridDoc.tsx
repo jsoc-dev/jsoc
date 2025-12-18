@@ -2,7 +2,7 @@ import { CodeBlock } from '../../../../components/CodeBlock';
 import { Section } from '../../../../components/Section';
 import { ListItem, NumericList } from '../../../../components/List';
 import { CodeInline } from '../../../../components/CodeInline';
-import { props } from 'docs/generated';
+import { props } from '@jsoc/docs/generated';
 import { JsocGrid } from '@jsoc/react/grid';
 
 const compName = 'JsocGrid';
