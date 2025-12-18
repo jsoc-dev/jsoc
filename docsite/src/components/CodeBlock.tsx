@@ -20,15 +20,15 @@ export function CodeBlock({
 
 	return (
 		<>
-			<div className='rounded-xl bg-code border border-slate-200 overflow-hidden'>
+			<div className='bg-surface-code border border-outline-subtle rounded-xl overflow-hidden'>
 				{/* header */}
-				<div className='p-3 flex justify-between border-b border-b-slate-200'>
+				<div className='border-b border-b-outline-subtle p-3 flex justify-between'>
 					<CodeMeta title={title} lang={lang} />
 					<CopyCode code={children} />
 				</div>
 				{/* content */}
 
-				<div className='py-3 font-code overflow-auto'>
+				<div className='py-3 text-sm overflow-auto'>
 					{lines.map((line, index) => (
 						<LineBox
 							key={index}

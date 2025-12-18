@@ -4,15 +4,6 @@
 
 :root {
 	scroll-behavior: smooth;
-	--color-code: lab(98.52% -0.0000298023 0.0000119209);
-}
-
-.font-code {
-  font-size: 14px;
-}
-
-.bg-code {
-	@apply bg-[var(--color-code)];
 }
 
 .link-button {
