@@ -5,8 +5,13 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				text: {
+					muted: '#475569',
+					primary: 'black'
+				},
 				surface: {
 					code: '#fbfbfb',
+					muted: '#f6f7f9'
 				},
 				outline: {
 					subtle: '#e2e8f0',

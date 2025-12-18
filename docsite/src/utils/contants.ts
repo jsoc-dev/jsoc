@@ -1,5 +1,6 @@
-import githubLogo from '../assets/github.svg';
-import npmLogo from '../assets/npm.svg';
+import { GithubSvg } from "../components/svg/GithubSvg";
+import { NpmSvg } from "../components/svg/NpmSvg";
+
 
 export type SocialLink =
 	| 'https://github.com/jsoc-dev/jsoc'
@@ -7,18 +8,18 @@ export type SocialLink =
 export type SocialList = Array<{
 	link: SocialLink;
 	text: string;
-	logo: string;
+	Svg: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 }>;
 export const SOCIAL_LIST: SocialList = [
 	{
 		text: 'Github',
 		link: 'https://github.com/jsoc-dev/jsoc',
-		logo: githubLogo,
+		Svg: GithubSvg,
 	},
 	{
 		text: 'NPM',
 		link: 'https://www.npmjs.com/org/jsoc',
-		logo: npmLogo,
+		Svg: NpmSvg,
 	},
 ];
 

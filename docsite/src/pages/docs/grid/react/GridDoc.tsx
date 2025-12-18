@@ -23,7 +23,7 @@ const propsData = Object.values(props).map((x) => ({
 	type: x.type?.name,
 	description: x.description,
 	required: x.required,
-	defaultvalue: x.defaultValue?.value
+	defaultvalue: x.defaultValue?.value,
 }));
 
 export function GridDoc() {
@@ -35,13 +35,8 @@ export function GridDoc() {
 			{/* heading */}
 			<Section
 				isHeading
-				title={compNameEl}
-				subtitle={
-					<>
-						This page will guide you through how to use {compNameEl}{' '}
-						in your React app.
-					</>
-				}
+				title="Grid Documentation"
+				subtitle={<>Guide for using {compNameEl} in a React app.</>}
 			/>
 
 			{/* installation */}
@@ -65,14 +60,14 @@ export function GridDoc() {
 			<Section id='usage' title='Usage'>
 				<NumericList>
 					<ListItem title='Import the component.'>
-						<CodeBlock title='JsocGridDemo' lang='tsx'>
+						<CodeBlock fileName='JsocGridDemo' lang='tsx'>
 							{importExample}
 						</CodeBlock>
 					</ListItem>
 
 					<ListItem title='Render the component.'>
 						<CodeBlock
-							title='JsocGridDemo'
+							fileName='JsocGridDemo'
 							lang='tsx'
 							highlightLines={[6]}
 						>
@@ -85,7 +80,12 @@ export function GridDoc() {
 			{/* props */}
 			<Section id='props' title='Props'>
 				{/* to be fetched from generated docs */}
-				<JsocGrid data={propsData} ui='mui' showDefaultNavigator={false} uiProps={{native: {showToolbar: true}}}/>
+				<JsocGrid
+					data={propsData}
+					ui='mui'
+					showDefaultNavigator={false}
+					uiProps={{ native: { showToolbar: true } }}
+				/>
 			</Section>
 
 			{/* adapters */}

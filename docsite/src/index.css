@@ -4,9 +4,9 @@
 
 :root {
 	/*
-		forcing default y scrollbar as navbar shifts while navigating between home and docs/demo page
-		since homepage renders without scrollbar and other pages render with scrollbar
-		Note: This can be removed once the content of homepage is large enough to cause scrollbar
+		forcing default y scrollbar as navbar shifts while navigating between home/notfound page and docs/demo page
+		since homepage/notfoundpage renders without scrollbar and other pages render with scrollbar
+		Note: This can be removed once the content of homepage/notfoundpage is large enough to cause scrollbar
 	*/
 	overflow-y: scroll; 
 	scroll-behavior: smooth;

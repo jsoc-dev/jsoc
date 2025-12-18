@@ -31,7 +31,6 @@ export function HomePage() {
 							className={'link-button border border-black text-[clamp(0.9rem,3vw,1rem)]'}
 							key={index}
 							to={path}
-							title={text}
 						>
 							{text} <span aria-hidden>↗︎</span>
 						</Link>
