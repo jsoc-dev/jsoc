@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { copyToClipboard } from '../utils/clipboard';
 
 export type Language = 'cmd' | 'js' | 'jsx' | 'ts' | 'tsx';
 
@@ -64,7 +65,7 @@ function CopyCode({ code }: { code: string }) {
 	const [showCopyButton, setShowCopyButton] = useState(true);
 
 	return showCopyButton ? (
-		<button onClick={copy} title='Copy code' aria-label="Copy code">
+		<button onClick={copy} title='Copy code' aria-label='Copy code'>
 			<CopyIcon />
 		</button>
 	) : (
@@ -72,7 +73,7 @@ function CopyCode({ code }: { code: string }) {
 	);
 
 	async function copy() {
-		await navigator.clipboard.writeText(code);
+		await copyToClipboard(code);
 		setShowCopyButton(false);
 		setTimeout(() => {
 			setShowCopyButton(true);
