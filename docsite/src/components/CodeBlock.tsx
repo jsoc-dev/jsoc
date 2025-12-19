@@ -92,23 +92,15 @@ function LineBox({
 	showLineNum: boolean;
 	highlightLines: number[];
 }) {
-	const lineWrapperStyle = function (lineNum: number) {
-		if (highlightLines.includes(lineNum)) {
-			return ' border-gray-400 border-l-4 bg-gray-200';
-		} else {
-			return ' border-transparent border-l-4';
-		}
-	};
+	const highlightCls = highlightLines.includes(lineNumber)
+		? 'border-gray-400 border-l-4 bg-gray-200'
+		: 'border-transparent border-l-4';
 
 	return (
-		<div
-			className={
-				'pl-3 flex flex-row space-x-5' + lineWrapperStyle(lineNumber)
-			}
-		>
+		<div className={`pl-3 flex flex-row space-x-5 ${highlightCls} `}>
 			{/* line numbering */}
 			{showLineNum && (
-				<pre className='w-6 select-none text-right text-gray-400'>
+				<pre className='font-code w-6 select-none text-right text-gray-400'>
 					{lineNumber}
 				</pre>
 			)}

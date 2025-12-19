@@ -4,18 +4,30 @@ module.exports = {
 	content: ['./src/**/*.{js,ts,jsx,tsx}', './index.html'],
 	theme: {
 		extend: {
+			fontFamily: {
+				code: [
+					'Fira Code',
+					'Source Code Pro',
+					'Menlo',
+					'Monaco',
+					'Consolas',
+					'Liberation Mono',
+					'Courier New',
+					'monospace',
+				],
+			},
 			colors: {
 				text: {
 					muted: '#475569',
-					primary: 'black'
+					primary: 'black',
 				},
 				surface: {
 					code: '#fbfbfb',
-					muted: '#f6f7f9'
+					muted: '#f6f7f9',
 				},
 				outline: {
 					subtle: '#e2e8f0',
-				}
+				},
 			},
 		},
 	},

@@ -10,7 +10,7 @@ export function DefaultToolbarAg() {
 					background: var(--ag-header-background-color);
 					display: flex;
 					align-items: center;
-					padding: 0px 10px;
+					padding: 0px 6px;
 				}
 			`}</style>
 			<div className='DefaultToolbarAg'>

@@ -1,10 +1,12 @@
-import { useCallback, useContext } from 'react';
 import { JsocGridDemoContext } from './GridDemo';
+import { decode } from '@jsoc/core/utils';
 import {
 	JsocGrid,
 	type GridUiAdapterComponentProps,
 	type GridUiAdapterName,
 } from '@jsoc/react/grid';
+import { useCallback, useContext } from 'react';
+import { PaneContent, PaneHeader } from '../../../../components/Pane';
 
 const uiOptions: Record<GridUiAdapterName, string> = {
 	mui: 'MUI DataGrid',
@@ -12,63 +14,69 @@ const uiOptions: Record<GridUiAdapterName, string> = {
 };
 
 export function OutputPane() {
-	const { gridUi, setGridUi } = useContext(JsocGridDemoContext);
-
-	const handleSelectUi = useCallback((uiKey: GridUiAdapterName) => {
-		setGridUi(uiKey);
-	}, []);
+	const { error } = useContext(JsocGridDemoContext);
 
 	return (
 		<>
-			<div className='border border-blue-900 flex flex-col h-[500px] justify-center p-2 space-y-10 '>
+			<PaneHeader title='UI'>
 				{/* adapter selector */}
-				<div>
-					{!gridUi && (
-						<h1 className='text-center'>Select UI Adapter</h1>
-					)}
-					{/* adapters list */}
-					<div className='flex justify-center space-x-4'>
-						{Object.entries(uiOptions).map(([uiKey, uiName]) => (
-							<button
-								key={uiKey}
-								onClick={() =>
-									handleSelectUi(uiKey as GridUiAdapterName)
-								}
-								style={{
-									padding: '6px 12px',
-									background:
-										gridUi === uiKey
-											? '#e0e7ff'
-											: '#f4f4f5',
-									border: '1px solid #ccc',
-									borderRadius: 6,
-									cursor: 'pointer',
-								}}
-							>
-								{uiName}
-							</button>
-						))}
-					</div>
-				</div>
+				<AdapterSelector />
+			</PaneHeader>
 
-				{/* render area */}
-				<RenderArea />
-			</div>
+			{/* output*/}
+			<PaneContent className='h-96'>
+				{error ? <ErrorMessage /> : <GridOutput />}
+			</PaneContent>
 		</>
 	);
 }
 
-function RenderArea() {
-	const { gridUi, gridData } = useContext(JsocGridDemoContext);
-	if (!gridUi) {
+export function AdapterSelector() {
+	const { ui, setUi } = useContext(JsocGridDemoContext);
+	const handleSelectUi = useCallback((uiKey: GridUiAdapterName) => {
+		setUi(uiKey);
+	}, []);
+
+	const getSelectedCls = function (uiKey: string): string {
+		return ui === uiKey ? 'underline' : '';
+	};
+
+	return (
+		<>
+			{/* json name editor */}
+			{Object.entries(uiOptions).map(([uiKey, uiName]) => (
+				<button
+					className={`${getSelectedCls(uiKey)} `}
+					key={uiKey}
+					onClick={() => handleSelectUi(uiKey as GridUiAdapterName)}
+				>
+					{/* TODO: Show library icon instead */}
+					{uiName}
+				</button>
+			))}
+		</>
+	);
+}
+
+export function ErrorMessage() {
+	const { error } = useContext(JsocGridDemoContext);
+
+	return <div>{error}</div>;
+}
+
+export function GridOutput() {
+	const { name, ui, json } = useContext(JsocGridDemoContext);
+
+	if (!ui) {
 		return;
 	}
 
-	let uiProps = getUiProps('Examples', gridUi as GridUiAdapterName);
+	const gridData = decode(json);
+	let uiProps = getUiProps(name, ui as GridUiAdapterName);
 
 	return (
-		<div className='h-96 max-h-96 min-h-96 w-full'>
-			<JsocGrid data={gridData} ui={gridUi} uiProps={uiProps} />
+		<div className={`h-full w-full`}>
+			<JsocGrid data={gridData} ui={ui} uiProps={uiProps} />
 		</div>
 	);
 }
