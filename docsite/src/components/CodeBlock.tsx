@@ -29,16 +29,18 @@ export function CodeBlock({
 				</div>
 				{/* content */}
 
-				<div className='py-3 text-sm overflow-auto'>
-					{lines.map((line, index) => (
-						<LineBox
-							key={index}
-							lineNumber={index+1}
-							content={line}
-							showLineNum={showLineNum}
-							highlightLines={highlightLines}
-						/>
-					))}
+				<div className='py-3 overflow-auto'>
+					<div className='inline-block '>
+						{lines.map((line, index) => (
+							<LineBox
+								key={index}
+								lineNumber={index + 1}
+								content={line}
+								showLineNum={showLineNum}
+								doHighlight={highlightLines.includes(index + 1)}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
 		</>
@@ -81,32 +83,38 @@ function CopyCode({ code }: { code: string }) {
 	}
 }
 
+type LineBoxProps = {
+	lineNumber: number;
+	content: string;
+	showLineNum?: boolean;
+	doHighlight?: boolean;
+	doWrap?: boolean;
+};
 function LineBox({
 	lineNumber,
 	content,
-	showLineNum,
-	highlightLines,
-}: {
-	lineNumber: number;
-	content: string;
-	showLineNum: boolean;
-	highlightLines: number[];
-}) {
-	const highlightCls = highlightLines.includes(lineNumber)
-		? 'border-gray-400 border-l-4 bg-gray-200'
-		: 'border-transparent border-l-4';
+	showLineNum = false,
+	doHighlight = false,
+	doWrap = false,
+}: LineBoxProps) {
+	const wrapCls = doWrap ? 'whitespace-pre-wrap' : '';
+	const bgCls = doHighlight ? 'bg-surface-codeHighlight' : 'bg-surface-code';
 
 	return (
-		<div className={`pl-3 flex flex-row space-x-5 ${highlightCls} `}>
-			{/* line numbering */}
-			{showLineNum && (
-				<pre className='font-code w-6 select-none text-right text-gray-400'>
-					{lineNumber}
-				</pre>
-			)}
-			{/* line content */}
-			<pre className=''>{content}</pre>
-		</div>
+		<>
+			<div className={`${bgCls}  flex flex-row`}>
+				{/* line numbering */}
+				{showLineNum && (
+					<pre
+						className={`${bgCls} sticky left-0 w-8 min-w-8 pr-2 font-code text-sm text-right text-gray-400 select-none `}
+					>
+						{lineNumber}
+					</pre>
+				)}
+				{/* line content */}
+				<pre className={`${wrapCls} pl-3 text-sm `}>{content}</pre>
+			</div>
+		</>
 	);
 }
 

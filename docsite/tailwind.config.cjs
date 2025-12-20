@@ -23,6 +23,7 @@ module.exports = {
 				},
 				surface: {
 					code: '#fbfbfb',
+					codeHighlight: '#e5e7eb',
 					muted: '#f6f7f9',
 				},
 				outline: {
