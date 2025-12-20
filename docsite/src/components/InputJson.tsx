@@ -1,4 +1,4 @@
-import { Chevron } from './svg/Chevron';
+import { ChevronSvg } from './svg/ChevronSvg';
 import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
 
@@ -72,7 +72,7 @@ function CollapseToggle({ isCollapsed, setIsCollapsed }: CollapseToggleProps) {
 			onClick={() => setIsCollapsed(v => !v)}
 			className="bg-white flex items-center justify-center gap-1 cursor-pointer border-t border-t-outline-subtle w-full"
 		>
-			<Chevron direction={isCollapsed ? 'down' : 'up'} />
+			<ChevronSvg direction={isCollapsed ? 'down' : 'up'} />
 			<span className="py-2 text-sm font-semibold select-none">
 				{isCollapsed ? 'Show more' : 'Show less'}
 			</span>

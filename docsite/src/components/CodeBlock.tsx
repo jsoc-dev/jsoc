@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { copyToClipboard } from '../utils/clipboard';
+import { WrapOn } from './svg/WrapOn';
+import { WrapOff } from './svg/WrapOff';
+import { ClipboardSvg } from './svg/ClipboardSvg';
 
 export type Language = 'cmd' | 'js' | 'jsx' | 'ts' | 'tsx';
 
+type Code = string;
 type CodeBlockProps = {
 	fileName?: string;
 	lang: Language;
-	children: string;
+	children: Code;
 	highlightLines?: number[];
 };
 
+// TODO: Add wrap toggle button
 export function CodeBlock({
 	fileName,
 	lang,
@@ -18,14 +23,19 @@ export function CodeBlock({
 }: CodeBlockProps) {
 	const lines = children.trim().split('\n');
 	const showLineNum = lines.length > 1;
+	const [isWrapEnabled, setIsWrapEnabled] = useState(false);
 
 	return (
 		<>
 			<div className='bg-surface-code border border-outline-subtle rounded-xl overflow-hidden'>
 				{/* header */}
-				<div className='border-b border-b-outline-subtle p-3 flex justify-between'>
+				<div className='p-3 border-b border-b-outline-subtle max-h-12  flex justify-between'>
 					<CodeMeta fileName={fileName} lang={lang} />
-					<CopyCode code={children} />
+					<CodeActions
+						code={children}
+						isWrapEnabled={isWrapEnabled}
+						setIsWrapEnabled={setIsWrapEnabled}
+					/>
 				</div>
 				{/* content */}
 
@@ -38,6 +48,7 @@ export function CodeBlock({
 								content={line}
 								showLineNum={showLineNum}
 								doHighlight={highlightLines.includes(index + 1)}
+								doWrap={isWrapEnabled}
 							/>
 						))}
 					</div>
@@ -63,39 +74,104 @@ function CodeMeta({ fileName, lang }: { fileName?: string; lang: Language }) {
 	);
 }
 
-function CopyCode({ code }: { code: string }) {
-	const [showCopyButton, setShowCopyButton] = useState(true);
+type isWrapEnabled = boolean;
+type SetisWrapEnabled = React.Dispatch<React.SetStateAction<boolean>>;
+type CodeActionsProps = {
+	code: Code;
+	isWrapEnabled: isWrapEnabled;
+	setIsWrapEnabled: SetisWrapEnabled;
+};
 
-	return showCopyButton ? (
-		<button onClick={copy} title='Copy code' aria-label='Copy code'>
-			<CopyIcon />
-		</button>
-	) : (
-		<CheckMarkIcon />
+function CodeActions({
+	code,
+	isWrapEnabled,
+	setIsWrapEnabled,
+}: CodeActionsProps) {
+	return (
+		<div className='flex gap-4'>
+			<WrapCodeAction
+				isWrapEnabled={isWrapEnabled}
+				setIsWrapEnabled={setIsWrapEnabled}
+			/>
+			<CopyCodeAction code={code} />
+		</div>
 	);
+}
 
-	async function copy() {
+const codeActionSvgProps: React.SVGProps<SVGSVGElement> = {
+	height: 20,
+	width: 20,
+};
+
+function WrapCodeAction({
+	isWrapEnabled,
+	setIsWrapEnabled,
+}: {
+	isWrapEnabled: isWrapEnabled;
+	setIsWrapEnabled: SetisWrapEnabled;
+}) {
+	const readerText = !isWrapEnabled ? 'Wrap code' : 'Unwrap code';
+	const Svg = !isWrapEnabled ? WrapOn : WrapOff;
+
+	return (
+		<button
+			onClick={() => setIsWrapEnabled((isWrapEnabled) => !isWrapEnabled)}
+			title={readerText}
+			aria-label={readerText}
+		>
+			<Svg {...codeActionSvgProps} />
+		</button>
+	);
+}
+
+function CopyCodeAction({ code }: { code: Code }) {
+	const [isCopied, setIsCopied] = useState(false);
+	const readerText = 'Copy code to clipboard';
+	const hoverText = isCopied ? 'Code copied' : 'Copy code';
+
+	const copyCode = useCallback(async () => {
 		await copyToClipboard(code);
-		setShowCopyButton(false);
-		setTimeout(() => {
-			setShowCopyButton(true);
+		setIsCopied(true);
+
+		const timeout = setTimeout(() => {
+			setIsCopied(false);
 		}, 2000);
-	}
+
+		return () => clearTimeout(timeout);
+	}, [code, isCopied]);
+
+	return (
+		<>
+			<button
+				type='button'
+				disabled={isCopied}
+				aria-label={readerText}
+				onClick={copyCode}
+				title={hoverText}
+			>
+				<ClipboardSvg checked={isCopied} />
+			</button>
+
+			<span role='status' aria-live='polite' className='sr-only'>
+				{!isCopied ? readerText : ''}
+			</span>
+		</>
+	);
 }
 
 type LineBoxProps = {
 	lineNumber: number;
 	content: string;
-	showLineNum?: boolean;
-	doHighlight?: boolean;
-	doWrap?: boolean;
+	showLineNum: boolean;
+	doHighlight: boolean;
+	doWrap: boolean;
 };
 function LineBox({
 	lineNumber,
 	content,
-	showLineNum = false,
-	doHighlight = false,
-	doWrap = false,
+	showLineNum,
+	doHighlight,
+	doWrap,
 }: LineBoxProps) {
 	const wrapCls = doWrap ? 'whitespace-pre-wrap' : '';
 	const bgCls = doHighlight ? 'bg-surface-codeHighlight' : 'bg-surface-code';
@@ -115,47 +191,5 @@ function LineBox({
 				<pre className={`${wrapCls} pl-3 text-sm `}>{content}</pre>
 			</div>
 		</>
-	);
-}
-
-function CopyIcon() {
-	return (
-		<svg
-			className='text-gray-400'
-			xmlns='http://www.w3.org/2000/svg'
-			width='24'
-			height='24'
-			viewBox='0 0 24 24'
-			fill='none'
-			stroke='currentColor'
-			strokeWidth='1'
-			strokeLinecap='round'
-			strokeLinejoin='round'
-		>
-			<rect x='6.5' y='6.5' width='12' height='12' rx='3' ry='3' />
-			<path d='M4 15.8c-.6-.4-1-1-1-1.8V5a2 2 0 0 1 2-2h9c.9 0 1.4.4 1.8 1' />
-		</svg>
-	);
-}
-
-function CheckMarkIcon() {
-	return (
-		<span title='Code copied' aria-label='Code Copied'>
-			<svg
-				className='text-gray-400'
-				xmlns='http://www.w3.org/2000/svg'
-				width='24'
-				height='24'
-				viewBox='0 0 24 24'
-				fill='none'
-				stroke='currentColor'
-				strokeWidth='1'
-				strokeLinecap='round'
-				strokeLinejoin='round'
-			>
-				<circle cx='12' cy='12' r='9' />
-				<polyline points='8.5 12.5 11 15 16 9' />
-			</svg>
-		</span>
 	);
 }

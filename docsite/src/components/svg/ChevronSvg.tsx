@@ -4,7 +4,7 @@ type ChevronProps = {
 	className?: string;
 };
 
-export function Chevron({
+export function ChevronSvg({
 	direction = 'down',
 	size = 20,
 	className,
@@ -20,9 +20,7 @@ export function Chevron({
 			className={className}
 			style={{
 				transform: `rotate(${rotation}deg) scale(0.85, 0.7)`,
-
 				    transformOrigin: '50% 50%',
-
 			}}
 			aria-hidden='true'
 		>
