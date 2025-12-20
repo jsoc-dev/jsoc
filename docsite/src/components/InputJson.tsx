@@ -1,8 +1,5 @@
 import { Chevron } from './svg/Chevron';
-import {
-	VerticalExpander,
-	type ToggleExpandButtonProps,
-} from './VerticalExpander';
+import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
 
 export type InputJsonProps = {
@@ -16,9 +13,9 @@ export function InputJson(props: InputJsonProps) {
 	const { native, setValue, error, setError } = props;
 	const { className } = native;
 	const editorRef = useRef<HTMLTextAreaElement>(null);
-	const editorCollapsedHeight = '100%';
-	const [editorHeight, setEditorHeight] = useState(editorCollapsedHeight);
-	
+	const editorDefaultHeight = '100%';
+	const [editorHeight, setEditorHeight] = useState(editorDefaultHeight);
+
 	const validationCls = error
 		? 'border-red-500 text-red-600'
 		: 'text-text-muted ';
@@ -38,17 +35,16 @@ export function InputJson(props: InputJsonProps) {
 		[setValue, setError]
 	);
 
-
 	// TODO: Add a toolbar with options beautify and view in fullscreen
 	return (
 		<>
 			{/* editor wrapper */}
 			<div className='flex flex-col flex-1 border border-outline-subtle rounded-md overflow-hidden'>
-				<VerticalExpander
-					monitorRef={editorRef}
-					monitorHeightSetter={setEditorHeight}
-					monitorCollapsedHeight={editorCollapsedHeight}
-					ToggleExpandButton={ToggleExpandButton}
+				<Collapsible
+					targetRef={editorRef}
+					targetDefaultHeight={editorDefaultHeight}
+					targetSetHeight={setEditorHeight}
+					CollapseToggle={CollapseToggle}
 				>
 					{/* editor */}
 					<textarea
@@ -61,30 +57,25 @@ export function InputJson(props: InputJsonProps) {
 						aria-invalid={!!error}
 						onChange={onChange}
 						spellCheck='false'
-						className={`bg-surface-code font-code w-full flex  resize-none focus:outline-none  ${className} ${validationCls}`}
+						className={`bg-surface-code pl-2 py-2 text-sm font-code w-full flex resize-none focus:outline-none ${className} ${validationCls}`}
 					/>
-				</VerticalExpander>
+				</Collapsible>
 			</div>
 		</>
 	);
 }
 
-function ToggleExpandButton({
-	isExpanded,
-	setIsExpanded,
-}: ToggleExpandButtonProps) {
+function CollapseToggle({ isCollapsed, setIsCollapsed }: CollapseToggleProps) {
 	return (
-		<label className='bg-white flex items-center justify-center gap-1 cursor-pointer border-t border-t-outline-subtle'>
-			{/* expand button */}
-			<button
-				type='button'
-				onClick={() => setIsExpanded((isExpanded) => !isExpanded)}
-			>
-				<Chevron direction={isExpanded ? 'up' : 'down'} />
-			</button>
-			<span className='py-2 text-sm font-semibold '>
-				{isExpanded ? 'Show less' : 'Show more'}
+		<button
+			type="button"
+			onClick={() => setIsCollapsed(v => !v)}
+			className="bg-white flex items-center justify-center gap-1 cursor-pointer border-t border-t-outline-subtle w-full"
+		>
+			<Chevron direction={isCollapsed ? 'down' : 'up'} />
+			<span className="py-2 text-sm font-semibold select-none">
+				{isCollapsed ? 'Show more' : 'Show less'}
 			</span>
-		</label>
+		</button>
 	);
 }
