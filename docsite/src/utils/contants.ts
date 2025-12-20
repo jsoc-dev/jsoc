@@ -1,6 +1,6 @@
-import { GithubSvg } from "../components/svg/GithubSvg";
-import { NpmSvg } from "../components/svg/NpmSvg";
-
+import { GithubSvg } from '../components/svg/GithubSvg';
+import { NpmSvg } from '../components/svg/NpmSvg';
+import { isDevMode } from './development';
 
 export type SocialLink =
 	| 'https://github.com/jsoc-dev/jsoc'
@@ -23,14 +23,15 @@ export const SOCIAL_LIST: SocialList = [
 	},
 ];
 
-export type Page = 'demos' | 'docs';
-export type PageMap = {
-	[key in Page]: {
+export type DevPage = 'tests';
+export type ProdPage = 'demos' | 'docs';
+export type PageMap<T extends string> = {
+	[key in T]: {
 		name: string;
 		path: string;
 	};
 };
-export const PAGE_MAP: PageMap = {
+export const PROD_PAGE_MAP: PageMap<ProdPage> = {
 	demos: {
 		name: 'Demos',
 		path: '/demos',
@@ -40,6 +41,18 @@ export const PAGE_MAP: PageMap = {
 		path: '/docs',
 	},
 };
+
+export const DEV_PAGE_MAP: PageMap<DevPage | ProdPage> = {
+	...PROD_PAGE_MAP,
+	tests: {
+		name: 'Tests',
+		path: '/tests',
+	},
+};
+
+export const PAGE_MAP: PageMap<ProdPage> | PageMap<DevPage> = isDevMode()
+	? DEV_PAGE_MAP
+	: PROD_PAGE_MAP;
 
 export type Framework = 'react' | 'angular' | 'vue';
 export type Component = 'grid';
