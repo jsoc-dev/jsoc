@@ -1,4 +1,4 @@
-import { CodeBlock } from '../../../../components/CodeBlock';
+import { CodeBlock } from '../../../../components/codeblock/CodeBlock';
 import { Section } from '../../../../components/Section';
 import { ListItem, NumericList } from '../../../../components/List';
 import { CodeInline } from '../../../../components/CodeInline';

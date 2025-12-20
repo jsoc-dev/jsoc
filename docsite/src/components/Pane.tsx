@@ -1,5 +1,5 @@
 export function PaneWrapper({
-	className,
+	className = '',
 	children,
 }: {
 	className: string;
@@ -24,7 +24,7 @@ export function PaneHeader({
 }
 
 export function PaneContent({
-	className,
+	className = '',
 	children,
 }: {
 	className?: string;

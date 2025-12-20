@@ -11,7 +11,7 @@ export type InputJsonProps = {
 
 export function InputJson(props: InputJsonProps) {
 	const { native, setValue, error, setError } = props;
-	const { className } = native;
+	const { className = '' } = native;
 	const editorRef = useRef<HTMLTextAreaElement>(null);
 	const editorDefaultHeight = '100%';
 	const [editorHeight, setEditorHeight] = useState(editorDefaultHeight);
