@@ -13,10 +13,8 @@ export function InputPane() {
 			<PaneHeader title='JSON'>
 				{/* json name editor */}
 				<InputText
-					native={{
-						value: name,
-						className: 'inline-flex ',
-					}}
+					value={name}
+					className='inline-flex text-right '
 					setValue={setName}
 				/>
 			</PaneHeader>
@@ -24,15 +22,12 @@ export function InputPane() {
 			<PaneContent className='min-h-96'>
 				{/* json value editor */}
 				<InputJson
-					native={{
-						value: json,
-						className: ``,
-					}}
-					setValue={setJson}
-					error={error}
-					setError={setError}
 				/>
 			</PaneContent>
+				value={json}
+				setValue={setJson}
+				error={error}
+				setError={setError}
 		</>
 	);
 }

@@ -1,12 +1,18 @@
+import { deleteKeys } from '@jsoc/core/utils';
 import { useCallback } from 'react';
 
-export type InputTextProps = {
+export type InputTextCustomProps = {
 	setValue: React.Dispatch<React.SetStateAction<string>>;
-	native: React.InputHTMLAttributes<HTMLInputElement>;
 };
+export type InputTextCustomPropsName = keyof InputTextCustomProps;
+export const InputTextCustomPropsList: InputTextCustomPropsName[] = [
+	'setValue',
+];
 
+export type InputTextNativeProps = React.InputHTMLAttributes<HTMLInputElement>;
+export type InputTextProps = InputTextNativeProps & InputTextCustomProps;
 export function InputText(props: InputTextProps) {
-	const { native, setValue } = props;
+	const { setValue } = props;
 	const onChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const raw = e.target.value;
@@ -17,7 +23,11 @@ export function InputText(props: InputTextProps) {
 
 	return (
 		<>
-			<input {...native} type='text' onChange={onChange}  />
+			<input
+				onChange={onChange}
+				{...deleteKeys(props, InputTextCustomPropsList)}
+				type='text'
+			/>
 		</>
 	);
 }

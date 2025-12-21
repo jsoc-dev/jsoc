@@ -1,17 +1,26 @@
 import { ChevronSvg } from './svg/ChevronSvg';
 import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
+import { deleteKeys } from '@jsoc/core/utils';
 
-export type InputJsonProps = {
+export type InputJsonCustomProps = {
 	setValue: React.Dispatch<React.SetStateAction<string>>;
 	error: string;
 	setError: React.Dispatch<React.SetStateAction<string>>;
-	native: React.InputHTMLAttributes<HTMLTextAreaElement>;
 };
+export type InputJsonCustomPropsName = keyof InputJsonCustomProps;
+export const InputJsonCustomPropsList: InputJsonCustomPropsName[] = [
+	'setValue',
+	'error',
+	'setError',
+];
+
+export type InputJsonNativeProps =
+	React.InputHTMLAttributes<HTMLTextAreaElement>;
+export type InputJsonProps = InputJsonNativeProps & InputJsonCustomProps;
 
 export function InputJson(props: InputJsonProps) {
-	const { native, setValue, error, setError } = props;
-	const { className = '' } = native;
+	const { setValue, error, setError } = props;
 	const editorRef = useRef<HTMLTextAreaElement>(null);
 	const editorDefaultHeight = '100%';
 	const [editorHeight, setEditorHeight] = useState(editorDefaultHeight);
@@ -48,16 +57,16 @@ export function InputJson(props: InputJsonProps) {
 				>
 					{/* editor */}
 					<textarea
+						aria-invalid={!!error}
+						className={`bg-surface-code pl-2 py-2 text-sm font-code w-full flex resize-none focus:outline-none ${validationCls}`}
+						onChange={onChange}
+						placeholder='Paste your JSON here'
+						spellCheck='false'
+						{...deleteKeys(props, InputJsonCustomPropsList)}
+						ref={editorRef}
 						style={{
 							height: editorHeight, // can't use tailwind class for height here, as height is dynamic (runtime value) but tailwind need static values to generate classes at build time
 						}}
-						placeholder='Paste your JSON here'
-						{...native}
-						ref={editorRef}
-						aria-invalid={!!error}
-						onChange={onChange}
-						spellCheck='false'
-						className={`bg-surface-code pl-2 py-2 text-sm font-code w-full flex resize-none focus:outline-none ${className} ${validationCls}`}
 					/>
 				</Collapsible>
 			</div>
@@ -68,12 +77,12 @@ export function InputJson(props: InputJsonProps) {
 function CollapseToggle({ isCollapsed, setIsCollapsed }: CollapseToggleProps) {
 	return (
 		<button
-			type="button"
-			onClick={() => setIsCollapsed(v => !v)}
-			className="bg-white flex items-center justify-center gap-1 cursor-pointer border-t border-t-outline-subtle w-full"
+			type='button'
+			onClick={() => setIsCollapsed((v) => !v)}
+			className='bg-white flex items-center justify-center gap-1 cursor-pointer border-t border-t-outline-subtle w-full'
 		>
 			<ChevronSvg direction={isCollapsed ? 'down' : 'up'} />
-			<span className="py-2 text-sm font-semibold select-none">
+			<span className='py-2 text-sm font-semibold select-none'>
 				{isCollapsed ? 'Show more' : 'Show less'}
 			</span>
 		</button>
