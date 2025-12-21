@@ -39,7 +39,7 @@ export function CodeBlock({
 				{/* content */}
 
 				<div className='py-3 overflow-auto'>
-					<div className='inline-block '>
+					<div className='inline-block min-w-full'>
 						{lines.map((line, index) => (
 							<LineBox
 								key={index}
