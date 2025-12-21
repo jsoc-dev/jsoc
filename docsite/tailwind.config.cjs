@@ -28,9 +28,30 @@ module.exports = {
 				},
 				outline: {
 					subtle: '#e2e8f0',
+					dominant: '',
 				},
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addUtilities, theme }) {
+			const px = (n) => ({
+				paddingLeft: theme(`spacing.${n}`),
+				paddingRight: theme(`spacing.${n}`),
+			});
+
+			addUtilities({
+				'.w-controlled': {
+					width: '100%',
+					maxWidth: theme('maxWidth.screen-xl'),
+				},
+				'.px-controlled': {
+					...px(6),
+					'@screen md': px(8),
+					'@screen lg': px(10),
+					'@screen 2xl': px(0),
+				},
+			});
+		},
+	],
 };
