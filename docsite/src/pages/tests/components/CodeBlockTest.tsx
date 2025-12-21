@@ -1,6 +1,5 @@
 import { CodeBlock } from '../../../components/codeblock/CodeBlock';
 import { Section } from '../../../components/Section';
-import { CodeInline } from '../../../components/CodeInline';
 import { getSampleLines } from '../../../utils/lorem';
 
 export function CodeBlockTest() {
@@ -21,15 +20,6 @@ export function CodeBlockTest() {
 
 	return (
 		<>
-			<Section
-				isHeading
-				title={
-					<>
-						Test <CodeInline>CodeBlock</CodeInline>
-					</>
-				}
-			></Section>
-
 			<Section title='Single Small line'>
 				<CodeBlock lang='cmd'>{getSampleLines(1, wordCounts.small.min, wordCounts.small.max)}</CodeBlock>
 			</Section>

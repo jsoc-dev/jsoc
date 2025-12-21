@@ -1,12 +1,12 @@
-import { type ReactElement, Children, Fragment } from 'react';
+import { type ReactElement, type ReactNode, Children, Fragment } from 'react';
 
 type SplitViewProps = {
+	className?: string;
 	children: [ReactElement, ReactElement];
 };
 
-export function SplitView({ children }: SplitViewProps) {
+export function SplitView({ className = '', children }: SplitViewProps) {
 	const items = Children.toArray(children);
-
 	return (
 		<div
 			className={`
@@ -19,21 +19,20 @@ export function SplitView({ children }: SplitViewProps) {
 			{items.map((child, index) => (
 				<Fragment key={index}>
 					{child}
-					{index === 0 && (
-						<div className='hidden md:block w-px bg-outline-subtle' />
-					)}
+					{index === 0 && <SplitViewSeparator />}
 				</Fragment>
 			))}
 		</div>
 	);
 }
 
-type SplitViewPaneProps = {
-	header: React.ReactNode;
-	children: React.ReactNode;
-};
+SplitView.Pane = SplitViewPane;
 
-SplitView.Pane = function ({ header, children }: SplitViewPaneProps) {
+type SplitViewPaneProps = {
+	header: ReactNode;
+	children: ReactNode;
+};
+function SplitViewPane({ header, children }: SplitViewPaneProps) {
 	return (
 		<div
 			className={`
@@ -41,14 +40,34 @@ SplitView.Pane = function ({ header, children }: SplitViewPaneProps) {
 				w-full svrow:w-1/2
 			`}
 		>
+			{/* header-wrapper */}
 			<div
-				className='px-6 py-2 min-h-10 flex items-center gap-3 text-lg
-                      border-b border-outline-subtle'
+				className='
+					bg-surface-muted
+					border-b border-outline-subtle
+					h-10 min-h-10 max-h-10 w-full
+					overflow-hidden
+					px-4 py-1 md:px-6 md:py-2
+				'
 			>
 				{header}
 			</div>
 
-			<div className='px-6 py-6 flex-1 overflow-auto'>{children}</div>
+			{/* content-wrapper */}
+			<div className='px-4 md:px-6 py-6 flex-1 overflow-y-auto overflow-x-hidden'>
+				{children}
+			</div>
 		</div>
 	);
-};
+}
+
+function SplitViewSeparator() {
+	return (
+		<div
+			className='
+				border border-dashed
+				md:h-auto md:w-px
+			'
+		/>
+	);
+}
