@@ -25,7 +25,7 @@ export default function App() {
 
 function AppWrapper({ children }: { children: React.ReactNode }) {
 	return (
-		<div className='flex flex-col'>
+		<div className='min-w-60 flex flex-col'>
 			<header className='bg-white border-b border-b-outline-subtle h-14 w-full flex justify-center sticky top-0 z-[9999]'>
 				<div className='h-full w-full max-w-screen-xl px-6 2xl:px-0'>
 					<Navbar />
