@@ -32,7 +32,7 @@ export function Navbar() {
 					</Link>
 
 					{/* Menu Items */}
-					<div className='hidden md:flex md:items-center md:space-x-2'>
+					<div className='hidden navbig:flex navbig:items-center navbig:space-x-2'>
 						{/* page links */}
 						{Object.entries(PAGE_MAP).map(
 							([key, { name, path }]) => (
@@ -67,7 +67,7 @@ export function Navbar() {
 					{/* hamburger */}
 					<button
 						onClick={() => toggleMobileMenu()}
-						className='ml-3 md:hidden rounded'
+						className='ml-3 navbig:hidden rounded'
 						aria-label='Toggle menu'
 						aria-expanded={isMobileMenuOpen}
 					>
@@ -78,7 +78,7 @@ export function Navbar() {
 
 			{/* mobile menu drawer */}
 			{isMobileMenuOpen && (
-				<div className='bg-white border-b border-b-outline-subtle h-full w-full flex flex-col items-center fixed left-0 top-14  md:hidden'>
+				<div className='bg-white border-b border-b-outline-subtle h-full w-full flex flex-col items-center fixed left-0 top-14  navbig:hidden'>
 					{Object.entries(PAGE_MAP).map(([key, { name, path }]) => (
 						<Link
 							className='w-full text-center p-3 border-b border-b-outline-subtle hover:bg-surface-muted'

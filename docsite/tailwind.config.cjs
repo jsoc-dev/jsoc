@@ -4,6 +4,10 @@ module.exports = {
 	content: ['./src/**/*.{js,ts,jsx,tsx}', './index.html'],
 	theme: {
 		extend: {
+			screens: {
+				navbig: '768px', // breakpoint that triggers Navbar layout to desktop view; same as md
+				svrow: '768px', // breakpoint that triggers SplitView layout to flex-row; same as md
+			},
 			fontFamily: {
 				code: [
 					'Fira Code',

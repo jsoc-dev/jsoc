@@ -17,7 +17,7 @@ export function Section({
 	centered = false,
 }: SectionProps) {
 	const alignmentCls = centered ? 'text-center' : 'text-left';
-	const titleCls = isHeading ? 'text-3xl mb-6' : 'text-xl mb-4';
+	const titleCls = isHeading ? 'text-[clamp(1.4rem,4vw,1.8rem)] mb-6' : 'text-[clamp(1.2rem,4vw,1.3rem)] mb-4';
 
 	return (
 		<section id={id} className={'mb-10'}>
