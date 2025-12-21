@@ -1,10 +1,10 @@
 import { singleProductJson } from './json/products';
 import { Section } from '../../../../components/Section';
-import { PaneWrapper } from '../../../../components/Pane';
-import { OutputPane } from './OutputPane';
-import { InputPane } from './InputPane';
 import { useState, createContext } from 'react';
 import { type GridUiAdapterName } from '@jsoc/react/grid';
+import { SplitView } from '../../../../components/SplitView';
+import { JsonSelector, InputJsonRenderer } from './InputPane';
+import { UiSelector, OutputGridRenderer } from './OutputPane';
 
 export function GridDemo() {
 	const [name, setName] = useState('Products');
@@ -26,26 +26,21 @@ export function GridDemo() {
 				setUi,
 			}}
 		>
-			<Section
-				isHeading
-				title='Grid Demo'
-				subtitle='Check out how your JSON data would look when rendered in different Grid UI libraries'
-			/>
-			<div className='mb-10 flex min-h-96 w-full flex-col items-stretch  border shadow-lg border-outline-subtle rounded-xl overflow-hidden md:flex-row'>
-				{/* input pane */}
-				<PaneWrapper className='w-full md:w-[30%] md:min-w-[30%]'>
-					<InputPane />
-				</PaneWrapper>
-			<div className='min-h-full'>
+			<div className='flex flex-col min-h-full'>
+				<Section
+					isHeading
+					title='Grid Demo'
+					subtitle='Check out how your JSON data would look when rendered in different Grid UI libraries'
+				/>
+					<SplitView className='flex-1'>
+						<SplitView.Pane header={<JsonSelector />}>
+							<InputJsonRenderer />
+						</SplitView.Pane>
 
-				{/* divider */}
-				<span className='border-r border-r-outline-subtle self-stretch'></span>
-
-				{/* output pane */}
-				<PaneWrapper className='flex-1 min-w-0 min-h-0 overflow-hidden'>
-					<OutputPane />
-				</PaneWrapper>
-			</div>
+						<SplitView.Pane header={<UiSelector />}>
+							<OutputGridRenderer />
+						</SplitView.Pane>
+					</SplitView>
 			</div> 
 		</JsocGridDemoContext.Provider>
 	);

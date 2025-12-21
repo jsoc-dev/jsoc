@@ -6,32 +6,13 @@ import {
 	type GridUiAdapterName,
 } from '@jsoc/react/grid';
 import { useCallback, useContext } from 'react';
-import { PaneContent, PaneHeader } from '../../../../components/Pane';
 
 const uiOptions: Record<GridUiAdapterName, string> = {
 	mui: 'MUI DataGrid',
 	ag: 'AG-Grid',
 };
 
-export function OutputPane() {
-	const { error } = useContext(JsocGridDemoContext);
-
-	return (
-		<>
-			<PaneHeader title='UI'>
-				{/* adapter selector */}
-				<AdapterSelector />
-			</PaneHeader>
-
-			{/* output*/}
-			<PaneContent className='h-96'>
-				{error ? <ErrorMessage /> : <GridOutput />}
-			</PaneContent>
-		</>
-	);
-}
-
-export function AdapterSelector() {
+export function UiSelector() {
 	const { ui, setUi } = useContext(JsocGridDemoContext);
 	const handleSelectUi = useCallback((uiKey: GridUiAdapterName) => {
 		setUi(uiKey);
@@ -43,6 +24,7 @@ export function AdapterSelector() {
 
 	return (
 		<>
+			Choose UI
 			{/* json name editor */}
 			{Object.entries(uiOptions).map(([uiKey, uiName]) => (
 				<button
@@ -58,13 +40,13 @@ export function AdapterSelector() {
 	);
 }
 
-export function ErrorMessage() {
+export function OutputGridRenderer() {
 	const { error } = useContext(JsocGridDemoContext);
 
-	return <div>{error}</div>;
+	return error ? <div>{error}</div>: <OutputGrid />;
 }
 
-export function GridOutput() {
+function OutputGrid() {
 	const { name, ui, json } = useContext(JsocGridDemoContext);
 
 	if (!ui) {

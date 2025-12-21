@@ -2,32 +2,37 @@ import { useContext } from 'react';
 import { InputJson } from '../../../../components/InputJson';
 import { JsocGridDemoContext } from './GridDemo';
 import { InputText } from '../../../../components/InputText';
-import { PaneContent, PaneHeader } from '../../../../components/Pane';
 
-export function InputPane() {
-	const { name, setName, json, setJson, error, setError } =
-		useContext(JsocGridDemoContext);
+export function JsonSelector() {
+	const { name, setName } = useContext(JsocGridDemoContext);
 
 	return (
 		<>
-			<PaneHeader title='JSON'>
-				{/* json name editor */}
+			<div className='h-full w-full flex justify-between'>
+				<div>Edit JSON</div>
+				<span className='bg-outline-subtle'></span>
 				<InputText
 					value={name}
 					className='inline-flex text-right '
 					setValue={setName}
 				/>
-			</PaneHeader>
+			</div>
+		</>
+	);
+}
 
-			<PaneContent className='min-h-96'>
-				{/* json value editor */}
-				<InputJson
-				/>
-			</PaneContent>
+export function InputJsonRenderer() {
+	const { json, setJson, error, setError } = useContext(JsocGridDemoContext);
+
+	return (
+		<>
+			{/* json value editor */}
+			<InputJson
 				value={json}
 				setValue={setJson}
 				error={error}
 				setError={setError}
+			/>
 		</>
 	);
 }
