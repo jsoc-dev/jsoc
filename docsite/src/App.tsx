@@ -25,14 +25,14 @@ export default function App() {
 
 function AppWrapper({ children }: { children: React.ReactNode }) {
 	return (
-		<div className='min-w-60 flex flex-col'>
+		<div className='min-h-screen min-w-60 flex flex-col'>
 			<header className='bg-white border-b border-b-outline-subtle h-14 w-full flex justify-center sticky top-0 z-[9999]'>
 				<div className='h-full w-full max-w-screen-xl px-6 2xl:px-0'>
 					<Navbar />
 				</div>
 			</header>
-			<main className='w-full flex justify-center'>
-				<div className='h-full w-full max-w-screen-xl px-6 2xl:px-0'>
+			<main className='w-full flex flex-1 justify-center'>
+				<div className='w-full max-w-screen-xl px-6 2xl:px-0'>
 					{children}
 				</div>
 			</main>

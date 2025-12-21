@@ -36,6 +36,7 @@ export function GridDemo() {
 				<PaneWrapper className='w-full md:w-[30%] md:min-w-[30%]'>
 					<InputPane />
 				</PaneWrapper>
+			<div className='min-h-full'>
 
 				{/* divider */}
 				<span className='border-r border-r-outline-subtle self-stretch'></span>
@@ -45,6 +46,7 @@ export function GridDemo() {
 					<OutputPane />
 				</PaneWrapper>
 			</div>
+			</div> 
 		</JsocGridDemoContext.Provider>
 	);
 }
