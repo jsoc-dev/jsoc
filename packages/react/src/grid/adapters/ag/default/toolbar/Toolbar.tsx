@@ -5,7 +5,8 @@ export function DefaultToolbarAg() {
 		<>
 			<style>{`
 				.DefaultToolbarAg {
-					height: 15%;
+					height: 52px;
+					max-height: 52px;
 					border-bottom: 1px solid var(--ag-border-color);
 					background: var(--ag-header-background-color);
 					display: flex;

@@ -6,7 +6,7 @@ type SplitViewProps = {
 };
 
 export function SplitView({ className = '', children }: SplitViewProps) {
-	const items = Children.toArray(children);
+	const splitViewPanes = Children.toArray(children);
 	return (
 		<div
 			className={`
@@ -16,9 +16,9 @@ export function SplitView({ className = '', children }: SplitViewProps) {
 				${className}
 			`}
 		>
-			{items.map((child, index) => (
+			{splitViewPanes.map((splitViewPane, index) => (
 				<Fragment key={index}>
-					{child}
+					{splitViewPane}
 					{index === 0 && <SplitViewSeparator />}
 				</Fragment>
 			))}
@@ -43,18 +43,26 @@ function SplitViewPane({ header, children }: SplitViewPaneProps) {
 			{/* header-wrapper */}
 			<div
 				className='
-					bg-surface-muted
+					bg-surface-muted/10
 					border-b border-outline-subtle
 					h-10 min-h-10 max-h-10 w-full
-					overflow-hidden
-					px-4 py-1 md:px-6 md:py-2
+					overflow-auto 
+					px-4 md:px-6
 				'
 			>
 				{header}
 			</div>
 
 			{/* content-wrapper */}
-			<div className='px-4 md:px-6 py-6 flex-1 overflow-y-auto overflow-x-hidden'>
+			<div
+				className='
+					bg-surface-muted
+					h-96 min-h-96 w-full
+					overflow-auto
+					px-4 md:px-6 py-6 
+					svrow:flex-1
+				'
+			>
 				{children}
 			</div>
 		</div>

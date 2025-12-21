@@ -54,6 +54,18 @@ export type JsocGridProps<U extends GridUiAdapterName> = {
 	showDefaultNavigator?: boolean;
 };
 
+/**
+ * JSOC Grid
+ *
+ * Renders a dynamic grid from JSON data without requiring
+ * explicit row or column configuration.
+ *
+ * @typeParam U - UI adapter name (react / angular / vue)
+ * 
+ * TODO: 1. Make JsocGrid minimal (no dependency other than adapters i.e. DataGrid, AgGridReact)
+ - To achieve this, remove the default navigator, provide a simple previous button in bottom of the grids
+ - use in house icons, remove dependency on mui so that JsocGrid is totally headless
+ */
 export function JsocGrid<U extends GridUiAdapterName>({
 	data,
 	ui,

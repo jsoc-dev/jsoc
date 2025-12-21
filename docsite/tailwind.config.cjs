@@ -23,7 +23,7 @@ module.exports = {
 			colors: {
 				text: {
 					muted: '#475569',
-					primary: 'black',
+					primary: 'blueviolet',
 				},
 				surface: {
 					code: '#fbfbfb',
@@ -32,7 +32,7 @@ module.exports = {
 				},
 				outline: {
 					subtle: '#e2e8f0',
-					dominant: '',
+					dominant: 'black',
 				},
 			},
 		},

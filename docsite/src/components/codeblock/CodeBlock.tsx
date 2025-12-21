@@ -13,7 +13,10 @@ export type CodeBlockProps = {
 	highlightLines?: number[];
 };
 
-// TODO: Add wrap toggle button
+// TODO: Use simple text buttons for copy, wrap instead of svgs 
+//  (for inspiration check editor css used in below sites
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+// https://developer.mozilla.org/en-US/play
 export function CodeBlock({
 	fileName,
 	lang,

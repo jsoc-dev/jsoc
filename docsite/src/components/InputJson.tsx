@@ -3,13 +3,18 @@ import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
 import { deleteKeys } from '@jsoc/core/utils';
 
+/**
+ * Custom props of InputJson, make sure to add any new prop in InputJsonCustomPropsList also
+ */
 export type InputJsonCustomProps = {
+	collapsible?: boolean;
 	setValue: React.Dispatch<React.SetStateAction<string>>;
 	error: string;
 	setError: React.Dispatch<React.SetStateAction<string>>;
 };
-export type InputJsonCustomPropsName = keyof InputJsonCustomProps;
-export const InputJsonCustomPropsList: InputJsonCustomPropsName[] = [
+
+export const InputJsonCustomPropsList: (keyof InputJsonCustomProps)[] = [
+	'collapsible',
 	'setValue',
 	'error',
 	'setError',
@@ -20,7 +25,7 @@ export type InputJsonNativeProps =
 export type InputJsonProps = InputJsonNativeProps & InputJsonCustomProps;
 
 export function InputJson(props: InputJsonProps) {
-	const { setValue, error, setError } = props;
+	const { collapsible = false, setValue, error, setError } = props;
 	const editorRef = useRef<HTMLTextAreaElement>(null);
 	const editorDefaultHeight = '100%';
 	const [editorHeight, setEditorHeight] = useState(editorDefaultHeight);
@@ -48,12 +53,18 @@ export function InputJson(props: InputJsonProps) {
 	return (
 		<>
 			{/* editor wrapper */}
-			<div className='flex flex-col flex-1 border border-outline-subtle rounded-md overflow-hidden'>
+			<div
+				className='border border-outline-subtle rounded-md 
+					flex flex-col flex-1 
+					overflow-hidden
+				'
+			>
 				<Collapsible
 					targetRef={editorRef}
 					targetDefaultHeight={editorDefaultHeight}
 					targetSetHeight={setEditorHeight}
 					CollapseToggle={CollapseToggle}
+					hideCollapseToggle={!collapsible}
 				>
 					{/* editor */}
 					<textarea

@@ -6,11 +6,12 @@ import {
 	type GridUiAdapterName,
 } from '@jsoc/react/grid';
 import { useCallback, useContext } from 'react';
+import { PaneHeader } from './PaneHeader';
 
-const uiOptions: Record<GridUiAdapterName, string> = {
-	mui: 'MUI DataGrid',
-	ag: 'AG-Grid',
-};
+const uiOptions: [GridUiAdapterName, string][] = [
+	['mui', 'MUI X'],
+	['ag', 'AG-Grid'],
+];
 
 export function UiSelector() {
 	const { ui, setUi } = useContext(JsocGridDemoContext);
@@ -19,23 +20,26 @@ export function UiSelector() {
 	}, []);
 
 	const getSelectedCls = function (uiKey: string): string {
-		return ui === uiKey ? 'underline' : '';
+		return ui === uiKey ? 'text-text-primary' : 'text-text-muted';
 	};
 
 	return (
 		<>
-			Choose UI
-			{/* json name editor */}
-			{Object.entries(uiOptions).map(([uiKey, uiName]) => (
-				<button
-					className={`${getSelectedCls(uiKey)} `}
-					key={uiKey}
-					onClick={() => handleSelectUi(uiKey as GridUiAdapterName)}
-				>
-					{/* TODO: Show library icon instead */}
-					{uiName}
-				</button>
-			))}
+			<PaneHeader heading='Choose UI'>
+				{/* json name editor */}
+				<div className='flex gap-3'>
+					{uiOptions.map(([uiKey, uiName]) => (
+						<button
+							className={`${getSelectedCls(uiKey)} `}
+							key={uiKey}
+							onClick={() => handleSelectUi(uiKey)}
+						>
+							{/* TODO: Show library icon instead */}
+							<span className='inline-block w-max'>{uiName}</span>
+						</button>
+					))}
+				</div>
+			</PaneHeader>
 		</>
 	);
 }
@@ -43,7 +47,7 @@ export function UiSelector() {
 export function OutputGridRenderer() {
 	const { error } = useContext(JsocGridDemoContext);
 
-	return error ? <div>{error}</div>: <OutputGrid />;
+	return error ? <div className='text-red-700'>{error}</div> : <OutputGrid />;
 }
 
 function OutputGrid() {

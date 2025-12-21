@@ -39,8 +39,8 @@ function TestsHomePage() {
 				subtitle='Click on the name of component that you want to test:'
 			>
 				<div className='flex gap-4'>
-					{TEST_COMPONENTS.map(([name, _]) => (
-						<Link to={name} className='link-button'>
+					{TEST_COMPONENTS.map(([name, _], index) => (
+						<Link key={index} to={name} className='link-button'>
 							{name.replace('Test', '')}
 						</Link>
 					))}

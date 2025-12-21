@@ -6,6 +6,7 @@ export type CollapsibleProps<R extends HTMLElement> = {
 	targetDefaultHeight: string;
 	targetSetHeight: React.Dispatch<React.SetStateAction<string>>;
 	CollapseToggle: React.FC<CollapseToggleProps>;
+	hideCollapseToggle: boolean;
 };
 export function Collapsible<R extends HTMLElement>({
 	children,
@@ -13,6 +14,7 @@ export function Collapsible<R extends HTMLElement>({
 	targetDefaultHeight,
 	targetSetHeight,
 	CollapseToggle,
+	hideCollapseToggle,
 }: CollapsibleProps<R>) {
 	const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -31,10 +33,12 @@ export function Collapsible<R extends HTMLElement>({
 		<>
 			{children}
 
-			<CollapseToggle
-				isCollapsed={isCollapsed}
-				setIsCollapsed={setIsCollapsed}
-			/>
+			{!hideCollapseToggle && (
+				<CollapseToggle
+					isCollapsed={isCollapsed}
+					setIsCollapsed={setIsCollapsed}
+				/>
+			)}
 		</>
 	);
 }
