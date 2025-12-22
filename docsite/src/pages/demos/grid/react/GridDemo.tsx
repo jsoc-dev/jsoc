@@ -3,8 +3,8 @@ import { Section } from '../../../../components/Section';
 import { useState, createContext } from 'react';
 import { type GridUiAdapterName } from '@jsoc/react/grid';
 import { SplitView } from '../../../../components/SplitView';
-import { JsonSelector, InputJsonRenderer } from './InputPane';
-import { UiSelector, OutputGridRenderer } from './OutputPane';
+import { JsonSelector, InputJsonRenderer } from './components/InputPane';
+import { UiSelector, OutputGridRenderer } from './components/OutputPane';
 
 export function GridDemo() {
 	const [name, setName] = useState('Products');

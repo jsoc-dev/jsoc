@@ -1,4 +1,5 @@
-import { JsocGridDemoContext } from './GridDemo';
+import { PaneHeader } from './PaneHeader';
+import { JsocGridDemoContext } from '../GridDemo';
 import { decode } from '@jsoc/core/utils';
 import {
 	JsocGrid,
@@ -6,7 +7,6 @@ import {
 	type GridUiAdapterName,
 } from '@jsoc/react/grid';
 import { useCallback, useContext } from 'react';
-import { PaneHeader } from './PaneHeader';
 
 const uiOptions: [GridUiAdapterName, string][] = [
 	['mui', 'MUI X'],

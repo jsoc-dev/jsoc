@@ -1,8 +1,8 @@
-import { useContext } from 'react';
-import { InputJson } from '../../../../components/InputJson';
-import { JsocGridDemoContext } from './GridDemo';
-import { InputText } from '../../../../components/InputText';
 import { PaneHeader } from './PaneHeader';
+import { JsocGridDemoContext } from '../GridDemo';
+import { InputJson } from '../../../../../components/InputJson';
+import { InputText } from '../../../../../components/InputText';
+import { useContext } from 'react';
 
 export function JsonSelector() {
 	const { name, setName } = useContext(JsocGridDemoContext);
