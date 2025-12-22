@@ -1,8 +1,8 @@
 import { PaneHeader } from './PaneHeader';
 import { JsocGridDemoContext } from '../GridDemo';
-import { InputJson } from '../../../../../components/InputJson';
 import { InputText } from '../../../../../components/InputText';
 import { useContext } from 'react';
+import { CodeEditor } from '../../../../../components/code-editor/CodeEditor';
 
 export function JsonSelector() {
 	const { name, setName } = useContext(JsocGridDemoContext);
@@ -11,13 +11,12 @@ export function JsonSelector() {
 		<>
 			<PaneHeader heading='Edit JSON'>
 				<InputText
-					value={name}
-					placeholder='Enter JSON name'
 					className='
-						bg-transparent border-b border-b-outline-subtle 
-						inline
+						border-b border-b-outline-subtle 
 						text-text-muted
-						w-max'
+					'
+					placeholder='Enter JSON name'
+					value={name}
 					setValue={setName}
 				/>
 			</PaneHeader>
@@ -26,16 +25,27 @@ export function JsonSelector() {
 }
 
 export function InputJsonRenderer() {
-	const { json, setJson, error, setError } = useContext(JsocGridDemoContext);
+	const { 
+		name, 
+		json, 
+		setJson, 
+		error, 
+		setError 
+	} =
+		useContext(JsocGridDemoContext);
 
 	return (
 		<div className='flex h-full'>
 			{/* json value editor */}
-			<InputJson
-				value={json}
-				setValue={setJson}
-				error={error}
-				setError={setError}
+			<CodeEditor
+				editable
+				className='flex-1'
+				code={json}
+				codeError={error}
+				codeLang='json'
+				fileName={name}
+				setCode={setJson}
+				setCodeError={setError}
 			/>
 		</div>
 	);

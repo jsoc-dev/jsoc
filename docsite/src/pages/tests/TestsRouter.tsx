@@ -1,12 +1,13 @@
 import { Section } from '../../components/Section';
 import { PageNotFound } from '../../shared/PageNotFound';
 import { Link, Route, Routes } from 'react-router';
-import { CodeBlockTest } from './components/CodeBlockTest';
+import { CodeEditorTest } from './components/CodeEditorTest';
 import { SplitViewTest } from './components/SplitViewTest';
 import { TestComponentPageWrapper } from './TestComponentPageWrapper';
 
+// TODO: Use naming convention : XYZUseCases
 const TEST_COMPONENTS = Object.entries({
-	CodeBlockTest,
+	CodeEditorTest,
 	SplitViewTest,
 });
 
@@ -36,8 +37,11 @@ function TestsHomePage() {
 			<Section
 				isHeading
 				title='Test Components'
-				subtitle='Click on the name of component that you want to test:'
 			>
+				<div className='mb-4'>
+					NOTE: These are components for testing generic components used in this docsite. These are not shipped in JSOC packages.
+				</div>
+
 				<div className='flex gap-4'>
 					{TEST_COMPONENTS.map(([name, _], index) => (
 						<Link key={index} to={name} className='link-button'>

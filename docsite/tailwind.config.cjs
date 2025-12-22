@@ -9,9 +9,10 @@ module.exports = {
 				svrow: '768px', // breakpoint that triggers SplitView layout to flex-row; same as md
 			},
 			fontFamily: {
-				code: [
-					'Fira Code',
+				// override the default mono font family that tailwind applies on code, kbd, samp, pre
+				mono: [
 					'Source Code Pro',
+					'Fira Code',
 					'Menlo',
 					'Monaco',
 					'Consolas',
@@ -27,7 +28,7 @@ module.exports = {
 				},
 				surface: {
 					code: '#fbfbfb',
-					codeHighlight: '#e5e7eb',
+					codeHighlight: '#fffbe6',
 					muted: '#f6f7f9',
 				},
 				outline: {

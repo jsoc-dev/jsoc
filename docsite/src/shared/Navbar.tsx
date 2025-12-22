@@ -5,7 +5,7 @@ import { PAGE_MAP, SOCIAL_LIST } from '../utils/contants';
 import { useReducer, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 
-// TODO: Add submenus for navbar menu items: Ex: Tests -> CodeBlock, SplitView    
+// TODO: Add submenus for navbar menu items: Ex: Tests -> CodeEditor, SplitView    
 export function Navbar() {
 	const [isMobileMenuOpen, dispatch] = useReducer(mobileMenuReducer, false);
 	const closeMobileMenu = () => dispatch('close');

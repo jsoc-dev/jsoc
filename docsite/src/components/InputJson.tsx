@@ -1,21 +1,24 @@
 import { ChevronSvg } from './svg/ChevronSvg';
 import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
-import { deleteKeys } from '@jsoc/core/utils';
+import { decode, deleteKeys } from '@jsoc/core/utils';
+import type { DemoGridError, DemoGridJson } from '../pages/demos/grid/react/GridDemo';
 
 /**
  * Custom props of InputJson, make sure to add any new prop in InputJsonCustomPropsList also
  */
 export type InputJsonCustomProps = {
 	collapsible?: boolean;
-	setValue: React.Dispatch<React.SetStateAction<string>>;
-	error: string;
-	setError: React.Dispatch<React.SetStateAction<string>>;
+	json: DemoGridJson
+	setJson: React.Dispatch<React.SetStateAction<DemoGridJson>>;
+	error: DemoGridError;
+	setError: React.Dispatch<React.SetStateAction<DemoGridError>>;
 };
 
 export const InputJsonCustomPropsList: (keyof InputJsonCustomProps)[] = [
 	'collapsible',
-	'setValue',
+	'json',
+	'setJson',
 	'error',
 	'setError',
 ];
@@ -24,8 +27,17 @@ export type InputJsonNativeProps =
 	React.InputHTMLAttributes<HTMLTextAreaElement>;
 export type InputJsonProps = InputJsonNativeProps & InputJsonCustomProps;
 
+/**
+ * Inputfield for JSON
+ * 
+ * TODOs: 
+ * - Use or integrate CodeEditor instead, to show line numbering
+ * - View and Go to Pos_ Ln_ Col_ options in bottom bar
+ * - Beautify option in Toolbar (and beautify indent/Tab size option in bottom bar)
+ * - View in full screen option in toolbar
+ */
 export function InputJson(props: InputJsonProps) {
-	const { collapsible = false, setValue, error, setError } = props;
+	const { collapsible = false, json, setJson, error, setError } = props;
 	const editorRef = useRef<HTMLTextAreaElement>(null);
 	const editorDefaultHeight = '100%';
 	const [editorHeight, setEditorHeight] = useState(editorDefaultHeight);
@@ -37,19 +49,14 @@ export function InputJson(props: InputJsonProps) {
 	const onChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			const newVal = e.target.value;
-			setValue(newVal);
+			setJson(newVal);
 
-			try {
-				JSON.parse(newVal);
-				setError('');
-			} catch (err: unknown) {
-				setError(String(err));
-			}
+			const {error: decodedError} = decode(newVal);
+			setError(decodedError);
 		},
-		[setValue, setError]
+		[setJson, setError]
 	);
 
-	// TODO: Add a toolbar with options beautify and view in fullscreen
 	return (
 		<>
 			{/* editor wrapper */}
@@ -69,11 +76,12 @@ export function InputJson(props: InputJsonProps) {
 					{/* editor */}
 					<textarea
 						aria-invalid={!!error}
-						className={`bg-surface-code pl-2 py-2 text-sm font-code w-full flex resize-none focus:outline-none ${validationCls}`}
+						className={`bg-surface-code pl-2 py-2 text-sm w-full flex resize-none focus:outline-none ${validationCls}`}
 						onChange={onChange}
 						placeholder='Paste your JSON here'
 						spellCheck='false'
 						{...deleteKeys(props, InputJsonCustomPropsList)}
+						value={json}
 						ref={editorRef}
 						style={{
 							height: editorHeight, // can't use tailwind class for height here, as height is dynamic (runtime value) but tailwind need static values to generate classes at build time

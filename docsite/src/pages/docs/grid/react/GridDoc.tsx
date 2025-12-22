@@ -1,4 +1,4 @@
-import { CodeBlock } from '../../../../components/codeblock/CodeBlock';
+import { CodeEditor } from '../../../../components/code-editor/CodeEditor';
 import { Section } from '../../../../components/Section';
 import { ListItem, NumericList } from '../../../../components/List';
 import { CodeInline } from '../../../../components/CodeInline';
@@ -35,7 +35,7 @@ export function GridDoc() {
 			{/* heading */}
 			<Section
 				isHeading
-				title="Grid Documentation"
+				title='Grid Documentation'
 				subtitle={<>Guide for using {compNameEl} in a React app.</>}
 			/>
 
@@ -49,9 +49,10 @@ export function GridDoc() {
 							</>
 						}
 					>
-						<CodeBlock lang='cmd'>
-							{'npm install ' + pkgName}
-						</CodeBlock>
+						<CodeEditor
+							code={'npm install ' + pkgName}
+							codeLang='cmd'
+						/>
 					</ListItem>
 				</NumericList>
 			</Section>
@@ -60,19 +61,20 @@ export function GridDoc() {
 			<Section id='usage' title='Usage'>
 				<NumericList>
 					<ListItem title='Import the component.'>
-						<CodeBlock fileName='JsocGridDemo' lang='tsx'>
-							{importExample}
-						</CodeBlock>
+						<CodeEditor
+							code={importExample}
+							codeLang='tsx'
+							fileName='JsocGridDemo'
+						/>
 					</ListItem>
 
 					<ListItem title='Render the component.'>
-						<CodeBlock
+						<CodeEditor
+							code={renderExample}
+							codeLang='tsx'
 							fileName='JsocGridDemo'
-							lang='tsx'
 							highlightLines={[6]}
-						>
-							{renderExample}
-						</CodeBlock>
+						/>
 					</ListItem>
 				</NumericList>
 			</Section>

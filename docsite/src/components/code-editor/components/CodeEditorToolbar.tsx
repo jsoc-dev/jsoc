@@ -1,20 +1,18 @@
-import { useState, useCallback } from 'react';
-import type { Code, isWrapEnabled, SetisWrapEnabled } from '../CodeBlock';
+import { useState, useContext, useCallback } from 'react';
+import type { Code, isWrapEnabled, SetisWrapEnabled } from '../CodeEditor';
 import { WrapTextSvg } from '../../svg/WrapTextSvg';
 import { copyToClipboard } from '../../../utils/clipboard';
 import { ClipboardSvg } from '../../svg/ClipboardSvg';
+import { CodeEditorContext } from '../CodeEditor';
 
-type CodeActionButtonContainerProps = {
-	code: Code;
-	isWrapEnabled: isWrapEnabled;
-	setIsWrapEnabled: SetisWrapEnabled;
+type CodeEditorToolbarProps = {
 };
 
-export function CodeActionButtonContainer({
-	code,
-	isWrapEnabled,
-	setIsWrapEnabled,
-}: CodeActionButtonContainerProps) {
+export function CodeEditorToolbar({
+
+}: CodeEditorToolbarProps) {
+	const { code, isWrapEnabled,setIsWrapEnabled  } = useContext(CodeEditorContext);
+
 	return (
 		<div className='flex h-full items-center gap-4'>
 			<WrapCodeAction
