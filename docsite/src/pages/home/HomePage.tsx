@@ -15,7 +15,7 @@ export function HomePage() {
 	return (
 		<div>
 			{/* Hero section */}
-			<section className='text-center mt-24'>
+			<section className='text-center'>
 				<h1 className='text-[clamp(2rem,5vw,4rem)] mb-5 font-semibold'>
 					<span>Introducing </span>
 					<span className='font-bold tracking-wide'>JSOC</span> Grid
@@ -39,7 +39,7 @@ export function HomePage() {
 			</section>
 
 			{/* Features */}
-			<section className='mt-14 py-6 flex flex-col space-y-12 items-center'>
+			<section className='mt-14 flex flex-col space-y-12 items-center'>
 				{features.map(([title, description], index) => (
 					<div
 						key={index}

@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode, Children, Fragment } from 'react';
+import { type ReactElement, type ReactNode, Children } from 'react';
 
 type SplitViewProps = {
 	className?: string;
@@ -17,10 +17,20 @@ export function SplitView({ className = '', children }: SplitViewProps) {
 			`}
 		>
 			{splitViewPanes.map((splitViewPane, index) => (
-				<Fragment key={index}>
+				<div
+					className={`
+						flex flex-col 
+						svrow:w-1/2
+						${
+							index == 0
+								? 'border-b border-outline-subtle svrow:border-b-0 svrow:border-r'
+								: ''
+						}
+					`}
+					key={index}
+				>
 					{splitViewPane}
-					{index === 0 && <SplitViewSeparator />}
-				</Fragment>
+				</div>
 			))}
 		</div>
 	);
@@ -34,12 +44,7 @@ type SplitViewPaneProps = {
 };
 function SplitViewPane({ header, children }: SplitViewPaneProps) {
 	return (
-		<div
-			className={`
-				flex flex-col 
-				w-full svrow:w-1/2
-			`}
-		>
+		<>
 			{/* header-wrapper */}
 			<div
 				className='
@@ -65,17 +70,6 @@ function SplitViewPane({ header, children }: SplitViewPaneProps) {
 			>
 				{children}
 			</div>
-		</div>
-	);
-}
-
-function SplitViewSeparator() {
-	return (
-		<div
-			className='
-				border border-dashed
-				md:h-auto md:w-px
-			'
-		/>
+		</>
 	);
 }
