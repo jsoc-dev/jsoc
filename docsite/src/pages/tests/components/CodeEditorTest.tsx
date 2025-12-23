@@ -25,19 +25,17 @@ const LINE_SIZES: Record<LineSize, { min: number; max: number }> = {
 };
 
 type Example = {
+	code?: string;
 	lineCount: number;
 	lineSize: LineSize;
-	editable: boolean;
-	controlled?: boolean;
+	editable?: boolean;
 	highlightLines: number[];
 	fixedParentHeight: boolean;
-	code?: string;
 };
 const EXAMPLES_META: Example[] = [
 	{
 		lineCount: 1,
 		lineSize: 'small',
-		editable: false,
 		highlightLines: [1],
 		fixedParentHeight: false,
 	},
@@ -52,7 +50,6 @@ const EXAMPLES_META: Example[] = [
 		lineCount: 5,
 		lineSize: 'combo',
 		editable: true,
-		controlled: true,
 		highlightLines: [1, 3],
 		fixedParentHeight: true,
 	},
@@ -82,7 +79,6 @@ export function CodeEditorTest() {
 	return EXAMPLES_META.map((example, index) => {
 		const {
 			code = '',
-			controlled = false,
 			editable,
 			highlightLines,
 			fixedParentHeight,
@@ -94,9 +90,7 @@ export function CodeEditorTest() {
 
 		return (
 			<Section key={index} id={sectionId} title={sectionTitle}>
-				<div
-					className='bg-surface-muted border border-outline-subtle flex flex-col p-4 mb-10 gap-4'
-				>
+				<div className='bg-surface-muted border border-outline-subtle flex flex-col p-4 mb-10 gap-4'>
 					{/* example data */}
 					<div className='flex flex-col gap-1'>
 						{Object.entries(example).map(([key, value], index) => (
@@ -118,9 +112,8 @@ export function CodeEditorTest() {
 					{/* editor */}
 					<div className={`flex ${parentHeightCls}`}>
 						<ExampleRenderer
-							code={code}
-							controlled={controlled}
 							editable={editable}
+							exampleCode={code}
 							highlightLines={highlightLines}
 						/>
 					</div>
@@ -131,26 +124,24 @@ export function CodeEditorTest() {
 }
 
 function ExampleRenderer({
-	code,
-	controlled,
+	exampleCode,
 	editable,
+
 	highlightLines,
 }: {
-	code: Code;
-	controlled: boolean;
-	editable: boolean;
+	exampleCode: Code;
+	editable?: boolean;
+
 	highlightLines: CodeLineNumber[];
 }) {
-	const [codeControlled, setCodeControlled] = useState(code);
+	const [code, setCode] = useState(exampleCode);
 
 	return (
 		<CodeEditor
 			code={code}
-			{...(controlled && {
-				code: codeControlled,
-				setCode: setCodeControlled,
+			{...(editable && {
+				setCode: setCode,
 			})}
-			editable={editable}
 			codeLang='cmd'
 			highlightLines={highlightLines}
 		/>

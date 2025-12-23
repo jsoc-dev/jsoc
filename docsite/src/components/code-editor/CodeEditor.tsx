@@ -21,7 +21,6 @@ export type CodeEditorProps = {
 	code: Code;
 	codeError?: CodeError;
 	codeLang: CodeLanguage;
-	editable?: boolean;
 	fileName?: string;
 	highlightCls?: string;
 	highlightLines?: CodeLineNumber[];
@@ -38,7 +37,6 @@ export function CodeEditor({
 	className = '',
 	code,
 	codeLang,
-	editable = false,
 	fileName = 'Code',
 	highlightCls = 'bg-surface-codeHighlight',
 	highlightLines = [],
@@ -46,19 +44,12 @@ export function CodeEditor({
 	setCodeError,
 	showLineNumbers = codeToLine(code).length > 1,
 }: CodeEditorProps) {
-	if (editable && !setCode) {
-		console.error(
-			`CodeEditor is provided with editable prop but 'setCode' prop is not provided. Edit mode won't be enabled.
-			\nFor Line numbers / line highlighting to work properly, "code" state needs to be updated by which virtual lines content gets updated.
-			\nThis is probably unintentional unless you are testing it. `
-		);
-	}
 	const virtualLinesContentRef = useRef(codeToLine(code));
 	const [isWrapEnabled, setIsWrapEnabled] = useState(true);
 
 	const linesWrapperCls = `
 		${isWrapEnabled ? 'min-w-full' : 'min-w-max'}
-		${showLineNumbers ? 'pl-10' : 'pl-3'}
+		${showLineNumbers ? 'pl-14' : 'pl-3'}
 	`;
 
 	const togglehighlightCls = (n: CodeLineNumber) =>
@@ -77,7 +68,6 @@ export function CodeEditor({
 			value={{
 				code,
 				codeLang,
-				editable,
 				fileName,
 				highlightLines,
 				isWrapEnabled,
@@ -91,13 +81,12 @@ export function CodeEditor({
 		>
 			<div
 				// flex-1: for forcing grow if consumer wraps CodeEditor in flex container
-				// min-h-32: header is h-12 so atleast h-20 for content
+				// don-t add min-h as it can be extra if there is only one line of code
 				// overflow-hidden: to make sure rounded borders are not overlapped by children
 				className={`
 					bg-surface-code 
 					border border-outline-subtle rounded-xl
 					flex-1 flex flex-col
-					min-h-32
 					overflow-hidden ${className}
 				`}
 			>
@@ -180,7 +169,6 @@ export function CodeEditor({
 export type CodeEditorContext = {
 	code: Code;
 	codeLang: CodeLanguage;
-	editable: boolean;
 	fileName: string;
 	highlightLines: number[];
 	isWrapEnabled: boolean;
@@ -194,7 +182,6 @@ export type CodeEditorContext = {
 export const CodeEditorContext = createContext<CodeEditorContext>({
 	code: '',
 	codeLang: 'cmd',
-	editable: true,
 	fileName: '',
 	highlightLines: [],
 	isWrapEnabled: true,

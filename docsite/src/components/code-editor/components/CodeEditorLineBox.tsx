@@ -9,7 +9,6 @@ export type CodeEditorLineBoxProps = {
 export function CodeEditorLineBox({ lineNumber }: CodeEditorLineBoxProps) {
 	const {
 		codeLang,
-		editable,
 		lineCls,
 		virtualLinesContentRef,
 		setCode,
@@ -34,7 +33,7 @@ export function CodeEditorLineBox({ lineNumber }: CodeEditorLineBoxProps) {
 
 	const onInput = useCallback(
 		(e: React.FormEvent<HTMLPreElement>) => {
-			if (!editable) return;
+			if (!setCode) return;
 
 			virtualLinesContentRef.current[lineNumber - 1] =
 				e.currentTarget.textContent ?? '';
@@ -43,12 +42,12 @@ export function CodeEditorLineBox({ lineNumber }: CodeEditorLineBoxProps) {
 
 			debouncedCommit(newCode);
 		},
-		[editable, lineNumber, debouncedCommit]
+		[setCode, lineNumber, debouncedCommit]
 	);
 
 	return (
 		<pre
-			contentEditable={!!(editable && setCode)}
+			contentEditable={!!(setCode)}
 			className={`
 				${lineCls} text-transparent caret-blue-600
 			`}

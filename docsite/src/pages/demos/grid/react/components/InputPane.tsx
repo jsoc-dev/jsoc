@@ -38,7 +38,6 @@ export function InputJsonRenderer() {
 		<div className='flex h-full'>
 			{/* json value editor */}
 			<CodeEditor
-				editable
 				className='flex-1'
 				code={json}
 				codeError={error}
