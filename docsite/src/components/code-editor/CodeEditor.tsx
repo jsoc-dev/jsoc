@@ -1,8 +1,9 @@
-import { createContext, useRef, useState } from 'react';
+import { createContext, Fragment, useRef, useState } from 'react';
 import { CodeEditorToolbar } from './components/CodeEditorToolbar';
 import { CodeEditorTitlebar } from './components/CodeEditorTitlebar';
-import { CodeEditorLineBox } from './components/CodeEditorLineBox';
 import { codeToLine } from './utils/codeEditorUtil';
+import { CodeEditorLineNumber } from './components/CodeEditorLineNumber';
+import { CodeEditorLineBox } from './components/CodeEditorLineBox';
 
 export type Code = string;
 export type CodeError = {
@@ -12,12 +13,9 @@ export type CodeError = {
 	line?: number;
 	column?: number;
 } | null;
-export type CodeLines = string[];
+export type CodeLine = string;
 export type CodeLineNumber = number;
 export type CodeLanguage = 'cmd' | 'json' | 'js' | 'jsx' | 'ts' | 'tsx';
-
-export type isWrapEnabled = boolean;
-export type SetisWrapEnabled = React.Dispatch<React.SetStateAction<boolean>>;
 export type CodeEditorProps = {
 	className?: string;
 	code: Code;
@@ -25,6 +23,7 @@ export type CodeEditorProps = {
 	codeLang: CodeLanguage;
 	editable?: boolean;
 	fileName?: string;
+	highlightCls?: string;
 	highlightLines?: CodeLineNumber[];
 	setCode?: React.Dispatch<React.SetStateAction<Code>>;
 	setCodeError?: React.Dispatch<React.SetStateAction<CodeError>>;
@@ -41,13 +40,37 @@ export function CodeEditor({
 	codeLang,
 	editable = false,
 	fileName = 'Code',
+	highlightCls = 'bg-surface-codeHighlight',
 	highlightLines = [],
 	setCode,
 	setCodeError,
-	showLineNumbers = (codeToLine(code).length > 1),
+	showLineNumbers = codeToLine(code).length > 1,
 }: CodeEditorProps) {
-	const linesRef = useRef(codeToLine(code));
+	if (editable && !setCode) {
+		console.error(
+			`CodeEditor is provided with editable prop but 'setCode' prop is not provided. Edit mode won't be enabled.
+			\nFor Line numbers / line highlighting to work properly, "code" state needs to be updated by which virtual lines content gets updated.
+			\nThis is probably unintentional unless you are testing it. `
+		);
+	}
+	const virtualLinesContentRef = useRef(codeToLine(code));
 	const [isWrapEnabled, setIsWrapEnabled] = useState(true);
+
+	const linesWrapperCls = `
+		${isWrapEnabled ? 'min-w-full' : 'min-w-max'}
+		${showLineNumbers ? 'pl-10' : 'pl-3'}
+	`;
+
+	const togglehighlightCls = (n: CodeLineNumber) =>
+		highlightLines.includes(n) ? highlightCls : '';
+
+	const virtualLineCls = showLineNumbers ? '-left-6' : '';
+
+	const lineCls = `
+		flex-1
+		leading-5 text-sm text-text-muted
+		${isWrapEnabled ? 'whitespace-pre-wrap' : ''}
+	`;
 
 	return (
 		<CodeEditorContext.Provider
@@ -58,7 +81,8 @@ export function CodeEditor({
 				fileName,
 				highlightLines,
 				isWrapEnabled,
-				linesRef,
+				lineCls,
+				virtualLinesContentRef,
 				showLineNumbers,
 				setCode,
 				setCodeError,
@@ -67,15 +91,14 @@ export function CodeEditor({
 		>
 			<div
 				// flex-1: for forcing grow if consumer wraps CodeEditor in flex container
-				// min-h-20: header is h-12 so atleast h-8 for content
+				// min-h-32: header is h-12 so atleast h-20 for content
 				// overflow-hidden: to make sure rounded borders are not overlapped by children
 				className={`
 					bg-surface-code 
 					border border-outline-subtle rounded-xl
 					flex-1 flex flex-col
-					min-h-20
-					overflow-hidden
-					${className}
+					min-h-32
+					overflow-hidden ${className}
 				`}
 			>
 				{/* header-wrapper */}
@@ -91,19 +114,61 @@ export function CodeEditor({
 					<CodeEditorToolbar />
 				</div>
 
-				{/* content-wrapper*/}
-				<div
-					// flex-1: for growing (minimum h-8)
-					// overflow-auto: for scrollbars
-					className='py-3 overflow-auto flex-1'
-				>
-					{/* line-box-wrapper */}
-					<div className='inline-block min-w-full'>
-						{linesRef.current.map((_, index) => (
-							<CodeEditorLineBox
+				<div className='flex flex-1 py-3 overflow-auto relative'>
+					{/* syntax-highlight-layer */}
+					<div
+						aria-hidden
+						className={`
+							absolute
+							flex flex-col w-full
+							pointer-events-none
+							select-none
+							z-0
+							${isWrapEnabled ? '' : 'min-w-max'}
+						`}
+					>
+						{virtualLinesContentRef.current.map((line, index) => (
+							// virtual-lines-wrapper
+							<div
 								key={index}
-								lineNumber={index + 1}
-							/>
+								className={`
+									inline-flex ${togglehighlightCls(index + 1)}
+									${linesWrapperCls} 
+								`}
+							>
+								{/* line-number */}
+								{showLineNumbers && (
+									<CodeEditorLineNumber
+										lineNumber={index + 1}
+									/>
+								)}
+								{/* virtual-line */}
+								<pre
+									className={`
+										relative min-w-full 
+										${virtualLineCls}
+										${lineCls}
+									`}
+								>
+									{line}
+								</pre>
+							</div>
+						))}
+					</div>
+
+					{/* editable-lines-wrapper */}
+					<div
+						className={`
+							inline-block 
+							${linesWrapperCls}
+							z-10
+						`}
+					>
+						{virtualLinesContentRef.current.map((_, index) => (
+							// editable-line
+							<Fragment key={index}>
+								<CodeEditorLineBox lineNumber={index + 1} />
+							</Fragment>
 						))}
 					</div>
 				</div>
@@ -119,7 +184,8 @@ export type CodeEditorContext = {
 	fileName: string;
 	highlightLines: number[];
 	isWrapEnabled: boolean;
-	linesRef: React.RefObject<CodeLines>;
+	lineCls: string;
+	virtualLinesContentRef: React.RefObject<CodeLine[]>;
 	showLineNumbers: boolean;
 	setCode?: React.Dispatch<React.SetStateAction<Code>>;
 	setCodeError?: React.Dispatch<React.SetStateAction<CodeError>>;
@@ -132,10 +198,10 @@ export const CodeEditorContext = createContext<CodeEditorContext>({
 	fileName: '',
 	highlightLines: [],
 	isWrapEnabled: true,
-	linesRef: { current: [] },
+	lineCls: '',
+	virtualLinesContentRef: { current: [] },
 	showLineNumbers: true,
 	setCode: () => undefined,
 	setCodeError: () => undefined,
 	setIsWrapEnabled: () => undefined,
 });
-

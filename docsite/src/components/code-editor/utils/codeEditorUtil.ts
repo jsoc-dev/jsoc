@@ -1,9 +1,9 @@
-import type { Code, CodeLines } from '../CodeEditor';
+import type { Code, CodeLine } from '../CodeEditor';
 
-export function codeToLine(code: Code): CodeLines {
+export function codeToLine(code: Code): CodeLine[] {
 	return code.trim().split('\n');
 }
 
-export function linesToCode(lines: CodeLines): Code {
+export function linesToCode(lines: CodeLine[]): Code {
 	return lines.join('\n');
 }

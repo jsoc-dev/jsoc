@@ -2,6 +2,11 @@ import { isBoolean, toBoolIcon } from '@jsoc/core/utils';
 import { CodeEditor } from '../../../components/code-editor/CodeEditor';
 import { getSampleLines } from '../../../utils/lorem';
 import { Section } from '../../../components/Section';
+import { useState } from 'react';
+import type {
+	Code,
+	CodeLineNumber,
+} from '../../../components/code-editor/CodeEditor';
 
 type LineSize = 'small' | 'large' | 'combo';
 const LINE_SIZES: Record<LineSize, { min: number; max: number }> = {
@@ -23,10 +28,12 @@ type Example = {
 	lineCount: number;
 	lineSize: LineSize;
 	editable: boolean;
+	controlled?: boolean;
 	highlightLines: number[];
 	fixedParentHeight: boolean;
+	code?: string;
 };
-const examples: Example[] = [
+const EXAMPLES_META: Example[] = [
 	{
 		lineCount: 1,
 		lineSize: 'small',
@@ -35,17 +42,18 @@ const examples: Example[] = [
 		fixedParentHeight: false,
 	},
 	{
-		lineCount: 1,
+		lineCount: 2,
 		lineSize: 'large',
 		editable: true,
 		highlightLines: [1],
 		fixedParentHeight: false,
 	},
 	{
-		lineCount: 10,
+		lineCount: 5,
 		lineSize: 'combo',
 		editable: true,
-		highlightLines: [4, 5],
+		controlled: true,
+		highlightLines: [1, 3],
 		fixedParentHeight: true,
 	},
 	{
@@ -64,62 +72,88 @@ const examples: Example[] = [
 	},
 ];
 
+for (const example of EXAMPLES_META) {
+	const { min, max } = LINE_SIZES[example.lineSize];
+
+	example.code = getSampleLines(example.lineCount, min, max);
+}
+
 export function CodeEditorTest() {
-	return (
-		<>
-			{examples.map((example, index) => {
-				const {
-					lineCount,
-					lineSize,
-					editable,
-					highlightLines,
-					fixedParentHeight,
-				} = example;
-				const parentHeightCls = fixedParentHeight ? `h-[300px]` : '';
+	return EXAMPLES_META.map((example, index) => {
+		const {
+			code = '',
+			controlled = false,
+			editable,
+			highlightLines,
+			fixedParentHeight,
+		} = example;
+		const parentHeightCls = fixedParentHeight ? `h-[200px]` : '';
 
-				const { min, max } = LINE_SIZES[lineSize];
-				const code = getSampleLines(lineCount, min, max);
+		const sectionId = `u${index + 1}`;
+		const sectionTitle = `Usage #${index + 1}`;
 
-				const sectionId = `u${index + 1}`;
-				const sectionTitle = `Usage #${index + 1}`;
-
-				return (
-					<Section key={index} id={sectionId} title={sectionTitle}>
-						<div
-							className={`
-								bg-surface-muted border border-outline-subtle flex flex-col p-4 mb-10 gap-4
-
-								${parentHeightCls}
-							`}
-						>
-							{/* example data */}
-							<div className='flex flex-col gap-1'>
-								{Object.entries(example).map(
-									([key, value], index) => (
-										<div key={index} className='flex gap-2'>
-											<span className='font-semibold'>
-												{key}:
-											</span>
-											<span className='font-semibold text-text-primary'>
-												{formatValue(value)}
-											</span>
-										</div>
-									)
+		return (
+			<Section key={index} id={sectionId} title={sectionTitle}>
+				<div
+					className='bg-surface-muted border border-outline-subtle flex flex-col p-4 mb-10 gap-4'
+				>
+					{/* example data */}
+					<div className='flex flex-col gap-1'>
+						{Object.entries(example).map(([key, value], index) => (
+							<div key={index} className='flex gap-2'>
+								<span className='font-semibold'>{key}:</span>
+								{key == 'code' ? (
+									<pre className='overflow-auto max-h-20 font-semibold text-text-primary'>
+										{formatValue(value)}
+									</pre>
+								) : (
+									<span className='overflow-auto max-h-20 font-semibold text-text-primary'>
+										{formatValue(value)}
+									</span>
 								)}
 							</div>
+						))}
+					</div>
 
-							{/* editor */}
-							<CodeEditor
-								code={code}
-								editable={editable}
-								codeLang='cmd'
-								highlightLines={highlightLines}
-							/>
-						</div>
-					</Section>
-				);
+					{/* editor */}
+					<div className={`flex ${parentHeightCls}`}>
+						<ExampleRenderer
+							code={code}
+							controlled={controlled}
+							editable={editable}
+							highlightLines={highlightLines}
+						/>
+					</div>
+				</div>
+			</Section>
+		);
+	});
+}
+
+function ExampleRenderer({
+	code,
+	controlled,
+	editable,
+	highlightLines,
+}: {
+	code: Code;
+	controlled: boolean;
+	editable: boolean;
+	highlightLines: CodeLineNumber[];
+}) {
+	const [codeControlled, setCodeControlled] = useState(code);
+
+	return (
+		<CodeEditor
+			code={code}
+			{...(controlled && {
+				code: codeControlled,
+				setCode: setCodeControlled,
 			})}
-		</>
+			editable={editable}
+			codeLang='cmd'
+			highlightLines={highlightLines}
+		/>
 	);
 }
 
