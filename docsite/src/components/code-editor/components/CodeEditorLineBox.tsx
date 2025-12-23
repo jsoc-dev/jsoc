@@ -1,19 +1,12 @@
 import { useContext, useCallback, useRef } from 'react';
-import { CodeEditorContext, type CodeLineNumber } from '../CodeEditor';
+import { CodeEditorContext } from '../CodeEditor';
 import { validateCode } from '../utils/codeLanguageUtil';
-import { linesToCode } from '../utils/codeEditorUtil';
+import { codeToLines, linesToCode } from '../utils/codeEditorUtil';
 
-export type CodeEditorLineBoxProps = {
-	lineNumber: CodeLineNumber;
-};
-export function CodeEditorLineBox({ lineNumber }: CodeEditorLineBoxProps) {
-	const {
-		codeLang,
-		lineCls,
-		virtualLinesContentRef,
-		setCode,
-		setCodeError,
-	} = useContext(CodeEditorContext);
+export type CodeEditorLineBoxProps = {};
+export function CodeEditorLineBox({}: CodeEditorLineBoxProps) {
+	const { codeLang, lineCls, virtualLinesContentRef, setCode, setCodeError } =
+		useContext(CodeEditorContext);
 
 	const commitRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -35,30 +28,31 @@ export function CodeEditorLineBox({ lineNumber }: CodeEditorLineBoxProps) {
 		(e: React.FormEvent<HTMLPreElement>) => {
 			if (!setCode) return;
 
-			virtualLinesContentRef.current[lineNumber - 1] =
-				e.currentTarget.textContent ?? '';
-
-			const newCode = linesToCode(virtualLinesContentRef.current);
+			const newCode = e.currentTarget.innerText ?? '';
+			const newLines = codeToLines(newCode);
+			console.log('newCode: ', newCode);
+			console.log('newLines: ', newLines);
+			virtualLinesContentRef.current = newLines;
 
 			debouncedCommit(newCode);
 		},
-		[setCode, lineNumber, debouncedCommit]
+		[setCode, debouncedCommit]
 	);
 
 	return (
 		<pre
-			contentEditable={!!(setCode)}
+			contentEditable={!!setCode}
 			className={`
-				${lineCls} text-transparent caret-blue-600
+				${lineCls} text-transparent caret-black focus:outline-none
 			`}
 			onInput={onInput}
-			ref={(el) => {
-				if (!el) return;
+			ref={(pre) => {
+				if (!pre) return;
 
-				const line = virtualLinesContentRef.current[lineNumber - 1];
+				const code = linesToCode(virtualLinesContentRef.current);
 				// Only set once (or on external reset)
-				if (el.textContent !== line) {
-					el.textContent = line;
+				if (pre.textContent !== code) {
+					pre.textContent = code;
 				}
 			}}
 			spellCheck={false}

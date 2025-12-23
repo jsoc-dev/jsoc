@@ -1,7 +1,7 @@
-import { createContext, Fragment, useRef, useState } from 'react';
+import { createContext, useRef, useState } from 'react';
 import { CodeEditorToolbar } from './components/CodeEditorToolbar';
 import { CodeEditorTitlebar } from './components/CodeEditorTitlebar';
-import { codeToLine } from './utils/codeEditorUtil';
+import { codeToLines } from './utils/codeEditorUtil';
 import { CodeEditorLineNumber } from './components/CodeEditorLineNumber';
 import { CodeEditorLineBox } from './components/CodeEditorLineBox';
 
@@ -42,9 +42,10 @@ export function CodeEditor({
 	highlightLines = [],
 	setCode,
 	setCodeError,
-	showLineNumbers = codeToLine(code).length > 1,
+	showLineNumbers,
 }: CodeEditorProps) {
-	const virtualLinesContentRef = useRef(codeToLine(code));
+	showLineNumbers = setCode ? true : !!showLineNumbers;
+	const virtualLinesContentRef = useRef(codeToLines(code));
 	const [isWrapEnabled, setIsWrapEnabled] = useState(true);
 
 	const linesWrapperCls = `
@@ -153,12 +154,7 @@ export function CodeEditor({
 							z-10
 						`}
 					>
-						{virtualLinesContentRef.current.map((_, index) => (
-							// editable-line
-							<Fragment key={index}>
-								<CodeEditorLineBox lineNumber={index + 1} />
-							</Fragment>
-						))}
+						<CodeEditorLineBox />
 					</div>
 				</div>
 			</div>

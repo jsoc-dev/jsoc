@@ -1,18 +1,17 @@
 import { ChevronSvg } from './svg/ChevronSvg';
 import { Collapsible, type CollapseToggleProps } from './Collapsible';
 import { useCallback, useRef, useState } from 'react';
-import { decode, deleteKeys } from '@jsoc/core/utils';
-import type { DemoGridError, DemoGridJson } from '../pages/demos/grid/react/GridDemo';
+import { decode, deleteKeys, type JsonErrorMeta } from '@jsoc/core/utils';
 
 /**
  * Custom props of InputJson, make sure to add any new prop in InputJsonCustomPropsList also
  */
 export type InputJsonCustomProps = {
 	collapsible?: boolean;
-	json: DemoGridJson
-	setJson: React.Dispatch<React.SetStateAction<DemoGridJson>>;
-	error: DemoGridError;
-	setError: React.Dispatch<React.SetStateAction<DemoGridError>>;
+	json: string
+	setJson: React.Dispatch<React.SetStateAction<string>>;
+	error: JsonErrorMeta | undefined;
+	setError: React.Dispatch<React.SetStateAction<JsonErrorMeta | undefined>>;
 };
 
 export const InputJsonCustomPropsList: (keyof InputJsonCustomProps)[] = [

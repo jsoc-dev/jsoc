@@ -74,6 +74,7 @@ export function GridDoc() {
 							codeLang='tsx'
 							fileName='JsocGridDemo'
 							highlightLines={[6]}
+							showLineNumbers
 						/>
 					</ListItem>
 				</NumericList>
