@@ -30,8 +30,6 @@ export function CodeEditorLineBox({}: CodeEditorLineBoxProps) {
 
 			const newCode = e.currentTarget.innerText ?? '';
 			const newLines = codeToLines(newCode);
-			console.log('newCode: ', newCode);
-			console.log('newLines: ', newLines);
 			virtualLinesContentRef.current = newLines;
 
 			debouncedCommit(newCode);

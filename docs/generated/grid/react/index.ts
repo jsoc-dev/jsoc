@@ -1,3 +1,3 @@
-import * as props from './props.json';
+import props from './props.json';
 
 export { props };

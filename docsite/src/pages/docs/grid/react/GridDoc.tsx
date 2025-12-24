@@ -20,10 +20,10 @@ function JsocGridDemo({data, ui}) {
 `;
 const propsData = Object.values(props).map((x) => ({
 	name: x.name,
-	type: x.type?.name,
-	description: x.description,
 	required: x.required,
 	defaultvalue: x.defaultValue?.value,
+	type: x.type?.name,
+	description: x.description,
 }));
 
 export function GridDoc() {

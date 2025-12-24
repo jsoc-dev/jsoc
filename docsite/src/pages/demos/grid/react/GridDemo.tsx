@@ -1,4 +1,4 @@
-import { singleProductJson } from './json/products';
+import { productsJson } from './json/products';
 import { Section } from '../../../../components/Section';
 import { useState, createContext } from 'react';
 import { type GridUiAdapterName } from '@jsoc/react/grid';
@@ -14,7 +14,7 @@ export type DemoGridError = CodeError;
 export type DemoGridUi = GridUiAdapterName;
 
 const DEFAULT_NAME: DemoGridName = 'products';
-const DEFAULT_JSON: DemoGridJson = singleProductJson;
+const DEFAULT_JSON: DemoGridJson = productsJson;
 const DEFAULT_ERROR: DemoGridError = validateCode(DEFAULT_JSON, 'json');
 const DEFAULT_UI: DemoGridUi = 'mui';
 const SET_STATE_FAKE = () => undefined;
@@ -47,7 +47,7 @@ export function GridDemo() {
 					title='Grid Demo'
 					subtitle='Check out how your JSON data would look when rendered in different Grid UI libraries'
 				/>
-				<SplitView className='flex-1'>
+				<SplitView className='flex-1 max-h-[700px]'>
 					<SplitView.Pane header={<JsonSelector />}>
 						<InputJsonRenderer />
 					</SplitView.Pane>
