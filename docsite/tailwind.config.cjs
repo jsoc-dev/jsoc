@@ -6,7 +6,7 @@ module.exports = {
 		extend: {
 			screens: {
 				navbig: '768px', // breakpoint that triggers Navbar layout to desktop view; same as md
-				svrow: '768px', // breakpoint that triggers SplitView layout to flex-row; same as md
+				svrow: '1024px', // breakpoint that triggers SplitView layout to flex-row; same as lg
 			},
 			fontFamily: {
 				// override the default mono font family that tailwind applies on code, kbd, samp, pre

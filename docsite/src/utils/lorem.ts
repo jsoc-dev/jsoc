@@ -6,7 +6,7 @@ function shuffle<T>(arr: T[]) {
 
 export function getSampleLines(
 	count: number,
-	minWordCount: number = 1,
+	minWordCount: number = 0,
 	maxWordCount: number = 10
 ) {
 	const line =

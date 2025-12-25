@@ -11,15 +11,15 @@ import type {
 type LineSize = 'small' | 'large' | 'combo';
 const LINE_SIZES: Record<LineSize, { min: number; max: number }> = {
 	small: {
-		min: 3,
+		min: 0,
 		max: 6,
 	},
 	large: {
-		min: 30,
+		min: 0,
 		max: 40,
 	},
 	combo: {
-		min: 1,
+		min: 0,
 		max: 50,
 	},
 };
@@ -30,49 +30,51 @@ type Example = {
 	lineSize: LineSize;
 	editable?: boolean;
 	highlightLines: number[];
-	fixedParentHeight: boolean;
+	parentHeightCls?: string;
 };
 const EXAMPLES_META: Example[] = [
 	{
 		lineCount: 1,
 		lineSize: 'small',
 		highlightLines: [1],
-		fixedParentHeight: false,
+	},
+	{
+		lineCount: 2,
+		lineSize: 'small',
+		editable: true,
+		highlightLines: [1],
 	},
 	{
 		lineCount: 2,
 		lineSize: 'large',
 		editable: true,
 		highlightLines: [1],
-		fixedParentHeight: false,
 	},
 	{
-		lineCount: 5,
+		lineCount: 10,
 		lineSize: 'combo',
 		editable: true,
 		highlightLines: [1, 3],
-		fixedParentHeight: true,
+		parentHeightCls: 'h-[200px]',
 	},
 	{
 		lineCount: 10,
 		lineSize: 'combo',
 		editable: true,
 		highlightLines: [2, 6],
-		fixedParentHeight: false,
 	},
 	{
 		lineCount: 100,
 		lineSize: 'combo',
 		editable: true,
 		highlightLines: [1, 30, 100],
-		fixedParentHeight: false,
 	},
 ];
 
 for (const example of EXAMPLES_META) {
 	const { min, max } = LINE_SIZES[example.lineSize];
 
-	example.code = getSampleLines(example.lineCount, min, max);
+	example.code = getSampleLines(example.lineCount, min, max) + ("\n");
 }
 
 export function CodeEditorTest() {
@@ -81,9 +83,8 @@ export function CodeEditorTest() {
 			code = '',
 			editable,
 			highlightLines,
-			fixedParentHeight,
+			parentHeightCls = '',
 		} = example;
-		const parentHeightCls = fixedParentHeight ? `h-[200px]` : '';
 
 		const sectionId = `u${index + 1}`;
 		const sectionTitle = `Usage #${index + 1}`;

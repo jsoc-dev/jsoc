@@ -42,7 +42,7 @@ export function InputJsonRenderer() {
 				code={json}
 				codeError={error}
 				codeLang='json'
-				highlightCls='bg-red-100'
+				highlightLineCls='bg-red-100'
 				highlightLines={error?.line ? [error?.line] : []}
 				fileName={name}
 				setCode={setJson}
