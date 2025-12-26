@@ -31,7 +31,7 @@ export function GridDoc() {
 	const pkgNameEl = <CodeInline>{pkgName}</CodeInline>;
 
 	return (
-		<>
+		<div className='flex flex-col min-h-full py-pageY'>
 			{/* heading */}
 			<Section
 				isHeading
@@ -94,6 +94,6 @@ export function GridDoc() {
 			<Section id='adapters' title='Adapters'>
 				{/* to be fetched from generated docs */}
 			</Section>
-		</>
+		</div>
 	);
 }

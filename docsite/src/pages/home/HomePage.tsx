@@ -13,7 +13,7 @@ const links = [
 
 export function HomePage() {
 	return (
-		<div>
+		<div className='flex flex-col min-h-full py-pageY'>
 			{/* Hero section */}
 			<section className='text-center'>
 				<h1 className='text-[clamp(2rem,5vw,4rem)] mb-5 font-semibold'>

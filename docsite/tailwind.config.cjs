@@ -36,6 +36,15 @@ module.exports = {
 					dominant: 'black',
 				},
 			},
+			height: {
+				header: '56px',
+			},
+			inset: {
+				belowHeader: '56px',
+			},
+			spacing: {
+				pageY: '48px',
+			},
 		},
 	},
 	plugins: [
