@@ -67,7 +67,7 @@ const EXAMPLES_META: CodeEditorTestExample[] = [
 for (const example of EXAMPLES_META) {
 	const { min, max } = LINE_SIZES[example.lineSize];
 
-	example.code = getSampleLines(example.lineCount, min, max) + '\n';
+	example.code = getSampleLines(example.lineCount, min, max) ;
 }
 
 export { EXAMPLES_META };

@@ -26,7 +26,7 @@ export function CodeEditorTestExampleSection({
 		<Section key={index} id={sectionId} title={sectionTitle}>
 			<div className='bg-surface-muted border border-outline-subtle flex flex-col p-4 mb-10 gap-4'>
 				{/* checkboxes to toggle visibility */}
-				<div className='flex gap-4'>
+				<div className='flex justify-between'>
 					<label className='flex items-center gap-2 cursor-pointer'>
 						<input
 							type='checkbox'

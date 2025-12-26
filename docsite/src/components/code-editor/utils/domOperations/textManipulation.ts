@@ -5,7 +5,6 @@ export function insertTextAtCursor(text: string): boolean {
 	}
 
 	const { selection, range, textNode, offset } = ctx;
-	const text = getTextByKeyboardKey(keyboardKey);
 
 	textNode.nodeValue =
 		textNode.nodeValue!.slice(0, offset) +

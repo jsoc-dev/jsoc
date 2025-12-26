@@ -1,9 +1,19 @@
 import { useContext, useCallback } from 'react';
 import { CodeEditorContext, type Code } from '../../CodeEditor';
 import { validateCode } from '../../utils/codeLanguageUtil';
-import { codeToVirtualLines, sanitizeCode, virtualLinesToCode } from '../../utils/virtualLinesUtil';
-import { onKeyDown, onPaste } from '../../utils/userInput/eventHandlers';
+import {
+	convertVirtualLinesToCode,
+	createVirtualLines,
+	sanitizeCode,
+} from '../../utils/virtualLinesUtil';
+import { onKeyDown	 } from '../../utils/eventHandling/keyboardEvent';
+import { onPaste } from '../../utils/eventHandling/clipboardEvent';
 
+ //TODO 
+ // handle delete, 
+ // selection + backspace,delete
+ // ctrl/shift + key
+ // zwsp navigation / backspace
 export function CodeEditorInput({ className }: { className?: string }) {
 	const {
 		codeLang,
@@ -15,9 +25,10 @@ export function CodeEditorInput({ className }: { className?: string }) {
 
 	const updateCode = useCallback(
 		(code: Code) => {
-			virtualLinesContentRef.current = codeToVirtualLines(code);
-			setCode?.(code);
-			setCodeError?.(validateCode(code, codeLang));
+			virtualLinesContentRef.current = createVirtualLines(code);
+			const sanitized = sanitizeCode(code);
+			setCode?.(sanitized);
+			setCodeError?.(validateCode(sanitized, codeLang));
 		},
 		[setCode, setCodeError]
 	);
@@ -25,9 +36,10 @@ export function CodeEditorInput({ className }: { className?: string }) {
 	const setInitialCode = (pre: HTMLPreElement | null) => {
 		if (!pre) return;
 
-		const code = virtualLinesToCode(virtualLinesContentRef.current);
-		if (pre.textContent !== code) {
-			pre.textContent = code;
+		const initialCode = convertVirtualLinesToCode(virtualLinesContentRef.current);
+		if (pre.innerHTML !== initialCode) {
+			console.info('CodeEditor: Setting initial code in input element.');
+			pre.innerHTML = initialCode;
 		}
 	};
 

@@ -40,6 +40,7 @@ export function CodeEditorBody() {
 							key={index}
 							className='bg-surface-code  select-none'
 							lineNumber={index + 1}
+							totalLines={virtualLines.length}
 						/>
 					))}
 				</div>
@@ -49,28 +50,29 @@ export function CodeEditorBody() {
 			<div
 				aria-hidden
 				className={`
-							absolute
-							flex flex-col w-full
-							pointer-events-none
-							select-none
-							z-0
-							${isWrapEnabled ? '' : 'min-w-max'}
-						`}
+					absolute
+					flex flex-col w-full
+					pointer-events-none
+					select-none
+					z-0
+					${isWrapEnabled ? '' : 'min-w-max'}
+				`}
 			>
 				{virtualLines.map((line, index) => (
 					// virtual-lines-wrapper
 					<div
 						key={index}
 						className={`
-									inline-flex
-									${linesWrapperCls} 
-								`}
+							inline-flex
+							${linesWrapperCls} 
+						`}
 					>
 						{/* line-number: isWrapEnabled */}
 						{isWrapEnabled && (
 							<CodeEditorLineNumber
 								className='inline-block'
 								lineNumber={index + 1}
+								totalLines={virtualLines.length}
 							/>
 						)}
 						{/* virtual-line */}
@@ -79,6 +81,7 @@ export function CodeEditorBody() {
 								${isWrapEnabled ? '' : 'pl-12 h-5'}
 								${togglehighlightLineCls(index + 1)}
 								${lineCls}
+								${virtualLines.length === index + 1 ? 'text-transparent' : ''}
 							`}
 						>
 							{line}
@@ -90,10 +93,10 @@ export function CodeEditorBody() {
 			{/* editable-lines-wrapper */}
 			<div
 				className={`
-							inline-block 
-							flex-1
-							z-10 ${linesWrapperCls}
-						`}
+					inline-block 
+					flex-1
+					z-10 ${linesWrapperCls}
+				`}
 			>
 				<CodeEditorInput className={lineCls} />
 			</div>

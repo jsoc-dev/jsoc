@@ -1,5 +1,5 @@
 import { createContext, useRef, useState } from 'react';
-import { codeToVirtualLines } from './utils/virtualLinesUtil';
+import { createVirtualLines } from './utils/virtualLinesUtil';
 import { CodeEditorHeader } from './components/CodeEditorHeader';
 import { CodeEditorBody } from './components/CodeEditorBody';
 
@@ -37,7 +37,7 @@ export function CodeEditor({
 	setCode,
 	setCodeError,
 }: CodeEditorProps) {
-	const virtualLinesContentRef = useRef(codeToVirtualLines(code));
+	const virtualLinesContentRef = useRef(createVirtualLines(code));
 	const [isWrapEnabled, setIsWrapEnabled] = useState(true);
 
 	return (
