@@ -12,7 +12,7 @@ export function PaneHeader({
 				<div className='flex h-full items-center'>
 					<span className="font-semibold w-max">{heading}</span>
 					<span 
-						className='bg-outline-dominant 
+						className='bg-outline-subtle 
 						h-[50%] w-px
 						mx-3'
 					/>

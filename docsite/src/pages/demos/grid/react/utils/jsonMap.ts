@@ -1,6 +1,7 @@
 import { encodePretty } from '@jsoc/core/utils';
+import type { DemoGridJsonOption } from '../GridDemo';
 
-export const singleProductJson = encodePretty({
+export const shoeJson = encodePretty({
 	id: 'P-1001',
 	name: 'AirFlex Running Shoes',
 	createdDate: '2024-07-30',
@@ -1422,3 +1423,11 @@ export const productsJson = encodePretty([
 		],
 	},
 ]);
+
+export const DEMO_GRID_JSON_MAP: Record<DemoGridJsonOption, string> = {
+	shoe: shoeJson,
+	products: productsJson
+}
+
+export const DEMO_GRID_JSON_OPTIONS = Object.keys(DEMO_GRID_JSON_MAP);
+
