@@ -15,7 +15,6 @@ export function CodeEditorTestExampleSection({
 	const [showOutput, setShowOutput] = useState(false);
 	const {
 		code = '',
-		editable,
 		highlightLines,
 		parentHeightCls = '',
 	} = example;
@@ -71,7 +70,6 @@ export function CodeEditorTestExampleSection({
 				{showOutput && (
 					<div className={`flex ${parentHeightCls}`}>
 						<CodeEditorTestExampleOutput
-							editable={editable}
 							exampleCode={code}
 							highlightLines={highlightLines}
 						/>

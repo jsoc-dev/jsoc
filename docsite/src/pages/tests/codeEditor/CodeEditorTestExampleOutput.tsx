@@ -7,13 +7,9 @@ import {
 
 export function CodeEditorTestExampleOutput({
 	exampleCode,
-	editable,
-
 	highlightLines,
 }: {
 	exampleCode: Code;
-	editable?: boolean;
-
 	highlightLines: CodeLineNumber[];
 }) {
 	const [code, setCode] = useState(exampleCode);
@@ -21,9 +17,7 @@ export function CodeEditorTestExampleOutput({
 	return (
 		<CodeEditor
 			code={code}
-			{...(editable && {
-				setCode: setCode,
-			})}
+			setCode= {setCode}
 			codeLang='cmd'
 			highlightLines={highlightLines}
 		/>

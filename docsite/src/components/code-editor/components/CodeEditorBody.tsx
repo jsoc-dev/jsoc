@@ -1,17 +1,17 @@
-import { useContext } from 'react';
-import { CodeEditorContext, type CodeLineNumber } from '../CodeEditor';
+import { useContext, useEffect, useState } from 'react';
+import { CodeEditorContext } from '../CodeEditor';
 import { CodeEditorLineNumber } from './body/CodeEditorLineNumber';
 import { CodeEditorInput } from './body/CodeEditorInput';
+import { convertToVirtualLines } from '../utils/virtualLinesUtil';
+import { CodeEditorVirtualLine } from './body/CodeEditorVirtualLine';
 
 export function CodeEditorBody() {
-	const {
-		isWrapEnabled,
-		highlightLines,
-		highlightLineCls,
-		virtualLinesContentRef,
-	} = useContext(CodeEditorContext);
+	const { code, codeInternalRef, isWrapEnabled } =
+		useContext(CodeEditorContext);
 
-	const virtualLines = virtualLinesContentRef.current;
+	const [virtualLines, setVirtualLines] = useState(
+		convertToVirtualLines(codeInternalRef.current)
+	);
 
 	const lineCls = `
 		flex-1
@@ -19,8 +19,12 @@ export function CodeEditorBody() {
 		${isWrapEnabled ? 'whitespace-pre-wrap wrap-anywhere' : 'min-w-full'}
 	`;
 	const linesWrapperCls = `${isWrapEnabled ? '' : 'min-w-max'}`;
-	const togglehighlightLineCls = (n: CodeLineNumber) =>
-		highlightLines.includes(n) ? highlightLineCls : 'bg-surface-code';
+
+	useEffect(() => {
+		// can use codeInternalRef as it is already updated in CodeEditorInput effect (child effects run first).
+		const newVirtualLines = convertToVirtualLines(codeInternalRef.current);
+		setVirtualLines(newVirtualLines);
+	}, [code]);
 
 	return (
 		/* scroller */
@@ -40,7 +44,7 @@ export function CodeEditorBody() {
 							key={index}
 							className='bg-surface-code  select-none'
 							lineNumber={index + 1}
-							totalLines={virtualLines.length}
+							isTrailingLine={index + 1 === virtualLines.length}
 						/>
 					))}
 				</div>
@@ -59,7 +63,6 @@ export function CodeEditorBody() {
 				`}
 			>
 				{virtualLines.map((line, index) => (
-					// virtual-lines-wrapper
 					<div
 						key={index}
 						className={`
@@ -67,25 +70,12 @@ export function CodeEditorBody() {
 							${linesWrapperCls} 
 						`}
 					>
-						{/* line-number: isWrapEnabled */}
-						{isWrapEnabled && (
-							<CodeEditorLineNumber
-								className='inline-block'
-								lineNumber={index + 1}
-								totalLines={virtualLines.length}
-							/>
-						)}
-						{/* virtual-line */}
-						<pre
-							className={`
-								${isWrapEnabled ? '' : 'pl-12 h-5'}
-								${togglehighlightLineCls(index + 1)}
-								${lineCls}
-								${virtualLines.length === index + 1 ? 'text-transparent' : ''}
-							`}
-						>
-							{line}
-						</pre>
+						<CodeEditorVirtualLine
+							line={line}
+							lineCls={lineCls}
+							lineNumber={index + 1}
+							isTrailingLine={index + 1 == virtualLines.length}
+						/>
 					</div>
 				))}
 			</div>
@@ -98,7 +88,7 @@ export function CodeEditorBody() {
 					z-10 ${linesWrapperCls}
 				`}
 			>
-				<CodeEditorInput className={lineCls} />
+				<CodeEditorInput lineCls={lineCls} />
 			</div>
 		</div>
 	);

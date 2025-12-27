@@ -2,12 +2,17 @@ import { PaneHeader } from '../PaneHeader';
 import { JsocGridDemoContext, type DemoGridJsonOption } from '../../GridDemo';
 import { DEMO_GRID_JSON_MAP, DEMO_GRID_JSON_OPTIONS } from '../../utils/jsonMap';
 import { useCallback, useContext } from 'react';
+import { validateCode } from '../../../../../../components/code-editor/utils/codeLanguageUtil';
 
 export function JsonOptions() {
-	const { jsonOption, setJson, setJsonOption } = useContext(JsocGridDemoContext);
+	const { jsonOption, setJson, setJsonError, setJsonOption } = useContext(JsocGridDemoContext);
 	const onJsonOptionClick = useCallback((jsonOption: DemoGridJsonOption) => {
+		const newJson = DEMO_GRID_JSON_MAP[jsonOption];
 		setJsonOption(jsonOption);
-		setJson(DEMO_GRID_JSON_MAP[jsonOption]);
+		setJson(newJson);
+		setJsonError(validateCode(newJson, 'json'));
+		// TODO: use composite state for option,json,error, currently the design is 
+		// prone to bugs like the jsonOption is updated somewhere without updating jsonError.
 	}, []);
 
 	const getSelectedCls = function (uiKey: string): string {

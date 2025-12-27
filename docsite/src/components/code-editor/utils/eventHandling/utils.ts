@@ -4,15 +4,15 @@ export type DomUpdater = () => boolean;
 export type StateUpdater = (code: Code) => void;
 
 export function applyEdit(
-	e:
+	event:
 		| React.KeyboardEvent<HTMLPreElement>
 		| React.ClipboardEvent<HTMLPreElement>,
 	domUpdater: DomUpdater,
 	stateUpdater: StateUpdater
 ) {
-	e.preventDefault();
+	event.preventDefault();
 
 	if (domUpdater()) {
-		stateUpdater(e.currentTarget.innerHTML);
+		stateUpdater(event.currentTarget.innerHTML);
 	}
 }

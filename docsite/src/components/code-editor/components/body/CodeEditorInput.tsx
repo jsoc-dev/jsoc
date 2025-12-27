@@ -1,59 +1,68 @@
-import { useContext, useCallback } from 'react';
+import { useContext, useCallback, useRef, useEffect } from 'react';
 import { CodeEditorContext, type Code } from '../../CodeEditor';
 import { validateCode } from '../../utils/codeLanguageUtil';
 import {
-	convertVirtualLinesToCode,
-	createVirtualLines,
-	sanitizeCode,
+	convertToExternalCode,
+	convertToInternalCode,
 } from '../../utils/virtualLinesUtil';
-import { onKeyDown	 } from '../../utils/eventHandling/keyboardEvent';
+import { onKeyDown } from '../../utils/eventHandling/keyboardEvent';
 import { onPaste } from '../../utils/eventHandling/clipboardEvent';
 
- //TODO 
- // handle delete, 
- // selection + backspace,delete
- // ctrl/shift + key
- // zwsp navigation / backspace
-export function CodeEditorInput({ className }: { className?: string }) {
+export function CodeEditorInput({ lineCls }: { lineCls: string }) {
+	const inputRef = useRef<HTMLPreElement>(null);
 	const {
+		code,
+		codeInternalRef,
 		codeLang,
 		isWrapEnabled,
-		virtualLinesContentRef,
 		setCode,
 		setCodeError,
 	} = useContext(CodeEditorContext);
 
-	const updateCode = useCallback(
+	const setInternalHtmlOnce = () => {
+		const inputEl = inputRef.current;
+		if (!inputEl) return;
+
+		inputEl.innerHTML = codeInternalRef.current;
+	};
+	const syncCodeInternal = () => {
+		const inputEl = inputRef.current;
+		if (!inputEl) return;
+
+		const currentInternalCode = codeInternalRef.current;
+		const newInternalCode = convertToInternalCode(code);
+
+		if (newInternalCode !== currentInternalCode) {
+			console.info('CodeEditor: Setting initial internal code.');
+			codeInternalRef.current = newInternalCode;
+			inputEl.innerHTML = newInternalCode;
+		}
+	};
+
+	const syncCodeExternal = useCallback(
 		(code: Code) => {
-			virtualLinesContentRef.current = createVirtualLines(code);
-			const sanitized = sanitizeCode(code);
-			setCode?.(sanitized);
-			setCodeError?.(validateCode(sanitized, codeLang));
+			codeInternalRef.current = code;
+			const codeExternal = convertToExternalCode(code);
+			setCode?.(codeExternal);
+			setCodeError?.(validateCode(codeExternal, codeLang));
 		},
 		[setCode, setCodeError]
 	);
 
-	const setInitialCode = (pre: HTMLPreElement | null) => {
-		if (!pre) return;
-
-		const initialCode = convertVirtualLinesToCode(virtualLinesContentRef.current);
-		if (pre.innerHTML !== initialCode) {
-			console.info('CodeEditor: Setting initial code in input element.');
-			pre.innerHTML = initialCode;
-		}
-	};
+	useEffect(setInternalHtmlOnce, []);
+	useEffect(syncCodeInternal, [code]);
 
 	return (
 		<pre
-			className={`${className}
+			className={`${lineCls}
 				${isWrapEnabled ? 'pl-12' : ''}
 				text-transparent/20 caret-black
 				focus:outline-none
 			`}
 			contentEditable={!!setCode}
-			onKeyDown={(e) => onKeyDown(e, updateCode)}
-			onPaste={(e) => onPaste(e, updateCode)}
-			ref={(pre) => setInitialCode(pre)}
+			onKeyDown={(e) => onKeyDown(e, syncCodeExternal)}
+			onPaste={(e) => onPaste(e, syncCodeExternal)}
+			ref={inputRef}
 			spellCheck={false}
 		/>
 	);

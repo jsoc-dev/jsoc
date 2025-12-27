@@ -1,32 +1,56 @@
-import { deleteBackward, getTextByKeyboardKey, insertTextAtCursor } from "../domOperations/textManipulation";
-import { applyEdit, type StateUpdater } from "./utils";
+import {
+	deleteBackward,
+	deleteForward,
+	insertTextAtCursor,
+} from '../domOperations/textManipulation';
+import { applyEdit, type StateUpdater } from './utils';
 
-export function isPrintableKey(e: React.KeyboardEvent) {
-	if (
-		e.shiftKey || // SHIFT
-		e.ctrlKey || // CTRL
-		e.metaKey || // ⌘(macOS) / ⊞(Windows) / Super(linux)
-		e.altKey // ALT
-	) {
+export function isCharacterKey(e: React.KeyboardEvent) {
+	const key = e.key;
+
+	if (e.ctrlKey || e.metaKey || e.altKey) {
+		// let browser handle combination input
 		return false;
 	}
 
-	const key = e.key;
-
-	return key.length === 1 || key === 'Enter' || key === 'Tab';
+	return key.length === 1;
 }
 
 export function onKeyDown(
-	e: React.KeyboardEvent<HTMLPreElement>,
+	event: React.KeyboardEvent<HTMLPreElement>,
 	stateUpdater: StateUpdater
 ) {
-	if (isPrintableKey(e)) {
-		applyEdit(
-			e,
-			() => insertTextAtCursor(getTextByKeyboardKey(e.key)),
-			stateUpdater
-		);
-	} else if (e.key === 'Backspace') {
-		applyEdit(e, deleteBackward, stateUpdater);
+	const key = event.key;
+
+	switch (key) {
+		case 'Control': {
+			// TODO: Implement Undo, Redo
+			break;
+		}
+		case 'Shift': {
+			// let browser handle
+			break;
+		}
+		case 'Backspace': {
+			applyEdit(event, deleteBackward, stateUpdater);
+			break;
+		}
+		case 'Delete': {
+			applyEdit(event, deleteForward, stateUpdater);
+			break;
+		}
+		case 'Enter': {
+			applyEdit(event, () => insertTextAtCursor('\n'), stateUpdater);
+			break;
+		}
+		case 'Tab': {
+			applyEdit(event, () => insertTextAtCursor('\t'), stateUpdater);
+			break;
+		}
+		default: {
+			if (isCharacterKey(event)) {
+				applyEdit(event, () => insertTextAtCursor(key), stateUpdater);
+			}
+		}
 	}
 }

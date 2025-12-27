@@ -20,7 +20,6 @@ export type CodeEditorTestExample = {
 	code?: string;
 	lineCount: number;
 	lineSize: LineSize;
-	editable?: boolean;
 	highlightLines: number[];
 	parentHeightCls?: string;
 };
@@ -34,32 +33,27 @@ const EXAMPLES_META: CodeEditorTestExample[] = [
 	{
 		lineCount: 2,
 		lineSize: 'small',
-		editable: true,
 		highlightLines: [1],
 	},
 	{
 		lineCount: 2,
 		lineSize: 'large',
-		editable: true,
 		highlightLines: [1],
 	},
 	{
 		lineCount: 10,
 		lineSize: 'combo',
-		editable: true,
 		highlightLines: [1, 3],
 		parentHeightCls: 'h-[200px]',
 	},
 	{
 		lineCount: 10,
 		lineSize: 'combo',
-		editable: true,
 		highlightLines: [2, 6],
 	},
 	{
 		lineCount: 100,
 		lineSize: 'combo',
-		editable: true,
 		highlightLines: [1, 30, 100],
 	},
 ];

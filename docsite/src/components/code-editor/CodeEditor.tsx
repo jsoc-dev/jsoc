@@ -1,5 +1,5 @@
 import { createContext, useRef, useState } from 'react';
-import { createVirtualLines } from './utils/virtualLinesUtil';
+import { convertToInternalCode } from './utils/virtualLinesUtil';
 import { CodeEditorHeader } from './components/CodeEditorHeader';
 import { CodeEditorBody } from './components/CodeEditorBody';
 
@@ -37,19 +37,19 @@ export function CodeEditor({
 	setCode,
 	setCodeError,
 }: CodeEditorProps) {
-	const virtualLinesContentRef = useRef(createVirtualLines(code));
+	const codeInternalRef = useRef(convertToInternalCode(code));
 	const [isWrapEnabled, setIsWrapEnabled] = useState(true);
 
 	return (
 		<CodeEditorContext.Provider
 			value={{
 				code,
+				codeInternalRef,
 				codeLang,
 				fileName,
 				highlightLines,
 				highlightLineCls,
 				isWrapEnabled,
-				virtualLinesContentRef,
 				setCode,
 				setCodeError,
 				setIsWrapEnabled,
@@ -75,18 +75,19 @@ export function CodeEditor({
 
 export type CodeEditorContext = {
 	code: Code;
+	codeInternalRef: React.RefObject<Code>;
 	codeLang: CodeLanguage;
 	fileName: string;
 	highlightLines: number[];
 	highlightLineCls: string;
 	isWrapEnabled: boolean;
-	virtualLinesContentRef: React.RefObject<CodeLine[]>;
 	setCode?: React.Dispatch<React.SetStateAction<Code>>;
 	setCodeError?: React.Dispatch<React.SetStateAction<CodeError>>;
 	setIsWrapEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export const CodeEditorContext = createContext<CodeEditorContext>({
 	code: '',
+	codeInternalRef: { current: '' },
 	codeLang: 'cmd',
 	fileName: '',
 	highlightLines: [],
@@ -95,5 +96,4 @@ export const CodeEditorContext = createContext<CodeEditorContext>({
 	setCode: () => undefined,
 	setCodeError: () => undefined,
 	setIsWrapEnabled: () => undefined,
-	virtualLinesContentRef: { current: [] },
 });

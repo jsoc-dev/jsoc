@@ -2,10 +2,10 @@ import { insertTextAtCursor } from '../domOperations/textManipulation';
 import { applyEdit, type StateUpdater } from './utils';
 
 export function onPaste(
-	e: React.ClipboardEvent<HTMLPreElement>,
+	event: React.ClipboardEvent<HTMLPreElement>,
 	stateUpdater: StateUpdater
 ) {
-	const text = e.clipboardData.getData('text/plain');
+	const text = event.clipboardData.getData('text/plain');
 
-	applyEdit(e, () => insertTextAtCursor(text), stateUpdater);
+	applyEdit(event, () => insertTextAtCursor(text), stateUpdater);
 }
