@@ -16,7 +16,7 @@ export function CodeEditorBody() {
 	const lineCls = `
 		flex-1
 		leading-5 text-sm
-		${isWrapEnabled ? 'whitespace-pre-wrap ' : 'min-w-full'}
+		${isWrapEnabled ? 'whitespace-pre-wrap wrap-anywhere' : 'min-w-full'}
 	`;
 	const linesWrapperCls = `${isWrapEnabled ? '' : 'min-w-max'}`;
 	const togglehighlightLineCls = (n: CodeLineNumber) =>

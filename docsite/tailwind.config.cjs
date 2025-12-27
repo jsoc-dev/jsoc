@@ -65,6 +65,9 @@ module.exports = {
 					'@screen lg': px(10),
 					'@screen 2xl': px(0),
 				},
+				'.wrap-anywhere': {
+					'overflow-wrap': 'anywhere',
+				},
 			});
 		},
 	],
