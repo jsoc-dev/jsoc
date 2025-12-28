@@ -4,8 +4,6 @@ import { DocsRouter } from './pages/docs/DocsRouter';
 import { DemosRouter } from './pages/demos/DemosRouter';
 import { PageNotFound } from './shared/PageNotFound';
 import { Route, Routes } from 'react-router';
-import { TestsRouter } from './pages/tests/TestsRouter';
-import { isDevMode } from './utils/development';
 
 export default function App() {
 	return (
@@ -14,9 +12,6 @@ export default function App() {
 				<Route index element={<HomePage />} />
 				<Route path='demos/*' element={<DemosRouter />} />
 				<Route path='docs/*' element={<DocsRouter />} />
-				{isDevMode() && (
-					<Route path='tests/*' element={<TestsRouter />} />
-				)}
 				<Route path='*' element={<PageNotFound />} />
 			</Routes>
 		</AppWrapper>

@@ -1,4 +1,4 @@
-import { CodeEditor } from '../../../../components/code-editor/CodeEditor';
+import { CodeEditor } from '../../../../../../../code-editor';
 import { Section } from '../../../../components/Section';
 import { ListItem, NumericList } from '../../../../components/List';
 import { CodeInline } from '../../../../components/CodeInline';

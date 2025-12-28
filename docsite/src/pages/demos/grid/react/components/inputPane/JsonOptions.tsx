@@ -2,7 +2,7 @@ import { PaneHeader } from '../PaneHeader';
 import { JsocGridDemoContext, type DemoGridJsonOption } from '../../GridDemo';
 import { DEMO_GRID_JSON_MAP, DEMO_GRID_JSON_OPTIONS } from '../../utils/jsonMap';
 import { useCallback, useContext } from 'react';
-import { validateCode } from '../../../../../../components/code-editor/utils/codeLanguageUtil';
+import { validateCode } from '../../../../../../../../../code-editor';
 
 export function JsonOptions() {
 	const { jsonOption, setJson, setJsonError, setJsonOption } = useContext(JsocGridDemoContext);
