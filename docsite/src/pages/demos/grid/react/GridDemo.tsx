@@ -8,7 +8,7 @@ import { UiOptions } from './components/outputPane/UiOptions';
 import {
 	CodeEditor,
 	type CodeError,
-	validateCode } from '../../../../../../../code-editor/';
+	validateCode } from 'code-editor';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
 import { OutputGrid } from './components/outputPane/OutputGrid';
 

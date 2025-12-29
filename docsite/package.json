@@ -11,6 +11,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"code-editor": "file:../../code-editor/editor",
 		"@jsoc/docs": "workspace:*",
 		"@jsoc/core": "workspace:*",
 		"@jsoc/react": "workspace:*",
