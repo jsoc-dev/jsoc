@@ -7,7 +7,7 @@ module.exports = {
 	content: [
 		'./index.html',
 		'./src/**/*.{js,ts,jsx,tsx}', 
-		'../node_modules/code-editor/**/*.{js,ts,jsx,tsx}'
+		'./node_modules/code-editor/**/*.{js,ts,jsx,tsx}'
 	],
 	theme: {
 		extend: {

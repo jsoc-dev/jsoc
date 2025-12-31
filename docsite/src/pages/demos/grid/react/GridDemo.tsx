@@ -5,8 +5,8 @@ import { type GridUiAdapterName } from '@jsoc/react/grid';
 import { SplitView } from '../../../../components/SplitView';
 import { JsonOptions } from './components/inputPane/JsonOptions';
 import { UiOptions } from './components/outputPane/UiOptions';
-import { CodeEditor, type CodeError } from 'code-editor';
-import { validateCode } from 'code-editor/utils';
+import { CodeEditor } from 'code-editor';
+import { validateCode, type CodeError } from 'code-editor/utils';
 import { ErrorMessage } from '../../../../components/ErrorMessage';
 import { OutputGrid } from './components/outputPane/OutputGrid';
 
