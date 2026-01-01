@@ -1,13 +1,16 @@
-// tailwind.config.cjs
-/** @type {import('tailwindcss').Config} */
+const { preset } = require('code-editor/tailwind-config');
+
+/**
+ * Tailwind config for the docsite
+ * @type {import('tailwindcss').Config}
+ *
+ */
 module.exports = {
-	presets: [
-		require('code-editor/tailwind-preset'),
-	],
+	presets: [preset],
 	content: [
 		'./index.html',
-		'./src/**/*.{js,ts,jsx,tsx}', 
-		'./node_modules/code-editor/**/*.{js,ts,jsx,tsx}'
+		'./src/**/*.{js,ts,jsx,tsx}',
+		'./node_modules/code-editor/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
 		extend: {
