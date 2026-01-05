@@ -76,17 +76,15 @@ export function GridDemo() {
 					<SplitView.Pane header={<JsonOptions />}>
 						<div className='flex h-full'>
 							<CodeEditor
-								className='flex-1'
-								code={json}
-								codeError={jsonError}
-								codeLang='json'
-								highlightLineCls='bg-red-100'
-								highlightLines={
-									jsonError?.line ? [jsonError?.line] : []
-								}
-								fileName={jsonOption}
-								setCode={setJson}
-								setCodeError={setJsonError}
+								document={{
+									content: json,
+									name: jsonOption,
+									language: 'json'
+								}}
+								onChange={(content, error) => {
+									setJson(content)
+									setJsonError(error)
+								}}
 							/>
 						</div>
 					</SplitView.Pane>

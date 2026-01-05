@@ -50,8 +50,17 @@ export function GridDoc() {
 						}
 					>
 						<CodeEditor
-							code={'npm install ' + pkgName}
-							codeLang='cmd'
+							document={{
+								content: 'npm install ' + pkgName,
+								language: 'cmd',
+							}}
+							editor={{
+								disabled: true,
+								hideLineNumbers: true,
+							}}
+							toolbar={{
+								showCopyTool: true,
+							}}
 						/>
 					</ListItem>
 				</NumericList>
@@ -62,18 +71,35 @@ export function GridDoc() {
 				<NumericList>
 					<ListItem title='Import the component.'>
 						<CodeEditor
-							code={importExample}
-							codeLang='tsx'
-							fileName='JsocGridDemo'
+							document={{
+								content: importExample,
+								language: 'tsx',
+								name: 'JsocGridDemo',
+							}}
+							editor={{
+								disabled: true,
+								hideLineNumbers: true,
+							}}
+							toolbar={{
+								showCopyTool: true,
+							}}
 						/>
 					</ListItem>
 
 					<ListItem title='Render the component.'>
 						<CodeEditor
-							code={renderExample}
-							codeLang='tsx'
-							fileName='JsocGridDemo'
-							highlightLines={[6]}
+							document={{
+								content: renderExample,
+								language: 'tsx',
+								name: 'JsocGridDemo',
+							}}
+							editor={{
+								disabled: true,
+								highlightLines: [6],
+							}}
+							toolbar={{
+								showCopyTool: true,
+							}}
 						/>
 					</ListItem>
 				</NumericList>
