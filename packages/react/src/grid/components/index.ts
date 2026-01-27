@@ -1,2 +1,2 @@
-export * from './navigator'
-export * from './toggle-subgrid';
+export * from './navigator/';
+export * from './toggle-subgrid/';

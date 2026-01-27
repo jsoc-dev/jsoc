@@ -19,7 +19,7 @@ import {
 	GridRenderCellParams,
 	// type GridColType,
 } from '@mui/x-data-grid';
-import { ToggleSubGridButton } from '../../../../components';
+import { ToggleSubGridButton } from '../../../components';
 // import type { GridBaseColDef } from '@mui/x-data-grid/internals';
 
 export const COLUMN_FACTORY_MUI: ColumnFactory<GridColDef> = {

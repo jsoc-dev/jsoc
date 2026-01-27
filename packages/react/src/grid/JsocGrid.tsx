@@ -3,7 +3,7 @@ import {
 	type GridUiAdapterComponent,
 	type GridUiAdapterComponentProps,
 	GRID_UI_ADAPTERS,
-} from './adapter-registry';
+} from './adapters';
 import { PlainObject } from '@jsoc/core/utils';
 import {
 	type GridDataReadonly,
@@ -13,7 +13,6 @@ import {
 } from '@jsoc/core/grid';
 import {
 	type FC,
-	type JSX,
 	type ReactNode,
 	type ReactElement,
 	type Dispatch,
@@ -22,18 +21,22 @@ import {
 	useEffect,
 	createContext,
 	Activity,
+	Fragment,
 } from 'react';
 
 export type JsocGridContextValue = {
 	gridSchemaStore: GridSchemaStore;
 	setGridSchemaStore: Dispatch<SetStateAction<GridSchemaStore>>;
-	showDefaultNavigator: boolean;
 };
+
+export type JsocGridCustomWrapper<U extends GridUiAdapterName> =
+	React.ComponentType<{
+		children: ReactElement<GridUiAdapterComponent<U>>;
+	}>;
 
 export const JsocGridContext = createContext<JsocGridContextValue>({
 	gridSchemaStore: [],
 	setGridSchemaStore: () => undefined,
-	showDefaultNavigator: true,
 });
 
 export type JsocGridProps<U extends GridUiAdapterName> = {
@@ -42,16 +45,10 @@ export type JsocGridProps<U extends GridUiAdapterName> = {
 	ui: U;
 	uiProps?: GridUiAdapterComponentProps<U>;
 	/**
-	 * A custom render function provided by consumer. 
-	 * Using this, consumer can wrap the UiAdapter element in any custom components if needed.
-	 * @default (uiAdapterEl) => uiAdapterEl
+	 * Custom wrapper component to wrap around each grid instance.
+	 * @default React.Fragment
 	 */
-	uiRenderer?: (uiAdapterEl: ReactElement<GridUiAdapterComponent<U>>) => JSX.Element;
-	/**
-	 * If `false`, the default navigator won't be rendered
-	 * @default true
-	 */
-	showDefaultNavigator?: boolean;
+	CustomWrapper?: JsocGridCustomWrapper<U>;
 };
 
 /**
@@ -70,12 +67,11 @@ export function JsocGrid<U extends GridUiAdapterName>({
 	data,
 	ui,
 	uiProps,
-	uiRenderer = (uiAdapterEl) => uiAdapterEl, // default renderer just returns the uiAdapterEl as it is
-	showDefaultNavigator = true,
+	CustomWrapper = Fragment,
 }: JsocGridProps<U>) {
 	const rootGridId = uiProps?.custom?.gridId || FALLBACK_ROOT_GRID_ID;
 	const [gridSchemaStore, setGridSchemaStore] = useState(
-		initGridSchemaStore(rootGridId, data)
+		initGridSchemaStore(rootGridId, data),
 	);
 
 	useEffect(() => {
@@ -91,7 +87,6 @@ export function JsocGrid<U extends GridUiAdapterName>({
 			value={{
 				gridSchemaStore,
 				setGridSchemaStore,
-				showDefaultNavigator,
 			}}
 		>
 			{gridSchemaStore.map((gridSchema) => (
@@ -99,7 +94,7 @@ export function JsocGrid<U extends GridUiAdapterName>({
 					key={gridSchema.gridId}
 					mode={gridSchema.isActiveGrid ? 'visible' : 'hidden'}
 				>
-					{uiRenderer(
+					<CustomWrapper>
 						<UiAdapter
 							{...uiProps}
 							{...{
@@ -109,7 +104,7 @@ export function JsocGrid<U extends GridUiAdapterName>({
 								},
 							}}
 						/>
-					)}
+					</CustomWrapper>
 				</Activity>
 			))}
 		</JsocGridContext.Provider>

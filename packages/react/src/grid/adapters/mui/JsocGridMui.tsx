@@ -1,5 +1,5 @@
-import { JsocGridContext } from '../../wrapper';
-import { COLUMN_FACTORY_MUI, DefaultToolbarMui } from './default';
+import { JsocGridContext } from '../../JsocGrid';
+import { COLUMN_FACTORY_MUI } from './';
 import { JsocGridError } from '@jsoc/core/errors';
 import { SubsetKeysOf } from '@jsoc/core/utils';
 import {
@@ -26,8 +26,8 @@ import { GridApiCommunity } from '@mui/x-data-grid/internals';
 export type JsocGridMuiCustomProps = {
 	/**
 	 * Name for the root grid. This is used by the default navigator to indicate whether
-	 * root grid is active or not. 
-	 * - Note: This prop is managed by `JsocGrid` and always has a value even if you don't 
+	 * root grid is active or not.
+	 * - Note: This prop is managed by `JsocGrid` and always has a value even if you don't
 	 * 	provide any value.
 	 */
 	gridId?: GridId;
@@ -66,11 +66,12 @@ export type JsocGridMuiProps = {
  */
 export function JsocGridMui({ native = {}, custom = {} }: JsocGridMuiProps) {
 	if (!custom.gridId) {
-		throw new JsocGridError("An internal error occured. JsocGrid didn't provide the gridId to the adapter.")
+		throw new JsocGridError(
+			"An internal error occured. JsocGrid didn't provide the gridId to the adapter.",
+		);
 	}
 
-	const { gridSchemaStore, showDefaultNavigator } =
-		useContext(JsocGridContext);
+	const { gridSchemaStore } = useContext(JsocGridContext);
 	const apiRef = useGridApiRef();
 	const { gridSchema } = searchGridSchema(gridSchemaStore, custom.gridId);
 	const { gridRows, gridIdColumnKey } = gridSchema;
@@ -85,19 +86,12 @@ export function JsocGridMui({ native = {}, custom = {} }: JsocGridMuiProps) {
 			generateColumns(
 				gridSchema,
 				COLUMN_FACTORY_MUI,
-				custom.columnFactory
+				custom.columnFactory,
 			),
 		// re-generate only when current gridSchema or columnFactory prop changes
-		[gridSchema, custom.columnFactory]
+		[gridSchema, custom.columnFactory],
 	);
 
-	const showToolbar = showDefaultNavigator || native.showToolbar;
-	const slots = {
-		...native.slots,
-		...(showDefaultNavigator && {
-			toolbar: DefaultToolbarMui,
-		}),
-	};
 
 	return (
 		<JsocGridMuiContext.Provider value={{ apiRef }}>
@@ -107,8 +101,6 @@ export function JsocGridMui({ native = {}, custom = {} }: JsocGridMuiProps) {
 				rows={gridRows}
 				getRowId={getRowId}
 				columns={columns}
-				showToolbar={showToolbar}
-				slots={slots}
 			/>
 		</JsocGridMuiContext.Provider>
 	);

@@ -1,5 +1,5 @@
-import { JsocGridContext } from '../../wrapper/JsocGrid';
-import { COLUMN_FACTORY_AG, DefaultToolbarAg } from './default';
+import { JsocGridContext } from '../../JsocGrid';
+import { COLUMN_FACTORY_AG } from './column-factory/';
 import { JsocGridError } from '@jsoc/core/errors';
 import { SubsetKeysOf } from '@jsoc/core/utils';
 import {
@@ -8,7 +8,7 @@ import {
 	generateColumns,
 	searchGridSchema,
 } from '@jsoc/core/grid';
-import { useContext, useMemo, type ReactElement } from 'react';
+import { useContext, useMemo } from 'react';
 import { AgGridReact, AgGridReactProps } from 'ag-grid-react';
 import {
 	type ColDef,
@@ -72,7 +72,7 @@ export function JsocGridAg({ native = {}, custom = {} }: JsocGridAgProps) {
 		);
 	}
 
-	const { gridSchemaStore, showDefaultNavigator } =
+	const { gridSchemaStore } =
 		useContext(JsocGridContext);
 	const { gridSchema } = searchGridSchema(gridSchemaStore, custom.gridId);
 	const { gridRows, gridIdColumnKey } = gridSchema;
@@ -89,42 +89,11 @@ export function JsocGridAg({ native = {}, custom = {} }: JsocGridAgProps) {
 	);
 
 	return (
-		<Wrapper showDefaultNavigator={showDefaultNavigator}>
-			<AgGridReact
-				{...native}
-				rowData={gridRows}
-				getRowId={getRowId}
-				columnDefs={columnDefs}
-			/>
-		</Wrapper>
-	);
-}
-
-type WrapperProps = {
-	children: ReactElement;
-	showDefaultNavigator: boolean;
-};
-
-function Wrapper({ children, showDefaultNavigator }: WrapperProps) {
-	return showDefaultNavigator ? (
-		<>
-			<style>{`.jsoc-grid-ag-navigator-wrapper {
-						height: 100%;
-						width: 100%;
-						border: solid 1px color-mix(in srgb, transparent, #181d1f 15%);
-						border-radius: 8px;
-						background-color: color-mix(in srgb, #fff, #181d1f 2%);
-					}
-
-			`}</style>
-			<div className='jsoc-grid-ag-navigator-wrapper'>
-				<DefaultToolbarAg />
-				<div style={{height: '85%'}}>
-					{children}
-				</div>
-			</div>
-		</>
-	) : (
-		children
+		<AgGridReact
+			{...native}
+			rowData={gridRows}
+			getRowId={getRowId}
+			columnDefs={columnDefs}
+		/>
 	);
 }

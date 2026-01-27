@@ -1,4 +1,4 @@
-import { ToggleSubGridButton } from '../../../../components';
+import { ToggleSubGridButton } from '../../../components';
 import {
 	ensureArray,
 	ensureString,

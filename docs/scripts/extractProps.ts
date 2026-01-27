@@ -51,7 +51,7 @@ type DocsPathMap = {
 const DOCS_PATH_MAP: DocsPathMap = {
 	grid: {
 		react: {
-			inputPath: '../packages/react/src/grid/wrapper/JsocGrid.tsx',
+			inputPath: '../packages/react/src/grid/JsocGrid.tsx',
 			outputPath: './generated/grid/react/props.json',
 		},
 	},
