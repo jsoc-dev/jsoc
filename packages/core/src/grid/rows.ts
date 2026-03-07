@@ -1,7 +1,9 @@
+import { JsocGridError } from '../errors';
 import {
 	areAllUnique,
 	ensureArray,
 	ensureString,
+	isArrayOfObjects,
 	isConcreteObject,
 	isNumber,
 	isPlainObject,
@@ -48,9 +50,12 @@ export function generateRows(gridData: GridDataReadonly): {
 	gridRows: GridRows;
 	gridIdColumnKey: IdColumnKey;
 } {
+	if (!isValidGridData(gridData)) {
+		throw new JsocGridError('Provided grid data is not valid.');
+	}
 	const gridDataCopy = structuredClone(gridData) as GridData;
 	let gridRows = ensureArray(gridDataCopy).filter(
-		(row) => isPlainObject(row) && isConcreteObject(row)
+		(row) => isPlainObject(row) && isConcreteObject(row),
 	);
 	let gridIdColumnKey: IdColumnKey;
 
@@ -65,6 +70,10 @@ export function generateRows(gridData: GridDataReadonly): {
 		gridRows,
 		gridIdColumnKey,
 	};
+}
+
+export function isValidGridData(arg: unknown): arg is GridData {
+	return isPlainObject(arg) || isArrayOfObjects(arg);
 }
 
 function isValidRowId(arg: unknown): arg is GridRowId {

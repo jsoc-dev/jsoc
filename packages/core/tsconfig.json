@@ -25,7 +25,7 @@
 			 * Define a type in any file of @jsoc/core
 			 * ```type ABC = Array<XYZ>```  // type XYZ in defined in other file of @jsoc/core and imported using type alias, lets say '@/utils'
 			 * Now if we import type ABC `@jsoc/react`, its type will shows as `any`.
-			 * Other the other hand if we import using relative import like "../../utils" it would show correct type.
+			 * On the other hand if XYZ was imported using relative import like "../../utils" it would show correct type.
 
 			 * This is because the consumer's TypeScript server doesn't inherit this package's `paths` configuration.
 			 * TypeScript project references were considered but did not resolve this issue.
