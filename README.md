@@ -10,12 +10,14 @@ This repository uses a modular workspace structure so each framework implementat
 
 ## Monorepo Structure
 
-    jsoc/
-    ├─ pnpm-workspace.yaml
-    ├─ package.json
-    └─ packages/
-        ├─ @jsoc/core/      # Framework-independent logic
-        └─ @jsoc/react/     # React component adapter layer
+```
+jsoc/
+├─ pnpm-workspace.yaml
+├─ package.json
+└─ packages/
+    ├─ @jsoc/core/      # Framework-independent logic
+    └─ @jsoc/react/     # React component adapter layer
+```
 
 Each package is isolated, can be built independently, and shares common core functionality.
 
@@ -30,9 +32,7 @@ Each package is isolated, can be built independently, and shares common core fun
     - Columns generator
     - Rows generator
     - Methods to mutate the Grid Schema Store
-
   - Utility functions
-
 
 ---
 
@@ -40,14 +40,10 @@ Each package is isolated, can be built independently, and shares common core fun
 
 - React-specific implementation built on top of @jsoc/core.
 - This is the UI bridge between JSON data and real React components.
-
 - Available Components: 
   - JsocGrid: Wrapper component that the end consumer will import and render.
     - JsocGridMui: Adapter for MUI DataGrid
     - JsocGridAg: Adapter for AG-Grid
-
-
-
 
 ---
 
@@ -55,13 +51,16 @@ Each package is isolated, can be built independently, and shares common core fun
 
 Packages folder contains the NPM packages.
 
-    packages/
-        @jsoc/core/
-        @jsoc/react/
-        @jsoc/vue - FUTURE
-        @json/angular - FUTURE
+```
+packages/
+    @jsoc/core/
+    @jsoc/react/
+    @jsoc/vue - FUTURE
+    @json/angular - FUTURE
+```
 
 Each package other than @jsoc/core, will contain set of components for a framework.
+
 ```
 @jsoc/core
   grid/
@@ -76,15 +75,13 @@ Each package other than @jsoc/core, will contain set of components for a framewo
 
 1. Install dependencies via PNPM (jsoc is a monorepo built using PNPM workspace)
   - pnpm install
-
 2. Navigate into a package during development
   - `cd packages/@jsoc/core` or  `cd packages/@jsoc/react`
 
 ---
 
-
 ## Documentation
-  
+
 Docsite under development! Check progress under /docsite folder. 
 
 ---

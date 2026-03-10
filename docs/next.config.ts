@@ -9,4 +9,10 @@ const withNextra = nextra({
 export default withNextra({
   // ... Add regular Next.js options here
   reactCompiler: true,
+  turbopack: {
+    resolveAlias: {
+      // Path to your `mdx-components` file with extension
+      "next-mdx-import-source-file": "./mdx-components.tsx",
+    },
+  },
 });

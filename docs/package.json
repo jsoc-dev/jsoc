@@ -1,5 +1,5 @@
 {
-  "name": "docsite",
+  "name": "docs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@jsoc/core": "workspace:*",
+    "@jsoc/react": "workspace:*",
+    "@monaco-editor/react": "^4.7.0",
     "next": "16.1.6",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",

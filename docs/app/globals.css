@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
+  --font-logo: consolas, monospace;
+  --font-mono:
+    "Source Code Pro", "Fira Code", "Menlo", "Monaco", "Consolas",
+    "Liberation Mono", "Courier New", monospace;
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --breakpoint-svrow: 1024px;
+
+  --color-text-muted: #475569;
+  --color-text-primary: blueviolet;
+  --color-surface-muted: #f6f7f9;
+  --color-outline-subtle: #e2e8f0;
 }
 
 body {
