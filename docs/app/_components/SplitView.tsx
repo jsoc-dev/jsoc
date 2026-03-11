@@ -21,9 +21,15 @@ export type PaneElement = ReactElement<
   typeof Pane
 >;
 
-export type PaneHeadElement = ReactElement<{ children: ReactNode }, typeof PaneHead>;
+export type PaneHeadElement = ReactElement<
+  { children: ReactNode },
+  typeof PaneHead
+>;
 
-export type PaneBodyElement = ReactElement<{ children: ReactNode }, typeof PaneBody>;
+export type PaneBodyElement = ReactElement<
+  { children: ReactNode },
+  typeof PaneBody
+>;
 
 /* ───────── Components ───────── */
 
@@ -33,7 +39,7 @@ export function SplitView({ className = "", children }: SplitViewProps) {
   return (
     <div
       className={cn(
-        "border border-outline-subtle rounded-xl shadow-xl",
+        "border border-border rounded-xl shadow-xl bg-card",
         "flex flex-col svrow:flex-row",
         "overflow-hidden",
         className,
@@ -45,7 +51,7 @@ export function SplitView({ className = "", children }: SplitViewProps) {
           className={cn(
             "flex flex-col svrow:w-1/2",
             index === 0 &&
-              "border-b border-outline-subtle svrow:border-b-0 svrow:border-r",
+              "border-b border-border svrow:border-b-0 svrow:border-r",
           )}
         >
           {splitViewPane}
@@ -61,7 +67,7 @@ function Pane({ children }: SplitViewPaneProps) {
 
 function PaneHead({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-surface-muted/10 border-b border-outline-subtle h-10 w-full px-4 md:px-6">
+    <div className="bg-muted/50 border-b border-border h-10 w-full px-4 md:px-6">
       {children}
     </div>
   );
@@ -69,7 +75,7 @@ function PaneHead({ children }: { children: ReactNode }) {
 
 function PaneBody({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-surface-muted h-96 w-full overflow-auto px-4 md:px-6 py-6 svrow:flex-1">
+    <div className="bg-muted/20 h-96 w-full overflow-auto px-4 md:px-6 py-6 svrow:flex-1">
       {children}
     </div>
   );

@@ -9,13 +9,13 @@ export function ErrorMessage({
     <div
       className="
 				flex flex-col gap-2
-				bg-white
-				border border-red-700 rounded-md
+				bg-destructive/10
+				border border-destructive/50 rounded-md
 				p-4	
 			"
     >
-      <p className="font-semibold text-xl text-red-700">{type}</p>
-      <div className="text-sm text-text-muted">
+      <p className="font-semibold text-xl text-destructive">{type}</p>
+      <div className="text-sm text-muted-foreground">
         <pre className="inline whitespace-pre-wrap">{message}</pre>
       </div>
     </div>

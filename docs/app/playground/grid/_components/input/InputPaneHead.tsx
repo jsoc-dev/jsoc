@@ -32,7 +32,7 @@ export function InputPaneHead({
 
   function getSelectedCls(jsonOption: DemoJsonOption): string {
     return jsonOption === selectedJsonOption
-      ? "text-text-primary"
-      : "text-text-muted";
+      ? "text-primary font-medium"
+      : "text-muted-foreground hover:text-foreground transition-colors";
   }
 }
