@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
   --card: 0 0% 100%;
@@ -48,7 +47,8 @@
 
 @theme {
   --font-logo: consolas, monospace;
-  --font-mono: "Source Code Pro", "Fira Code", "Menlo", "Monaco", "Consolas",
+  --font-mono:
+    "Source Code Pro", "Fira Code", "Menlo", "Monaco", "Consolas",
     "Liberation Mono", "Courier New", monospace;
   --font-sans: var(--font-geist-sans);
 
@@ -88,7 +88,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 
 @utility w-controlled {
   width: 100%;
@@ -145,4 +144,3 @@ body {
 @utility animate-float {
   animation: float 10s ease-in-out infinite;
 }
-

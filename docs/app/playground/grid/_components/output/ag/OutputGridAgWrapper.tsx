@@ -15,7 +15,7 @@ export const OutputGridAgWrapper: JsocGridCustomWrapper<"ag"> = ({
           mode: resolvedTheme === "dark" ? "dark" : "light",
         },
       }),
-    [resolvedTheme]
+    [resolvedTheme],
   );
 
   return (
@@ -29,4 +29,3 @@ export const OutputGridAgWrapper: JsocGridCustomWrapper<"ag"> = ({
     </ThemeProvider>
   );
 };
-

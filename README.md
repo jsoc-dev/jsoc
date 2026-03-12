@@ -1,6 +1,6 @@
 # JSOC
 
-JSOC is a framework-agnostic system that converts any JSON data into fully functional UI components.  
+JSOC is a framework-agnostic system that converts any JSON data into fully functional UI components.
 
 It is designed to support React, Vue, Angular, Svelte, and more — all powered by a shared core.
 
@@ -40,7 +40,7 @@ Each package is isolated, can be built independently, and shares common core fun
 
 - React-specific implementation built on top of @jsoc/core.
 - This is the UI bridge between JSON data and real React components.
-- Available Components: 
+- Available Components:
   - JsocGrid: Wrapper component that the end consumer will import and render.
     - JsocGridMui: Adapter for MUI DataGrid
     - JsocGridAg: Adapter for AG-Grid
@@ -74,15 +74,18 @@ Each package other than @jsoc/core, will contain set of components for a framewo
 ## Getting Started (Development)
 
 1. Install dependencies via PNPM (jsoc is a monorepo built using PNPM workspace)
-  - pnpm install
+
+- pnpm install
+
 2. Navigate into a package during development
-  - `cd packages/@jsoc/core` or  `cd packages/@jsoc/react`
+
+- `cd packages/@jsoc/core` or `cd packages/@jsoc/react`
 
 ---
 
 ## Documentation
 
-Documentation is under progress. Check progress under /docs folder. 
+Documentation is under progress. Check progress under /docs folder.
 
 ---
 

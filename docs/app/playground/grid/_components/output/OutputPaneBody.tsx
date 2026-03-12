@@ -46,7 +46,6 @@ export function OutputPaneBody({
   );
 }
 
-
 export type OutputPaneBodyContextType = {
   gridData: GridData;
   selectedJsonOption: DemoJsonOption;

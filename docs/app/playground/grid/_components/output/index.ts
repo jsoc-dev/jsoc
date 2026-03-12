@@ -1,2 +1,2 @@
-export * from './OutputPaneBody';
-export * from './OutputPaneHead';
+export * from "./OutputPaneBody";
+export * from "./OutputPaneHead";

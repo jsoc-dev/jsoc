@@ -107,7 +107,6 @@ export default function Page() {
           </div>
         </section>
 
-
         {/* Features Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl mt-6 mx-auto">
           {features.map((feature, i) => (
@@ -127,10 +126,7 @@ export default function Page() {
             </div>
           ))}
         </section>
-
-
       </main>
     </div>
   );
 }
-
