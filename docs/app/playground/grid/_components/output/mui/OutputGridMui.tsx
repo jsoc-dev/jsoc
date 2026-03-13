@@ -1,5 +1,10 @@
 import { useOutputPaneBodyContext } from "@/app/playground/grid/_components/output/";
-import { DefaultToolbarMui, JsocGrid } from "@jsoc/react/grid";
+import { ToggleSubGridButton } from "@/app/playground/grid/_components/output/shared";
+import {
+  DefaultToolbarMui,
+  COLUMN_FACTORY_MUI,
+  JsocGrid,
+} from "@jsoc/react/grid";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import cn from "clsx";
 import { useTheme } from "next-themes";
@@ -25,7 +30,7 @@ export function OutputGridMui() {
     setMounted(true);
   }, []);
 
-  // skip DataGrid rendering for first frame as it schedules async updates which causes below warning:
+  // skip DataGrid rendering for first render as it schedules async updates which causes below warning:
   // "Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component."
   if (!mounted) {
     return (
@@ -40,6 +45,27 @@ export function OutputGridMui() {
     );
   }
 
+  const customColDefProviderForArrayOfObjects: typeof COLUMN_FACTORY_MUI.arrayOfObjects =
+    (params) => {
+      return COLUMN_FACTORY_MUI.arrayOfObjects(params, {
+        renderCell: (cellParams) => {
+          const { columnKey, gridId, gridIdColumnKey } = params;
+          const { row, value } = cellParams;
+
+          return (
+            <ToggleSubGridButton
+              subGridData={value}
+              parentGridId={gridId}
+              parentGridCellLocation={{
+                rowId: row[gridIdColumnKey],
+                columnKey,
+              }}
+            />
+          );
+        },
+      });
+    };
+
   return (
     <ThemeProvider theme={theme}>
       <JsocGrid
@@ -48,6 +74,10 @@ export function OutputGridMui() {
         uiProps={{
           custom: {
             gridId: selectedJsonOption,
+            columnFactory: {
+              arrayOfObjects: customColDefProviderForArrayOfObjects,
+              object: customColDefProviderForArrayOfObjects,
+            },
           },
           native: {
             sx: {
