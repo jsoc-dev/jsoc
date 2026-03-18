@@ -8,6 +8,7 @@
     "pretty-quick": "^4.2.2"
   },
   "scripts": {
+    "type-all": "pnpm -r --parallel run type",
     "prepare": "husky"
   }
 }

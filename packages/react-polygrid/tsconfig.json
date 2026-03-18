@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    // language
+    "target": "ES2024",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
+    "allowImportingTsExtensions": true, // subpath imports require file extensions
+
+    // type checking
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": true,
+
+    // output
+    "noEmit": true // bundler will be used to emit
+
+    // source files
+    // "paths": {
+    // 	// same issue as core package
+    // 	// "@/*": ["*"]
+    // }
+  },
+
+  "exclude": [
+    "dist",
+    "build",
+    "**/*.min.js",
+    "node_modules",
+    "**/node_modules/*"
+  ]
+}

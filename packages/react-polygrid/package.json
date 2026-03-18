@@ -1,0 +1,27 @@
+{
+  "name": "@jsoc/react-polygrid",
+  "version": "0.0.1",
+  "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "type": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "dependencies": {
+    "@jsoc/core": "workspace:*",
+    "@jsoc/react": "workspace:*",
+    "@mui/material": "^7.3.4",
+    "@mui/x-data-grid": "^8.16.0",
+    "@mui/icons-material": "^7.3.4",
+    "ag-grid-react": "^34.3.1",
+    "ag-grid-community": "^34.3.1"
+  }
+}

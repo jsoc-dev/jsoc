@@ -1,15 +1,29 @@
 import nextra from "nextra";
 
-// Set up Nextra with its configuration
 const withNextra = nextra({
   // ... Add Nextra-specific options here
 });
 
-// Export the final Next.js config with Nextra included
 export default withNextra({
   // ... Add regular Next.js options here
+
   reactCompiler: true,
+
+  // reactStrictMode: false,
+
   turbopack: {
+    rules: {
+      // raw-loader for all files
+      "*": {
+        condition: {
+          // https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#advanced-webpack-loader-conditions
+          query: /[?&]raw(?=&|$)/,
+        },
+        loaders: ["raw-loader"],
+        as: "*.js",
+      },
+    },
+
     resolveAlias: {
       // Path to your `mdx-components` file with extension
       "next-mdx-import-source-file": "./mdx-components.tsx",

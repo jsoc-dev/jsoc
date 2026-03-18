@@ -1,10 +1,10 @@
-export function ErrorMessage({
-  type,
-  message,
-}: {
-  type: string;
-  message: string;
-}) {
+import { isError } from "@jsoc/core/utils";
+
+export function ErrorMessage({ error }: { error: unknown }) {
+  const err = isError(error)
+    ? error
+    : new Error("Something went wrong", { cause: error });
+
   return (
     <div
       className="
@@ -14,9 +14,9 @@ export function ErrorMessage({
 				p-4	
 			"
     >
-      <p className="font-semibold text-xl text-destructive">{type}</p>
+      <p className="font-semibold text-xl text-destructive">{err.name}</p>
       <div className="text-sm text-muted-foreground">
-        <pre className="inline whitespace-pre-wrap">{message}</pre>
+        <pre className="inline whitespace-pre-wrap">{err.message}</pre>
       </div>
     </div>
   );

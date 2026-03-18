@@ -2,13 +2,11 @@ import type { MetaRecord } from "nextra";
 
 const gridItems: MetaRecord = {
   start: { title: "Get Started" },
-  props: { title: "Props" },
-  adapters: { title: "Adapters" },
 };
 
 const documentationItems: MetaRecord = {
   index: { title: "Introduction" },
-  grid: {
+  "react-polygrid": {
     // @ts-expect-error - items is supported for all types in _meta.global file
     items: gridItems,
   },
@@ -19,7 +17,7 @@ const meta: MetaRecord = {
 
   documentation: {
     type: "page",
-    title: "Documentation",
+    title: "Docs",
     // @ts-expect-error - items is supported for all types in _meta.global file
     // https://nextra.site/docs/file-conventions/meta-file#_metaglobal-file
     items: documentationItems,
@@ -41,7 +39,7 @@ const meta: MetaRecord = {
 
     // @ts-expect-error - items is supported for all types in _meta.global file
     items: {
-      grid: { title: "Grid" },
+      "react-polygrid": { title: "React PolyGrid" },
     },
   },
 };
