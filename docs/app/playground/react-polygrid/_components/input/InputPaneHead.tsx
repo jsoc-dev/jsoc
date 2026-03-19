@@ -1,13 +1,13 @@
-import { HeadLayout } from "@/app/playground/react-polygrid/_components/shared";
+import { HeadLayout } from "@/playground/react-polygrid/_components/shared";
 import {
   SAMPLE_JSON_NAMES,
   SAMPLE_JSON_STRINGS,
   type SampleJsonName,
-} from "@/app/playground/react-polygrid/_components/input/json";
+} from "@/playground/react-polygrid/_components/input/json";
 import {
   createPlaygroundGridOptions,
   type GridOptionsState,
-} from "@/app/playground/react-polygrid/Playground";
+} from "@/playground/react-polygrid/Playground";
 
 export function InputPaneHead({
   gridOptions,

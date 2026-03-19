@@ -26,7 +26,7 @@ export default withNextra({
 
     resolveAlias: {
       // Path to your `mdx-components` file with extension
-      "next-mdx-import-source-file": "./mdx-components.tsx",
+      "next-mdx-import-source-file": "./app/mdx-components.tsx",
     },
   },
 });

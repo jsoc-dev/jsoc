@@ -1,5 +1,5 @@
-import "@/app/globals.css";
-import { JsocLogo } from "@/components/";
+import "@/globals.css";
+import { JsocLogo } from "@/_components";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

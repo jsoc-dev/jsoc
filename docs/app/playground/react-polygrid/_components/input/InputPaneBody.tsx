@@ -3,7 +3,7 @@ import { useTheme } from "next-themes";
 import {
   createPlaygroundGridOptions,
   type GridOptionsState,
-} from "@/app/playground/react-polygrid/Playground";
+} from "@/playground/react-polygrid/Playground";
 
 export function InputPaneBody({
   gridOptions,

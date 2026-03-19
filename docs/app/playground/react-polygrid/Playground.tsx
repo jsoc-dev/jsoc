@@ -1,17 +1,17 @@
 "use client";
 
-import { SplitView } from "@/app/_components";
+import { SplitView } from "@/_components";
 import {
   InputPaneHead,
   InputPaneBody,
-} from "@/app/playground/react-polygrid/_components/input";
+} from "@/playground/react-polygrid/_components/input";
 import {
   OutputPaneBody,
   OutputPaneHead,
-} from "@/app/playground/react-polygrid/_components/output";
-import { SAMPLE_JSON_STRINGS } from "@/app/playground/react-polygrid/_components/input/json";
-import type { GridPlugin } from "@jsoc/react-grid";
+} from "@/playground/react-polygrid/_components/output";
+import { SAMPLE_JSON_STRINGS } from "@/playground/react-polygrid/_components/input/json";
 import type { GridOptions } from "@jsoc/grid-core";
+import type { GridPlugin } from "@jsoc/react-grid";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 

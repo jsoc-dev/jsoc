@@ -1,5 +1,5 @@
-import { ErrorMessage } from "@/app/_components";
-import { type GridOptionsState } from "@/app/playground/react-polygrid/Playground";
+import { ErrorMessage } from "@/_components";
+import { type GridOptionsState } from "@/playground/react-polygrid/Playground";
 import { type GridPlugin } from "@jsoc/react-grid";
 import { PolyGrid } from "@jsoc/react-polygrid";
 import { ThemeProvider, createTheme } from "@mui/material/styles";

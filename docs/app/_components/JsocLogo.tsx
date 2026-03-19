@@ -1,4 +1,4 @@
-import jsocSvg from "@/app/icon.svg";
+import jsocSvg from "@/icon.svg";
 import Image from "next/image";
 
 export function JsocLogo() {

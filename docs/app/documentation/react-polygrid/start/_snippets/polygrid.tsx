@@ -5,7 +5,7 @@ import { PolyGrid } from "@jsoc/react-polygrid";
 import { useEffect, useState } from "react";
 
 export function App() {
-  const plugin: GridPlugin = "mui";
+  const plugin: GridPlugin = "ag";
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
