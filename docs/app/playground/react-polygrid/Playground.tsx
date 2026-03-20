@@ -2,18 +2,18 @@
 
 import { SplitView } from "@/_components";
 import {
-  InputPaneHead,
   InputPaneBody,
+  InputPaneHead,
 } from "@/playground/react-polygrid/_components/input";
+import { SAMPLE_JSON_STRINGS } from "@/playground/react-polygrid/_components/input/json";
 import {
   OutputPaneBody,
   OutputPaneHead,
 } from "@/playground/react-polygrid/_components/output";
-import { SAMPLE_JSON_STRINGS } from "@/playground/react-polygrid/_components/input/json";
+
 import type { GridOptions } from "@jsoc/grid-core";
 import type { GridPlugin } from "@jsoc/react-grid";
-
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 interface PlaygroundGridOptions extends GridOptions {
   name: keyof typeof SAMPLE_JSON_STRINGS;

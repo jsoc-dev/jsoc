@@ -1,5 +1,5 @@
-import { useNavigation } from "@jsoc/react-grid";
 import { type GridIndex } from "@jsoc/grid-core";
+import { useNavigation } from "@jsoc/react-grid";
 import { toPascalCase } from "@jsoc/utils";
 import { Chip, Tooltip } from "@mui/material";
 

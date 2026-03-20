@@ -1,9 +1,10 @@
 import type { ColumnKey } from "#column.ts";
 import type { GridRows } from "#schema.ts";
+
 import {
-  isNumber,
   areAllUnique,
   isFunction,
+  isNumber,
   isString,
   toStringSafe,
 } from "@jsoc/utils";

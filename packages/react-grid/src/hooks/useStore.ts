@@ -1,14 +1,15 @@
 import {
-  type ConfigByPlugin,
   CONFIG_GENERATOR_BY_PLUGIN,
+  type ConfigByPlugin,
 } from "#config-generators/configGenerator.registry.ts";
 import { type StoreContextValue } from "#contexts/StoreContext.tsx";
+
 import {
-  type PluginConfigGenerator,
   type GridOptions,
-  type PluginConfigGeneratorOptions,
   newGridStore,
   type PluginConfig,
+  type PluginConfigGenerator,
+  type PluginConfigGeneratorOptions,
 } from "@jsoc/grid-core";
 import { useEffect, useState } from "react";
 

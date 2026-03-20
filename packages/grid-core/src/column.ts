@@ -7,14 +7,14 @@ import {
 } from "#schema.ts";
 
 import {
-  type JSONValueOrUndefined,
   isArrayOfObjects,
   isBoolean,
-  isISODateString,
   isFunction,
+  isISODateString,
   isNumber,
   isPlainObject,
   isString,
+  type JSONValueOrUndefined,
 } from "@jsoc/utils";
 
 /**

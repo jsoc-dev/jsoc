@@ -1,17 +1,18 @@
 import { GridError } from "#errors.ts";
 import {
+  DEFAULT_ROOT_GRID_NAME,
   type GridCellLocation,
-  type PluginConfig,
   type GridId,
   type GridIndex,
   type GridOptions,
   type GridOptionsWithId,
   type GridSchemaWithConfig,
-  DEFAULT_ROOT_GRID_NAME,
   newGridSchema,
+  type PluginConfig,
   type PluginConfigGenerator,
   type PluginConfigGeneratorOptions,
 } from "#schema.ts";
+
 import { assertIsValidIndex } from "@jsoc/utils";
 
 export type GridStoreInternals<C extends PluginConfig = PluginConfig> = {

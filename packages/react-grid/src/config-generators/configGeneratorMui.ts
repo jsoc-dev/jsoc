@@ -1,12 +1,13 @@
 import { COLUMN_GENERATOR_BY_TYPE_MUI } from "#config-generators/column-generators/index.ts";
+
 import {
+  generateColumns,
   type PluginConfig,
   type PluginConfigGenerator,
-  generateColumns,
 } from "@jsoc/grid-core";
 import type { SubsetKeysOf } from "@jsoc/utils";
-import { type DataGridProps } from "@mui/x-data-grid";
 import type { GridColDef } from "@mui/x-data-grid";
+import { type DataGridProps } from "@mui/x-data-grid";
 
 export type PluginConfigNamesMui = SubsetKeysOf<
   DataGridProps,

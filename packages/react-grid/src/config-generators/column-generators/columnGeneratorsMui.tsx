@@ -1,21 +1,22 @@
 import { SubGridToggle } from "#components/index.ts";
 import type { PluginConfigMui } from "#config-generators/configGeneratorMui.ts";
+
+import type { ColumnGeneratorByType } from "@jsoc/grid-core";
 import {
-  ColumnGeneratorByType,
   type ColumnGenerator,
   type GridData,
   type GridDataReadonly,
   type GridRows,
 } from "@jsoc/grid-core";
 import {
-  ensureString,
+  encodePretty,
   ensureArray,
+  ensureString,
   isArray,
   isPlainObject,
-  encodePretty,
   toReadableString,
 } from "@jsoc/utils";
-import { GridRenderCellParams } from "@mui/x-data-grid";
+import type { GridRenderCellParams } from "@mui/x-data-grid";
 
 export const baseColumnGeneratorMui: ColumnGenerator<PluginConfigMui> = (
   params,

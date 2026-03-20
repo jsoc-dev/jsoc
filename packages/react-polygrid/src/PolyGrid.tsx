@@ -1,22 +1,23 @@
 import { DefaultLayout } from "#components/DefaultLayout.tsx";
 import { getConfigGeneratorOptions } from "#customizations/configGeneratorOptions.tsx";
+
 import {
+  type GridOptions,
+  type PluginConfigGeneratorOptions,
+} from "@jsoc/grid-core";
+import {
+  CONFIG_GENERATOR_BY_PLUGIN,
   type ConfigByPlugin,
   type GridPlugin,
   type PluginPropsAg,
   type PluginPropsMui,
-  CONFIG_GENERATOR_BY_PLUGIN,
   StoreContext,
   useStore,
 } from "@jsoc/react-grid";
-import {
-  type PluginConfigGeneratorOptions,
-  type GridOptions,
-} from "@jsoc/grid-core";
 import { DataGrid } from "@mui/x-data-grid";
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { type ReactNode, Activity, type ElementType } from "react";
-import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import { Activity, type ElementType, type ReactNode } from "react";
 
 // TODO: Remove this. Add in docs that users need to import the required modules themselves if they use ag-grid.
 ModuleRegistry.registerModules([AllCommunityModule]);

@@ -1,10 +1,10 @@
-import { useToggleSubGrid } from "@jsoc/react-grid";
 import {
-  type GridId,
   type GridCellLocation,
   type GridDataReadonly,
+  type GridId,
 } from "@jsoc/grid-core";
-import { GridOn, GridOff } from "@mui/icons-material";
+import { useToggleSubGrid } from "@jsoc/react-grid";
+import { GridOff, GridOn } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 
 export type SubGridToggleProps = {

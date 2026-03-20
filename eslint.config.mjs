@@ -1,8 +1,49 @@
-import globals from "globals";
 import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
+import pluginImport from "eslint-plugin-import";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
+import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+
+/** Common flat config rules for all projects. (import-sorting, type-imports) */
+export const commonConfig = {
+  plugins: {
+    import: pluginImport,
+    "simple-import-sort": pluginSimpleImportSort,
+  },
+  rules: {
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        prefer: "type-imports",
+        fixStyle: "separate-type-imports",
+      },
+    ],
+    "import/order": "off",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        groups: [
+          // Relative imports
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          // Internal aliases
+          ["^@/", "^#"],
+          // Node builtins
+          ["^node:"],
+          // External packages
+          ["^@?\\w"],
+          // Side Effect imports
+          ["^\\u0000"],
+          // Type imports
+          ["^\\u0000$"],
+        ],
+      },
+    ],
+    "simple-import-sort/exports": "error",
+  },
+};
 
 /** Base configuration for all TypeScript files */
 export const baseConfig = tseslint.config(
@@ -20,6 +61,7 @@ export const baseConfig = tseslint.config(
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  commonConfig,
 );
 
 /** React-specific configuration */

@@ -5,17 +5,27 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
-    "pretty-quick": "^4.2.2",
     "typescript-eslint": "^8.57.1"
   },
   "scripts": {
     "lint-all": "pnpm -r --parallel run lint",
+    "lint:fix-all": "pnpm -r --parallel run lint --fix",
     "type-all": "pnpm -r --parallel run type",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": "prettier --write"
   }
 }

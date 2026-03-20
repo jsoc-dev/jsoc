@@ -1,13 +1,13 @@
-import "@/globals.css";
 import { JsocLogo } from "@/_components";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 import { Head } from "nextra/components";
-import "nextra-theme-docs/style.css";
-import { Footer, Navbar, Layout, ThemeSwitch } from "nextra-theme-docs";
 import { getPageMap } from "nextra/page-map";
+import { Footer, Layout, Navbar, ThemeSwitch } from "nextra-theme-docs";
+
+import "@/globals.css";
+import "nextra-theme-docs/style.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

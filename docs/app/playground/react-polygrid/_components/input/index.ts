@@ -1,2 +1,2 @@
-export * from "./InputPaneHead";
 export * from "./InputPaneBody";
+export * from "./InputPaneHead";

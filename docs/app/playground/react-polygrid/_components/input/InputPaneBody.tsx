@@ -1,9 +1,10 @@
-import { Editor, type OnChange } from "@monaco-editor/react";
-import { useTheme } from "next-themes";
 import {
   createPlaygroundGridOptions,
   type GridOptionsState,
 } from "@/playground/react-polygrid/Playground";
+
+import { Editor, type OnChange } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 
 export function InputPaneBody({
   gridOptions,

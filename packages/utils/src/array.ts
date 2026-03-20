@@ -1,6 +1,6 @@
 import { isNumber } from "#number.ts";
-import { isString } from "#string.ts";
 import { isPlainObject, type PlainObject } from "#object.ts";
+import { isString } from "#string.ts";
 
 export const MAX_ARRAY_LENGTH = Math.pow(2, 32) - 1;
 

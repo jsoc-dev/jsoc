@@ -1,6 +1,7 @@
 import { type ColumnKey, type CustomColumnGeneratorByType } from "#column.ts";
 import { GridError } from "#errors.ts";
-import { type PrimaryColumnKey, getPrimaryColumnKey } from "#primary-column.ts";
+import { getPrimaryColumnKey, type PrimaryColumnKey } from "#primary-column.ts";
+
 import {
   ensureArray,
   isArrayOfObjects,

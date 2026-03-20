@@ -1,11 +1,12 @@
 import {
-  type PluginConfigAg,
   configGeneratorAg,
+  type PluginConfigAg,
 } from "#config-generators/configGeneratorAg.ts";
 import {
-  type PluginConfigMui,
   configGeneratorMui,
+  type PluginConfigMui,
 } from "#config-generators/configGeneratorMui.ts";
+
 import { type PluginConfig, type PluginConfigGenerator } from "@jsoc/grid-core";
 
 export type GridPlugin = "ag" | "mui";
