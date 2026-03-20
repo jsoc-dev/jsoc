@@ -33,9 +33,10 @@ const GridComponentByPlugin: {
   mui: DataGrid,
 };
 
-export type GridLayout = React.ComponentType<{
+export type GridLayoutProps = {
   children: ReactNode;
-}>;
+};
+export type GridLayout = React.ComponentType<GridLayoutProps>;
 
 export type PolyGridProps<P extends GridPlugin> = {
   configGeneratorOptions?: PluginConfigGeneratorOptions<ConfigByPlugin[P]>;
@@ -75,7 +76,6 @@ function PolyGridInner<P extends GridPlugin>({
   const activeSchema = gridStore.getActiveSchema();
   const PluginComponent = GridComponentByPlugin[plugin];
 
-  // Dispatch<SetStateAction<GridStore<PluginConfig<unknown>>>>
   return (
     <StoreContext.Provider
       value={{

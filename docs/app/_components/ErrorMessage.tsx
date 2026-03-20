@@ -9,8 +9,7 @@ export function ErrorMessage({ error }: { error: unknown }) {
     <div
       className="
 				flex flex-col gap-2
-				bg-destructive/10
-				border border-destructive/50 rounded-md
+				border-2 border-destructive rounded-md
 				p-4	
 			"
     >
