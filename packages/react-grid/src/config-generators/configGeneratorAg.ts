@@ -1,10 +1,10 @@
-import { COLUMN_GENERATOR_BY_TYPE_AG } from "#config-generators/ag/columnGeneratorsAg.tsx";
+import { COLUMN_GENERATOR_BY_TYPE_AG } from "#config-generators/column-generators/index.ts";
 import {
   type PluginConfig,
   type PluginConfigGenerator,
   generateColumns,
 } from "@jsoc/grid-core";
-import { SubsetKeysOf } from "@jsoc/utils";
+import { type SubsetKeysOf } from "@jsoc/utils";
 import { type AgGridReactProps } from "ag-grid-react";
 import type { ColDef } from "ag-grid-community";
 
