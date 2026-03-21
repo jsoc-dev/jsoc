@@ -15,6 +15,8 @@ export type StoreContextValue<C extends PluginConfig> = {
 export const StoreContext = createStoreContext<any>();
 export const StoreContextAg = createStoreContext<ConfigByPlugin["ag"]>("ag");
 export const StoreContextMui = createStoreContext<ConfigByPlugin["mui"]>("mui");
+export const StoreContextTanstack =
+  createStoreContext<ConfigByPlugin["tanstack"]>("tanstack");
 
 function createStoreContext<C extends PluginConfig = PluginConfig>(
   plugin?: GridPlugin,
