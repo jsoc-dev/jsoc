@@ -2,6 +2,7 @@ import type { ConfigByPlugin, GridPlugin } from "#config-generators/index.ts";
 import {
   StoreContext,
   StoreContextAg,
+  StoreContextMantine,
   StoreContextMui,
   StoreContextTanstack,
   type StoreContextValue,
@@ -20,6 +21,10 @@ export const useStoreContextMui = createUseStoreContext(StoreContextMui, "mui");
 export const useStoreContextTanstack = createUseStoreContext(
   StoreContextTanstack,
   "tanstack",
+);
+export const useStoreContextMantine = createUseStoreContext(
+  StoreContextMantine,
+  "mantine",
 );
 
 function createUseStoreContext<P extends GridPlugin>(

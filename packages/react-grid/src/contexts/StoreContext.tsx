@@ -17,6 +17,8 @@ export const StoreContextAg = createStoreContext<ConfigByPlugin["ag"]>("ag");
 export const StoreContextMui = createStoreContext<ConfigByPlugin["mui"]>("mui");
 export const StoreContextTanstack =
   createStoreContext<ConfigByPlugin["tanstack"]>("tanstack");
+export const StoreContextMantine =
+  createStoreContext<ConfigByPlugin["mantine"]>("mantine");
 
 function createStoreContext<C extends PluginConfig = PluginConfig>(
   plugin?: GridPlugin,
