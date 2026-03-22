@@ -5,6 +5,7 @@ import {
   StoreContextMui,
   type StoreContextValue,
 } from "#contexts/StoreContext.tsx";
+import { ReactGridError } from "#errors/ReactGridError.ts";
 
 import { type Context, useContext } from "react";
 
@@ -24,7 +25,7 @@ function createUseStoreContext<P extends GridPlugin>(
     const ctx = useContext(StoreContext);
 
     if (!ctx) {
-      throw new Error(
+      throw new ReactGridError(
         `Missing provider for useStoreContext${plugin ? `(${plugin})` : ""}.`,
       );
     }
