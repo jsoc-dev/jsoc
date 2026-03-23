@@ -36,11 +36,6 @@ const meta: MetaRecord = {
       pagination: false,
       toc: false,
     },
-
-    // @ts-expect-error - items is supported for all types in _meta.global file
-    items: {
-      "react-polygrid": { title: "React PolyGrid" },
-    },
   },
 };
 
