@@ -5,9 +5,12 @@ import { Cards } from "nextra/components";
 import { getIndexPageMap, getPageMap } from "nextra/page-map";
 import type { FC } from "react";
 
-/** Copied from Nextra official docs
- * @see https://github.com/shuding/nextra/blob/main/docs/app/_components/overview-page.tsx
+/**
+ * Creates a page overview with cards for each page.
+ *
  * TODO: Add support of card description
+ *
+ * @see {@link https://github.com/shuding/nextra/blob/main/docs/app/_components/overview-page.tsx Code reference}
  */
 export const OverviewPage: FC<{
   filePath: string;
