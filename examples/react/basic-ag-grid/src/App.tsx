@@ -21,9 +21,7 @@ export default function App() {
   return (
     <StoreContext.Provider value={{ gridStore, setGridStore }}>
       <AgGridProvider modules={modules}>
-        <GridClose>
-          {({ close }) => <button onClick={close}>Go Back</button>}
-        </GridClose>
+        <GridClose>Back</GridClose>
         <div style={{ height: 600 }}>
           <AgGridReact {...config} />
         </div>

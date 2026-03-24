@@ -6,16 +6,12 @@ export type GridCloseRendererParams = {
 
 export type GridCloseProps = {
   /**
-   * Custom renderer for the close action.
-   * @param close - Function to close the current schema
-   * @default DefaultGridCloseRenderer
+   * Either a custom renderer for the close action component or a string to display as text of default close action component.
    */
-  children?: (params: GridCloseRendererParams) => React.ReactNode;
+  children?: string | ((params: GridCloseRendererParams) => React.ReactNode);
 };
 
-export function GridClose({
-  children = DefaultGridCloseRenderer,
-}: GridCloseProps) {
+export function GridClose({ children }: GridCloseProps) {
   const { gridStore, setGridStore } = useStoreContext();
   const isRootSchema = gridStore.getSchemas().length === 1;
 
@@ -23,17 +19,24 @@ export function GridClose({
     return null;
   }
 
-  return children({ close });
-
-  function close() {
+  const close = () => {
     const newGridStore = gridStore.clone();
     newGridStore.removeSchema();
     setGridStore(newGridStore);
+  };
+
+  const params = { close };
+
+  if (typeof children === "function") {
+    return children(params);
   }
+
+  return DefaultGridCloseRenderer(children || "Close", params);
 }
 
-function DefaultGridCloseRenderer(params: GridCloseRendererParams) {
-  const { close } = params;
-
-  return <button onClick={close}>Close</button>;
+function DefaultGridCloseRenderer(
+  children: string,
+  params: GridCloseRendererParams,
+) {
+  return <button onClick={params.close}>{children}</button>;
 }
