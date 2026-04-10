@@ -1,6 +1,6 @@
 {
   "name": "@jsoc/react-grid",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dynamic columns/rows generator for popular React grid components",
   "keywords": [
     "datagrid",

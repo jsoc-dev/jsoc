@@ -1,5 +1,11 @@
 # @jsoc/react-grid
 
+## 0.0.2
+
+### Patch Changes
+
+- Fix infinite rerenders
+
 ## 0.0.1
 
 ### Patch Changes
